@@ -1,9 +1,13 @@
 package com.github.gameoholic.partigon.commands
 
 
-import com.github.gameoholic.partigon.particleanimation.LineParticleAnimation
-import com.github.gameoholic.partigon.particleanimation.LineParticleLoopEndType
-import com.github.gameoholic.partigon.particleanimation.LineParticleSettings
+import com.github.gameoholic.partigon.partigonparticle.PartigonParticleImpl
+import com.github.gameoholic.partigon.partigonparticle.envelope.Envelope
+import com.github.gameoholic.partigon.partigonparticle.envelope.LineEnvelope
+import com.github.gameoholic.partigon.partigonparticle.envelope.PropertyType
+import com.github.gameoholic.partigon.partigonparticle.loop.Loop
+import com.github.gameoholic.partigon.partigonparticle.loop.LoopType
+import net.minecraft.core.particles.ParticleType
 import org.bukkit.Bukkit
 import org.bukkit.Particle
 import org.bukkit.command.Command
@@ -25,24 +29,24 @@ object TestCommand : CommandExecutor {
 //            stopCondition = { t: Int -> t / 20.0 > 2 * Math.PI }
 //        ).start()
 
-        val line = LineParticleAnimation(
-            LineParticleSettings(
-                Bukkit.getWorlds()[0],
-                Vector(0.5, 100.0, 0.5),
-                Vector(10.5, 100.0, 0.5),
-                1000,
-                40,
-                LineParticleLoopEndType.BOUNCE,
-                Particle.FLAME,
+        val particle = PartigonParticleImpl(
+            Bukkit.getWorlds()[0],
+            Vector(0.5, 100.0, 0.5),
+            Particle.FLAME,
+            1,
+            Vector(0.0, 0.0, 0.0),
+            { t: Int -> t > 1000 },
+            listOf(
+                LineEnvelope(PropertyType.POS_X, 0, 8, Loop(LoopType.BOUNCE, 120)),
+                LineEnvelope(PropertyType.POS_Y, 0.0, -1.5, Loop(LoopType.BOUNCE, 20)),
                 )
         )
 
-        line.start()
+        particle.start()
 
 
 
 
-        //LoopSettings(loopDuration: 40, loopEndType: REVERSE)
 
 
 

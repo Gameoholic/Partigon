@@ -1,4 +1,6 @@
-package com.github.gameoholic.partigon.particleanimation.loop
+package com.github.gameoholic.partigon.partigonparticle.loop
+
+import kotlin.math.ceil
 
 
 /**
@@ -14,6 +16,15 @@ enum class LoopType { CONTINUE, REPEAT, REVERSE, BOUNCE, END}
 
 class Loop(val type: LoopType, val duration: Int) {
 
-    val halfDuration: Int = duration / 2
+    val oneDirectionLoopDuration: Int
+    init {
+        if (type == LoopType.REPEAT)
+            oneDirectionLoopDuration = duration
+        else if (type == LoopType.BOUNCE)
+            oneDirectionLoopDuration = ceil(duration / 2.0).toInt() + 1
+        else
+            oneDirectionLoopDuration = ceil(duration / 2.0).toInt()
+
+    }
 
 }

@@ -3,8 +3,8 @@ package com.github.gameoholic.partigon
 import org.bukkit.plugin.java.JavaPlugin
 
 
-class FancyAnimationsPlugin: JavaPlugin() {
+class PartigonPlugin: JavaPlugin() {
     override fun onEnable() {
-        FancyAnimations.onEnable(this)
+        Partigon.onEnable(this)
     }
 }

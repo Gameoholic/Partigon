@@ -4,11 +4,11 @@ import com.github.gameoholic.partigon.commands.TestCommand
 import com.github.gameoholic.partigon.parsers.ConfigFileParser
 import com.github.gameoholic.partigon.parsers.ConfigSettings
 
-object FancyAnimations {
-    lateinit var plugin: FancyAnimationsPlugin
+object Partigon {
+    lateinit var plugin: PartigonPlugin
     lateinit var configSettings: ConfigSettings
 
-    fun onEnable(fancyAnimationsPlugin: FancyAnimationsPlugin) {
+    fun onEnable(fancyAnimationsPlugin: PartigonPlugin) {
         plugin = fancyAnimationsPlugin
 
         plugin.saveResource("config.yml", false)

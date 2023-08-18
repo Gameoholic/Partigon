@@ -1,6 +1,6 @@
 package com.github.gameoholic.partigon.parsers
 
-import com.github.gameoholic.partigon.FancyAnimations
+import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.util.LogLevel
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -12,7 +12,7 @@ object ConfigFileParser {
      */
     fun parseFile(): ConfigSettings {
         val config: YamlConfiguration =
-            YamlConfiguration.loadConfiguration(File(FancyAnimations.plugin.dataFolder, "config.yml"))
+            YamlConfiguration.loadConfiguration(File(Partigon.plugin.dataFolder, "config.yml"))
         return ConfigSettings(
             LogLevel.valueOf(config.getString("LogLevel")!!),
         )
