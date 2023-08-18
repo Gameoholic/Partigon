@@ -1,0 +1,10 @@
+name: FancyAnimations
+version: '${version}'
+main: com.github.gameoholic.fancyanimations.FancyAnimationsPlugin
+api-version: 1.20
+authors: [ Gameoholic ]
+description: Test
+commands:
+  test:
+    description: Test
+    usage: /test
