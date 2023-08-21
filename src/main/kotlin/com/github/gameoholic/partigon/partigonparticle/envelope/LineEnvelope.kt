@@ -5,9 +5,9 @@ import org.bukkit.util.Vector
 
 class LineEnvelope<T>(
     propertyType: PropertyType,
-    value1: T, //1
-    value2: T, //5
-    loop: Loop //dur=8
+    value1: T,
+    value2: T,
+    loop: Loop
 ) : Envelope(
     propertyType,
     loop

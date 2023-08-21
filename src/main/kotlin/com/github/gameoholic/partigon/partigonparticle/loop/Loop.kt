@@ -6,13 +6,13 @@ import kotlin.math.ceil
 /**
  * Determine what happens to the particle animation when it reaches halfway point of the loop.
  *
- * @property CONTINUE Will continue running the animation in the same direction vector.
+ * @property CONTINUE Will continue running the animation, disregarding the loop.
  * @property REPEAT Will restart the animation where it was on frame t=0
- * @property REVERSE Will reverse the animation, playing it the same way but from point 2 to point 1. WARNING: This will modify the centerPosition and switch it between point1 and point2 on every loop.
- * @property BOUNCE Similar to REVERSE, but will not repeat frames upon finishing the loop. WARNING: This will modify the centerPosition and switch it between point1 and point2 on every loop.
- * @property END Stops the particle animation.
+ * @property REVERSE Will reverse the animation, playing it the same way but from point 2 to point 1.
+ * @property BOUNCE Similar to REVERSE, but will not repeat frames upon finishing the loop.
+ * @property DISABLE Disables the envelope.
  */
-enum class LoopType { CONTINUE, REPEAT, REVERSE, BOUNCE, END}
+enum class LoopType { CONTINUE, REPEAT, REVERSE, BOUNCE, DISABLE}
 
 class Loop(val type: LoopType, val duration: Int) {
 

@@ -109,9 +109,14 @@ class PartigonParticleImpl(
         currentCount = count
         currentOffset = offset.clone()
 
-        for (envelope in envelopes) {
+        for (envelope in envelopes.filter { !it.disabled }) {
             val envelopePropertyType = envelope.propertyType
             val envelopeValue = envelope.getValueAt(t)
+            LoggerUtil.debug("Applying envelope $envelope. Envelope value is $envelopeValue", id)
+            if (envelopeValue == null) {
+                LoggerUtil.debug("Envelop disabled, not applying it.", id)
+                continue
+            }
             when (envelopePropertyType) {
                 PropertyType.POS_X -> {
                     position.x += envelopeValue

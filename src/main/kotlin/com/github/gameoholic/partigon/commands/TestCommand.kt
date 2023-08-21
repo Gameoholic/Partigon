@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.commands
 
 
+import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.partigonparticle.PartigonParticleImpl
 import com.github.gameoholic.partigon.partigonparticle.envelope.Envelope
 import com.github.gameoholic.partigon.partigonparticle.envelope.LineEnvelope
@@ -13,6 +14,7 @@ import org.bukkit.Particle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 
 object TestCommand : CommandExecutor {
@@ -29,21 +31,19 @@ object TestCommand : CommandExecutor {
 //            stopCondition = { t: Int -> t / 20.0 > 2 * Math.PI }
 //        ).start()
 
-        val particle = PartigonParticleImpl(
+
+        PartigonParticleImpl(
             Bukkit.getWorlds()[0],
             Vector(0.5, 100.0, 0.5),
-            Particle.FLAME,
+            Particle.END_ROD,
             1,
             Vector(0.0, 0.0, 0.0),
             { t: Int -> t > 1000 },
             listOf(
-                LineEnvelope(PropertyType.POS_X, 0, 8, Loop(LoopType.BOUNCE, 120)),
-                LineEnvelope(PropertyType.POS_Y, 0.0, -1.5, Loop(LoopType.BOUNCE, 20)),
-                )
-        )
-
-        particle.start()
-
+                LineEnvelope(PropertyType.POS_X, 0.0, 4.0, Loop(LoopType.CONTINUE, 20)),
+                LineEnvelope(PropertyType.POS_Y, 0.0, 3.0, Loop(LoopType.DISABLE, 80)),
+            )
+        ).start()
 
 
 

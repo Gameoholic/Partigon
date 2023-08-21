@@ -15,16 +15,22 @@ abstract class Envelope(
     lateinit var envelopeExpression: String
         protected set
 
+    var disabled = false
+
     /**
-     * Returns the envelope's value for a certain frame t.
+     * Returns the envelope's value for a certain frame t. Applies loop.
      * @param t The frame index.
+     * @return The value of the envelope at a frame t, or null if envelope was disabled.
      */
-    fun getValueAt(t: Int): Double {
+    fun getValueAt(t: Int): Double? {
         val loopT = t % loop.duration
         val directionT = loopT % loop.oneDirectionLoopDuration //PREVIOUS WAS  t % loop.oneDirectionLoopDuration
-        var index = directionT //The index of the animation we want to get, from the expression //PREVIOUS WAS t % loop.oneDirectionLoopDuration
+        var index: Int = directionT //The index of the animation we want to get, from the expression //PREVIOUS WAS t % loop.oneDirectionLoopDuration
 
         when (loop.type) {
+            LoopType.REPEAT -> {
+                index = directionT
+            }
             LoopType.REVERSE -> {
                 if (loopT >= loop.oneDirectionLoopDuration) //First direction finished, this frame should start reversing the direction and restart the cycle from the last frame back to the 0th frame
                     index = loop.oneDirectionLoopDuration - directionT - 1
@@ -34,7 +40,15 @@ abstract class Envelope(
                         index = loop.oneDirectionLoopDuration - 2 - directionT
                 }
             }
-            else -> {}
+            LoopType.CONTINUE -> {
+                index = t
+            }
+            LoopType.DISABLE -> {
+                if (loopT >= loop.oneDirectionLoopDuration) {
+                    disabled = true
+                    return null
+                }
+            }
         }
 
         return ExpressionBuilder(envelopeExpression)
