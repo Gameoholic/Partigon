@@ -18,8 +18,4 @@ object Partigon {
 
         plugin.logger.info("Plugin enabled - Log level set to ${configSettings.logLevel}")
     }
-
-
-    //Every tick:
-    //Go over every envelope, apply envelope
 }
