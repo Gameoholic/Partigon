@@ -26,7 +26,15 @@ class LineEnvelope<T>(
 
 
     override fun getValueAt(frameIndex: Int): Double? {
+        if (disabled)
+            return null
+
         val loopedFrameIndex = loop.applyLoop(frameIndex)
+        if (loopedFrameIndex == null) {
+            disabled = true
+            return null
+        }
+
         return ExpressionBuilder(envelopeExpression)
             .variables("frame_index")
             .build()
