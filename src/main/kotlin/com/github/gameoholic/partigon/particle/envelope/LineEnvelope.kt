@@ -12,7 +12,7 @@ class LineEnvelope<T>(
 {
 
     override var disabled = false
-    override val envelopeExpression: String
+    final override val envelopeExpression: String
     init {
         envelopeExpression = if (value1 is Int && value2 is Int)
             "$value1 + t * ${(value2 - value1).toDouble() / (loop.envelopeDuration - 1)}"
@@ -29,8 +29,15 @@ class LineEnvelope<T>(
         if (disabled)
             return null
 
+
+        /**
+         * We don't use the actual frame index with the envelope,
+         * as the loop might modify it for different purposes.
+         * Therefore, we use the LOOPED frame index, which may
+         * differ from the original frame index.
+         */
         val loopedFrameIndex = loop.applyLoop(frameIndex)
-        if (loopedFrameIndex == null) {
+        if (loopedFrameIndex == null) { //If envelope should be disabled because of loop condition
             disabled = true
             return null
         }
