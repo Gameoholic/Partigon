@@ -3,6 +3,7 @@ package com.github.gameoholic.partigon.commands
 
 import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.particle.PartigonParticleImpl
+import com.github.gameoholic.partigon.particle.envelope.CurveEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
 import com.github.gameoholic.partigon.particle.loop.*
@@ -21,18 +22,33 @@ object TestCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) return true
         PartigonParticleImpl(sender.location,
-            Particle.END_ROD,
+            Particle.FLAME,
             listOf(
-                LineEnvelope(
-                    Envelope.PropertyType.POS_Y,
+                CurveEnvelope(
+                    Envelope.PropertyType.POS_X,
+                    -2.0,
                     0.0,
                     2.0,
-                    DisableLoop(8),
+                    "sin",
+                    1.0,
+                    RepeatLoop(80),
+                    false),
+                CurveEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    0.0,
+                    2.0,
+                    2.0,
+                    "cos",
+                    1.0,
+                    RepeatLoop(80),
                     false)
             ),
             1,
             Vector(0.0, 0.0, 0.0)
         ).start()
+
+
+
         return true
     }
 
