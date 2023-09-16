@@ -25,6 +25,13 @@ interface Envelope {
     var disabled: Boolean
 
     /**
+     * Whether the envelope's values are absolute, or are relative
+     * to the original value of the property that the object was
+     * created with.
+     */
+    val isAbsolute: Boolean
+
+    /**
      * Returns the envelope's value for a certain frame t. Applies loop.
      * @param frameIndex The frame index.
      * @return The value of the envelope at a frame t, or null if envelope is disabled.

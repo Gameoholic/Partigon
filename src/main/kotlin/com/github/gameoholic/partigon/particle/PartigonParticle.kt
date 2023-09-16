@@ -3,10 +3,15 @@ package com.github.gameoholic.partigon.particle
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import org.bukkit.Location
 import org.bukkit.Particle
+import org.bukkit.util.Vector
+import java.util.UUID
 
 interface PartigonParticle {
+    val id: UUID
     val location: Location
     val particleType: Particle
+    val count: Int
+    val offset: Vector
 
     val envelopes: List<Envelope>
 

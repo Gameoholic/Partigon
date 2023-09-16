@@ -15,7 +15,7 @@ class BounceLoop(override val duration: Int): Loop {
   override fun applyLoop(frameIndex: Int): Int {
     //For loop index 0,1,2,3 half loop index will be 0,1,2,0
     val loopIndex = frameIndex % duration
-    val halfLoopIndex = loopIndex % (duration / 2)
+    val halfLoopIndex = loopIndex % (duration / 2 + 1) //We add +1 so it's not actually half
     //If animation needs to be reversed, skip point 2 and reverse:
     if (loopIndex > duration / 2)
       return duration / 2 - 1 - halfLoopIndex
