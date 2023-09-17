@@ -10,3 +10,4 @@ TODO:
 + Better constructors and docs
 + More property types
 + Fill loop
++ Change envelopes/unmodifiable properties mid-anim?
