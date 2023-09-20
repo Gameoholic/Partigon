@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.10"
 
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing

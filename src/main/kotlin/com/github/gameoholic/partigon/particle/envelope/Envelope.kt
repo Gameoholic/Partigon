@@ -2,6 +2,10 @@ package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
 
+
+/**
+ * Represents an envelope for animating properties over time.
+ */
 interface Envelope {
     enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z }
 
@@ -32,10 +36,14 @@ interface Envelope {
     val isAbsolute: Boolean
 
     /**
-     * Returns the envelope's value for a certain frame t. Applies loop.
+     * Retrieves the envelope's value for a certain frame t. Applies loop.
+     *
      * @param frameIndex The frame index.
      * @return The value of the envelope at a frame t, or null if envelope is disabled.
      */
     fun getValueAt(frameIndex: Int): Double?
+
+    val passedEnvelopes: MutableList<Envelope> //todo: not muatble.
+
 
 }
