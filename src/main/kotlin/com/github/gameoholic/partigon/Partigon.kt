@@ -8,8 +8,8 @@ object Partigon {
     lateinit var plugin: PartigonPlugin
     lateinit var configSettings: ConfigSettings
 
-    fun onEnable(fancyAnimationsPlugin: PartigonPlugin) {
-        plugin = fancyAnimationsPlugin
+    fun onEnable(partigonPlugin: PartigonPlugin) {
+        plugin = partigonPlugin
 
         plugin.saveResource("config.yml", false)
         configSettings = ConfigFileParser.parseFile()
