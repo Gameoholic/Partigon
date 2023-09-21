@@ -15,8 +15,8 @@ import net.objecthunter.exp4j.ExpressionBuilder
 open class BasicEnvelope(
     override val propertyType: Envelope.PropertyType,
     override val loop: Loop,
-    override val envelopeExpression: String,
     override val isAbsolute: Boolean,
+    override val envelopeExpression: String = "",
     override val nestedEnvelopes: List<Envelope> = listOf()
 ) : Envelope {
 

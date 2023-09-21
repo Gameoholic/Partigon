@@ -26,7 +26,7 @@ class CurveEnvelope<T>(
     override val loop: Loop,
     semiCircles: Double = 1.0,
     width: Double = 1.0,
-    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, "", isAbsolute)
+    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute)
 {
 
     override val envelopeExpression: String
