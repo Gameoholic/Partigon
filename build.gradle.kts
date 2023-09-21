@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.10"
 
+    id("maven-publish")
+
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing
 
@@ -15,6 +17,8 @@ val apiVersion = "1.20"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {
@@ -67,7 +71,15 @@ tasks {
         fun reloc(pkg: String) = relocate(pkg, "${project.group}.${project.name}.dependency.$pkg")
 
         reloc("net.objecthunter.exp4j")
+        //reloc("stdlib-jdk8")
     }
 }
 
-
+publishing {
+    publications {
+        create<MavenPublication>("partigon") {
+            from(components["kotlin"])
+            artifact(tasks["kotlinSourcesJar"])
+        }
+    }
+}
