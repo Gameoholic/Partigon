@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.LoggerUtil
 import net.objecthunter.exp4j.ExpressionBuilder
 
 
@@ -15,10 +16,12 @@ open class BasicEnvelope(
     override val propertyType: Envelope.PropertyType,
     override val loop: Loop,
     override val envelopeExpression: String,
-    override val isAbsolute: Boolean
+    override val isAbsolute: Boolean,
+    override val nestedEnvelopes: List<Envelope> = listOf()
 ) : Envelope {
+
     override var disabled = false
-    override val passedEnvelopes = mutableListOf<Envelope>()
+
     override fun getValueAt(frameIndex: Int): Double? {
         if (disabled)
             return null
@@ -35,11 +38,19 @@ open class BasicEnvelope(
             return null
         }
 
-        //todo: the below can return null, if this ahppens we disable.
-        var newEnvelopeExpression = envelopeExpression
-        if (passedEnvelopes.size > 0)
-            newEnvelopeExpression = envelopeExpression.replace("@ENV0", passedEnvelopes[0].getValueAt(frameIndex).toString())
-        return ExpressionBuilder(newEnvelopeExpression)
+        var updatedEnvelopeExpression = envelopeExpression
+        //If there are nested envelopes, apply them recursively
+        for (i in nestedEnvelopes.indices) {
+            val nestedEnvelopeValue = nestedEnvelopes[i].getValueAt(frameIndex)
+            if (nestedEnvelopeValue == null) { //If envelope should be disabled because of nested envelope's loop condition
+                disabled = true
+                return null
+            }
+            updatedEnvelopeExpression = updatedEnvelopeExpression
+                .replace("@ENV_$i@", nestedEnvelopeValue.toString())
+        }
+
+        return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")
             .build()
             .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()

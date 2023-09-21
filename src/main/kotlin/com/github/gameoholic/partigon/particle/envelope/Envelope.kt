@@ -7,7 +7,7 @@ import com.github.gameoholic.partigon.particle.loop.Loop
  * Represents an envelope for animating properties over time.
  */
 interface Envelope {
-    enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z }
+    enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, NONE }
 
     /**
      * The property type the envelope controls.
@@ -43,7 +43,11 @@ interface Envelope {
      */
     fun getValueAt(frameIndex: Int): Double?
 
-    val passedEnvelopes: MutableList<Envelope> //todo: not muatble.
+    /**
+     * Nested envelopes are property-less envelopes that produce a value used for the parent envelope(s).
+     * They are applied recursively.
+     */
+    val nestedEnvelopes: List<Envelope>
 
 
 }

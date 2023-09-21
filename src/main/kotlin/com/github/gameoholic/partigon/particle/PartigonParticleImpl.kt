@@ -128,6 +128,10 @@ class PartigonParticleImpl(
                     else
                         newOffset.z += envelopeValue
                 }
+
+                Envelope.PropertyType.NONE -> {
+                    throw IllegalArgumentException("Property type NONE may only be used for nested envelopes, not for the parent one.")
+                }
             }
         }
 
