@@ -2,9 +2,10 @@ package com.github.gameoholic.partigon.commands
 
 
 import com.github.gameoholic.partigon.Partigon
-import com.github.gameoholic.partigon.particle.PartigonParticleImpl
+import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.envelope.CurveEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
 import com.github.gameoholic.partigon.particle.loop.*
 
 import net.minecraft.core.particles.ParticleType
@@ -20,63 +21,36 @@ import org.bukkit.util.Vector
 object TestCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) return true
-        //todo: add foo type to property type for nested
 
-        PartigonParticleImpl(
-            sender.location,
-            Particle.FLAME,
+
+
+
+        //Heart
+        PartigonParticle(sender.location,
+            Particle.HEART,
             listOf(
                 CurveEnvelope(
                     Envelope.PropertyType.POS_X,
                     -2.0,
-                    CurveEnvelope(
-                        Envelope.PropertyType.NONE,
-                        10.0,
-                        -10.0,
-                        CurveEnvelope.TrigFunc.SIN,
-                        RepeatLoop(80),
-                        2.0,
-                        1.0,
-                        false
-                    ),
+                    LineEnvelope(Envelope.PropertyType.POS_X, 0, 2, ReverseLoop(40)),
                     CurveEnvelope.TrigFunc.SIN,
                     RepeatLoop(80),
                     2.0,
                     1.0,
-                    false
-                )
+                    false),
+                CurveEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    LineEnvelope(Envelope.PropertyType.POS_X, 0, -2, ReverseLoop(40)),
+                    2.0,
+                    CurveEnvelope.TrigFunc.COS,
+                    RepeatLoop(80),
+                    2.0,
+                    1.0,
+                    false)
             ),
             1,
             Vector(0.0, 0.0, 0.0)
         ).start()
-
-
-        //Heart
-//        PartigonParticleImpl(sender.location,
-//            Particle.FLAME,
-//            listOf(
-//                CurveEnvelope(
-//                    Envelope.PropertyType.POS_X,
-//                    -2.0,
-//                    LineEnvelope(Envelope.PropertyType.POS_X, 0, 2, ReverseLoop(40)),
-//                    CurveEnvelope.TrigFunc.SIN,
-//                    RepeatLoop(80),
-//                    2.0,
-//                    1.0,
-//                    false),
-//                CurveEnvelope(
-//                    Envelope.PropertyType.POS_Z,
-//                    LineEnvelope(Envelope.PropertyType.POS_X, 0, -2, ReverseLoop(40)),
-//                    2.0,
-//                    CurveEnvelope.TrigFunc.COS,
-//                    RepeatLoop(80),
-//                    2.0,
-//                    1.0,
-//                    false)
-//            ),
-//            1,
-//            Vector(0.0, 0.0, 0.0)
-//        ).start()
 
         return true
     }
