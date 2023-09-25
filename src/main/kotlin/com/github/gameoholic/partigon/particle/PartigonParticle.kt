@@ -25,13 +25,11 @@ class PartigonParticle(
 ) {
 
     private constructor(
-        location: Location,
-        particleType: Particle,
         builder: Builder
     ) :
         this(
-            location,
-            particleType,
+            builder.location,
+            builder.particleType,
             builder.envelopes,
             builder.count,
             builder.offset
@@ -46,14 +44,14 @@ class PartigonParticle(
     }
 
     class Builder(
-        private val location: Location,
-        private val particleType: Particle
+        val location: Location,
+        val particleType: Particle
     ) {
         var envelopes: List<Envelope> = listOf()
         var count: Int = 1
         var offset: Vector = Vector(0, 0, 0)
 
-        fun build() = PartigonParticle(location, particleType, this)
+        fun build() = PartigonParticle(this)
     }
 
 
