@@ -18,10 +18,43 @@ class PartigonParticle(
     val offset: Vector
 ) {
 
+    private constructor(
+        location: Location,
+        particleType: Particle,
+        builder: Builder
+    ) :
+        this(
+            location,
+            particleType,
+            builder.envelopes,
+            builder.count,
+            builder.offset
+        )
+
+    companion object {
+        inline fun partigonParticle(
+            location: Location,
+            particleType: Particle,
+            block: Builder.() -> Unit
+        ) = Builder(location, particleType).apply(block).build()
+    }
+
+    class Builder(
+        private val location: Location,
+        private val particleType: Particle
+    ) {
+        var envelopes: List<Envelope> = listOf()
+        var count: Int = 1
+        var offset: Vector = Vector(0, 0, 0)
+
+        fun build() = PartigonParticle(location, particleType, this)
+    }
+
 
     val id = UUID.randomUUID()!!
     var frameIndex = -1
     private var task: BukkitTask? = null
+
     /**
      * Resets and starts the particle animation.
      */
@@ -44,6 +77,7 @@ class PartigonParticle(
         LoggerUtil.info("Pausing PartigonParticleImpl", id)
         task?.cancel()
     }
+
     /**
      * Resumes the particle animation from the frame it stopped.
      */
@@ -57,6 +91,7 @@ class PartigonParticle(
             }
         }.runTaskTimer(Partigon.plugin, 0L, 1L)
     }
+
     /**
      * Stops the particle animation.
      */

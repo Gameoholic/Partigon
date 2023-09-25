@@ -3,6 +3,7 @@ package com.github.gameoholic.partigon.commands
 
 import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.particle.PartigonParticle
+import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.CurveEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
@@ -23,6 +24,9 @@ object TestCommand : CommandExecutor {
         if (sender !is Player) return true
 
 
+        partigonParticle(sender.location, Particle.FLAME) {
+
+        }.start()
 
 
         //Heart
@@ -52,8 +56,12 @@ object TestCommand : CommandExecutor {
             Vector(0.0, 0.0, 0.0)
         ).start()
 
+
         return true
     }
+
+
+
 
 
 }
