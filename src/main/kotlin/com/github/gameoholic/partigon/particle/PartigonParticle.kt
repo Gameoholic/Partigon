@@ -24,6 +24,7 @@ class PartigonParticle(
     val offset: Vector,
     val animationFrameAmount: Int,
     val animationInterval: Int,
+    val extra: Double,
 ) {
 
     private constructor(
@@ -36,7 +37,8 @@ class PartigonParticle(
             builder.count,
             builder.offset,
             builder.animationFrameAmount,
-            builder.animationInterval
+            builder.animationInterval,
+            builder.extra
         )
 
     companion object {
@@ -56,6 +58,7 @@ class PartigonParticle(
         var offset: Vector = Vector(0, 0, 0)
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
+        var extra: Double = 0.0
 
         fun build() = PartigonParticle(this)
     }
@@ -219,7 +222,7 @@ class PartigonParticle(
             newOffset.x,
             newOffset.y,
             newOffset.z,
-            0.0
+            extra
         )
     }
 

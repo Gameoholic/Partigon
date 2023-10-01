@@ -11,6 +11,7 @@ import com.github.gameoholic.partigon.particle.loop.*
 
 import net.minecraft.core.particles.ParticleType
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -24,18 +25,35 @@ object TestCommand : CommandExecutor {
         if (sender !is Player) return true
 
 
-        partigonParticle(sender.location, Particle.FLAME) {
+        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                LineEnvelope(Envelope.PropertyType.POS_Y, 0.0, 4.0, RepeatLoop(20))
+                CurveEnvelope(
+                    Envelope.PropertyType.POS_X,
+                    0.0,
+                    2.0,
+                    CurveEnvelope.TrigFunc.COS,
+                    RepeatLoop(100),
+                    semiCircles = 1.0
+                    ),
+                CurveEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    0.0,
+                    2.0,
+                    CurveEnvelope.TrigFunc.SIN,
+                    RepeatLoop(100),
+                    semiCircles = 1.0
+                )
             )
-            animationInterval = 20
-            animationFrameAmount = 20
+            extra = 0.0
+            animationInterval = 1
+            animationFrameAmount = 1
         }.start()
 
         return true
 
         //Heart
-        PartigonParticle(sender.location,
+        PartigonParticle(
+            sender.location,
             Particle.HEART,
             listOf(
                 CurveEnvelope(
@@ -46,7 +64,8 @@ object TestCommand : CommandExecutor {
                     RepeatLoop(80),
                     2.0,
                     1.0,
-                    false),
+                    false
+                ),
                 CurveEnvelope(
                     Envelope.PropertyType.POS_Z,
                     LineEnvelope(Envelope.PropertyType.POS_X, 0, -2, ReverseLoop(40)),
@@ -55,20 +74,19 @@ object TestCommand : CommandExecutor {
                     RepeatLoop(80),
                     2.0,
                     1.0,
-                    false)
+                    false
+                )
             ),
             1,
             Vector(0.0, 0.0, 0.0),
             1,
-            1
+            1,
+            0.0
         ).start()
 
 
         return true
     }
-
-
-
 
 
 }
