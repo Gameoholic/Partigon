@@ -25,9 +25,14 @@ object TestCommand : CommandExecutor {
 
 
         partigonParticle(sender.location, Particle.FLAME) {
-
+            envelopes = listOf(
+                LineEnvelope(Envelope.PropertyType.POS_Y, 0.0, 4.0, RepeatLoop(20))
+            )
+            animationInterval = 20
+            animationFrameAmount = 20
         }.start()
 
+        return true
 
         //Heart
         PartigonParticle(sender.location,
@@ -53,7 +58,9 @@ object TestCommand : CommandExecutor {
                     false)
             ),
             1,
-            Vector(0.0, 0.0, 0.0)
+            Vector(0.0, 0.0, 0.0),
+            1,
+            1
         ).start()
 
 

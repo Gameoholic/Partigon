@@ -21,7 +21,9 @@ class PartigonParticle(
     val particleType: Particle,
     val envelopes: List<Envelope>,
     val count: Int,
-    val offset: Vector
+    val offset: Vector,
+    val animationFrameAmount: Int,
+    val animationInterval: Int,
 ) {
 
     private constructor(
@@ -32,7 +34,9 @@ class PartigonParticle(
             builder.particleType,
             builder.envelopes,
             builder.count,
-            builder.offset
+            builder.offset,
+            builder.animationFrameAmount,
+            builder.animationInterval
         )
 
     companion object {
@@ -50,6 +54,8 @@ class PartigonParticle(
         var envelopes: List<Envelope> = listOf()
         var count: Int = 1
         var offset: Vector = Vector(0, 0, 0)
+        var animationFrameAmount: Int = 1
+        var animationInterval: Int = 1
 
         fun build() = PartigonParticle(this)
     }
@@ -57,7 +63,9 @@ class PartigonParticle(
 
     val id = UUID.randomUUID()!!
     var frameIndex = -1
+        private set
     private var task: BukkitTask? = null
+    private var delay = animationInterval
 
     /**
      * Resets and starts the particle animation.
@@ -74,6 +82,7 @@ class PartigonParticle(
         }.runTaskTimer(Partigon.plugin, 0L, 1L)
     }
 
+    //todo: check edge casdsees for htese mthods
     /**
      * Pauses the particle animation.
      */
@@ -107,9 +116,16 @@ class PartigonParticle(
 
     private fun onTimerTickPassed() {
         LoggerUtil.debug("Timer tick passed", id)
-        frameIndex++
 
-        applyEnvelopes()
+        //Animate animationFrameAmount frames, every animationInterval ticks
+        delay += 1
+        if (delay >= animationInterval) {
+            for (i in 0 until animationFrameAmount) {
+                frameIndex++
+                applyEnvelopes()
+            }
+            delay = 0
+        }
     }
 
     /**
