@@ -10,7 +10,7 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param propertyType The property for the envelope to affect.
  * @param value1 The first value to interpolate.
  * @param value2 The second value to interpolate.
- * @param semiCircles How many semicircles to animate. By default, it's set to 1.0 and creates a curve. To make a circle, set it to 2.0.
+ * @param completion How much of the animation will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
  * @param trigFunc The trigonometric function to use to animate the curve.
  * @param width The width of the curve.
  * @param loop The loop to be used with the envelope.
@@ -18,15 +18,16 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  *
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
-class CurveEnvelope<T>(
+//todo: if completion above 1.0 or below 0.0 throw exception, in all envelopes.
+class CircleEnvelope<T>(
     override val propertyType: Envelope.PropertyType,
     value1: T,
     value2: T,
     trigFunc: TrigFunc,
     override val loop: Loop,
-    semiCircles: Double = 1.0,
+    override val completion: Double = 1.0,
     width: Double = 1.0,
-    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute)
+    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute, completion)
 {
 
     override val envelopeExpression: String
@@ -59,7 +60,7 @@ class CurveEnvelope<T>(
             nestedEnvelopesList.add(value2)
         }
 
-        envelopeExpression = "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $semiCircles) * $width"
+        envelopeExpression = "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion) * $width"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")

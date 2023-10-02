@@ -36,6 +36,14 @@ interface Envelope {
     val isAbsolute: Boolean
 
     /**
+     * How much of the animation is animated.
+     * When used with circle envelopes, for example, if you set it to 0.5,
+     * only half of the circle would be animated.
+     * The value should be between 0 and 1.
+     */
+    val completion: Double
+
+    /**
      * Retrieves the envelope's value for a certain frame t. Applies loop.
      *
      * @param frameIndex The frame index.
