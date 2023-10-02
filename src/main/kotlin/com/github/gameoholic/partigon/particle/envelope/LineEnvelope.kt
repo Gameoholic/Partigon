@@ -20,7 +20,8 @@ class LineEnvelope<T>(
     value1: T,
     value2: T,
     override val loop: Loop,
-    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute)
+    override val completion: Double = 1.0,
+    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute, completion)
 {
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>

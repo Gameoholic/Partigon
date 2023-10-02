@@ -19,7 +19,7 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
 //todo: if completion above 1.0 or below 0.0 throw exception, in all envelopes.
-class CircleEnvelope<T>(
+class TrigonometricEnvelope<T>(
     override val propertyType: Envelope.PropertyType,
     value1: T,
     value2: T,
@@ -60,7 +60,10 @@ class CircleEnvelope<T>(
             nestedEnvelopesList.add(value2)
         }
 
-        envelopeExpression = "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion) * $width"
+        if (trigFunc == TrigFunc.COS)
+            envelopeExpression = "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+        else
+            envelopeExpression = "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")

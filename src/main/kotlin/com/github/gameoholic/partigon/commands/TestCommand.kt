@@ -2,7 +2,7 @@ package com.github.gameoholic.partigon.commands
 
 
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
-import com.github.gameoholic.partigon.particle.envelope.CircleEnvelope
+import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.loop.*
 
@@ -19,22 +19,19 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                CircleEnvelope(
+                TrigonometricEnvelope( //(0,0) -> (4,4)
                     Envelope.PropertyType.POS_X,
                     0.0,
                     4.0,
-                    CircleEnvelope.TrigFunc.SIN,
+                    TrigonometricEnvelope.TrigFunc.COS,
                     RepeatLoop(110),
-                    semiCircles = 1.0,
-                    width = 0.5
                     ),
-                CircleEnvelope(
+                TrigonometricEnvelope(
                     Envelope.PropertyType.POS_Z,
                     0.0,
-                    2.0,
-                    CircleEnvelope.TrigFunc.COS,
+                    4.0,
+                    TrigonometricEnvelope.TrigFunc.SIN,
                     RepeatLoop(110),
-                    semiCircles = 1.0 //todo: width is fucking useless bro. rename to circle. fix this entire shit.
                 )
             )
             extra = 0.0
@@ -42,6 +39,7 @@ object TestCommand : CommandExecutor {
             animationFrameAmount = 1
         }.start()
 
+        //todo: create CircleEnvelope, with enum denoting whether use sin or cos. add new trig funcs. change doc a bit to reflect changes.
         return true
 
         //Heart
@@ -49,21 +47,21 @@ object TestCommand : CommandExecutor {
 //            sender.location,
 //            Particle.HEART,
 //            listOf(
-//                CircleEnvelope(
+//                TrigonometricEnvelope(
 //                    Envelope.PropertyType.POS_X,
 //                    -2.0,
 //                    LineEnvelope(Envelope.PropertyType.POS_X, 0, 2, ReverseLoop(40)),
-//                    CircleEnvelope.TrigFunc.SIN,
+//                    TrigonometricEnvelope.TrigFunc.SIN,
 //                    RepeatLoop(80),
 //                    2.0,
 //                    1.0,
 //                    false
 //                ),
-//                CircleEnvelope(
+//                TrigonometricEnvelope(
 //                    Envelope.PropertyType.POS_Z,
 //                    LineEnvelope(Envelope.PropertyType.POS_X, 0, -2, ReverseLoop(40)),
 //                    2.0,
-//                    CircleEnvelope.TrigFunc.COS,
+//                    TrigonometricEnvelope.TrigFunc.COS,
 //                    RepeatLoop(80),
 //                    2.0,
 //                    1.0,
