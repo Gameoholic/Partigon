@@ -26,7 +26,6 @@ class TrigonometricEnvelope<T>(
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
-    width: Double = 1.0,
     override val isAbsolute: Boolean = false
 ) : BasicEnvelope(propertyType, loop, isAbsolute, completion) {
 
