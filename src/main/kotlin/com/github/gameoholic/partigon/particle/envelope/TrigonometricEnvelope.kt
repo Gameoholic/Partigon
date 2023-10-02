@@ -27,17 +27,18 @@ class TrigonometricEnvelope<T>(
     override val loop: Loop,
     override val completion: Double = 1.0,
     width: Double = 1.0,
-    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute, completion)
-{
+    override val isAbsolute: Boolean = false
+) : BasicEnvelope(propertyType, loop, isAbsolute, completion) {
 
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
 
-    enum class TrigFunc(val value: String) {SIN("sin"), COS("cos"), TAN("tan")}
+    enum class TrigFunc(val value: String) { SIN("sin"), COS("cos"), TAN("tan"), COT("cot"), COSEC("cosec"), SEC("sec") }
 
     init {
         if ((value1 !is Int && value1 !is Double && value1 !is Envelope)
-            || (value2 !is Int && value2 !is Double && value2 !is Envelope))
+            || (value2 !is Int && value2 !is Double && value2 !is Envelope)
+        )
             throw IllegalArgumentException("Unsupported value types.")
 
         val animProgress = "frame_index / ${(loop.envelopeDuration - 1)}" //The animation progress, from 0.0 to 1.0
@@ -60,16 +61,16 @@ class TrigonometricEnvelope<T>(
             nestedEnvelopesList.add(value2)
         }
 
-        if (trigFunc == TrigFunc.COS)
-            envelopeExpression = "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+        //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
+        envelopeExpression = if (trigFunc == TrigFunc.COS)
+            "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
         else
-            envelopeExpression = "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+            "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
 
     }
-
 
 
 }
