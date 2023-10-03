@@ -12,7 +12,6 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param value2 The second value to interpolate.
  * @param completion How much of the animation will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
  * @param trigFunc The trigonometric function to use to animate the curve.
- * @param width The width of the curve.
  * @param loop The loop to be used with the envelope.
  * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
  *

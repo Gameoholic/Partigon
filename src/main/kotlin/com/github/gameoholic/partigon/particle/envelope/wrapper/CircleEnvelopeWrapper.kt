@@ -45,30 +45,50 @@ object CircleEnvelopeWrapper {
         LEFT_UP
     }
 
+    /**
+     * Represents the component (X,Y,Z) of a vector.
+     * This is used in circle envelopes with circle orientations to automatically
+     * determine the trigonometric function to use.
+     */
     enum class VectorComponent { X, Y, Z }
 
+    /**
+     * Trigonometric envelope wrapper that when applied on multiple properties,
+     * creates a circle between 2 points.
+     *
+     * @param propertyType The property for the envelope to affect.
+     * @param value1 The first value to interpolate.
+     * @param value2 The second value to interpolate.
+     * @param circleOrientation The orientation/direction of the circle.
+     * @param vectorComponent The vector component to be used for this circle property.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+     * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
+     *
+     * @throws IllegalArgumentException If an invalid combination of circle orientation & vector component was provided.
+     */
     fun <T> circleEnvelope(
         propertyType: Envelope.PropertyType,
         value1: T,
         value2: T,
-        circleLayout: CircleOrientation,
+        circleOrientation: CircleOrientation,
         vectorComponent: VectorComponent,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false
     ): TrigonometricEnvelope<T> {
         val trigFunc =
-            if ((circleLayout == CircleOrientation.LEFT || circleLayout == CircleOrientation.LEFT_UP || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
+            if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleOrientation.LEFT || circleLayout == CircleOrientation.LEFT_UP || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleLayout == CircleOrientation.RIGHT || circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
+            else if ((circleOrientation == CircleOrientation.RIGHT || circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleLayout == CircleOrientation.RIGHT || circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleOrientation == CircleOrientation.RIGHT || circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleOrientation.RIGHT_DOWN || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+            else if ((circleOrientation == CircleOrientation.RIGHT_DOWN || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.LEFT_UP) && vectorComponent == VectorComponent.Y)
+            else if ((circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.LEFT_UP) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.COS
             else
                 throw IllegalArgumentException()
@@ -84,11 +104,29 @@ object CircleEnvelopeWrapper {
         )
     }
 
+    //todo: make it work with offset too since it's a vector.
+    /**
+     * Trigonometric envelope wrapper that when applied on multiple properties,
+     * creates a circle between 2 points.
+     * This automatically determines the trigonometric function to use based
+     * on the circle orientation and the property type.
+     * This method may only be used with vector property types (POS_X, POS_Y, POS_Z)
+     *
+     * @param propertyType The property for the envelope to affect.
+     * @param value1 The first value to interpolate.
+     * @param value2 The second value to interpolate.
+     * @param circleOrientation The orientation/direction of the circle.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+     * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
+     *
+     * @throws IllegalArgumentException If the method doesn't support the property type provided.
+     */
     fun <T> circleEnvelope(
         propertyType: Envelope.PropertyType,
         value1: T,
         value2: T,
-        circleLayout: CircleOrientation,
+        circleOrientation: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false
@@ -105,7 +143,7 @@ object CircleEnvelopeWrapper {
             propertyType,
             value1,
             value2,
-            circleLayout,
+            circleOrientation,
             vectorComponent,
             loop,
             completion,
