@@ -48,7 +48,7 @@ object TestCommand : CommandExecutor {
                     Envelope.PropertyType.POS_X,
                     0.0,
                     -4.0,
-                    CircleEnvelopeWrapper.CircleLayout.LEFT,
+                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
                     RepeatLoop(110),
                     completion = 0.25
                 ),
@@ -56,7 +56,15 @@ object TestCommand : CommandExecutor {
                     Envelope.PropertyType.POS_Z,
                     0.0,
                     -4.0,
-                    CircleEnvelopeWrapper.CircleLayout.LEFT,
+                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
+                    RepeatLoop(110),
+                    completion = 0.25
+                ),
+                circleEnvelope(
+                    Envelope.PropertyType.POS_Y,
+                    0.0,
+                    -4.0,
+                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
                     RepeatLoop(110),
                     completion = 0.25
                 ),

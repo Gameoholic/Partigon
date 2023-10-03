@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
 object CircleEnvelopeWrapper {
 //todo: T can't be dtwo differents?
 
-    enum class CircleLayout { RIGHT, LEFT }
+    enum class CircleLayout { RIGHT, LEFT, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP }
     enum class VectorComponent { X, Y, Z }
 
     fun <T> circleEnvelope(
@@ -22,14 +22,18 @@ object CircleEnvelopeWrapper {
         isAbsolute: Boolean = false
     ): TrigonometricEnvelope<T> {
         val trigFunc =
-            if (circleLayout == CircleLayout.LEFT && vectorComponent == VectorComponent.X)
+            if ((circleLayout == CircleLayout.LEFT || circleLayout == CircleLayout.LEFT_UP || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if (circleLayout == CircleLayout.LEFT && vectorComponent == VectorComponent.Z)
+            else if ((circleLayout == CircleLayout.LEFT || circleLayout == CircleLayout.LEFT_UP || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if (circleLayout == CircleLayout.RIGHT && vectorComponent == VectorComponent.X)
+            else if ((circleLayout == CircleLayout.RIGHT || circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if (circleLayout == CircleLayout.RIGHT && vectorComponent == VectorComponent.Z)
+            else if ((circleLayout == CircleLayout.RIGHT || circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
+            else if ((circleLayout == CircleLayout.RIGHT_DOWN || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.SIN
+            else if ((circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.LEFT_UP) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.COS
             else
                 throw IllegalArgumentException()
 
@@ -43,6 +47,7 @@ object CircleEnvelopeWrapper {
             isAbsolute
         )
     }
+
     fun <T> circleEnvelope(
         propertyType: Envelope.PropertyType,
         value1: T,
