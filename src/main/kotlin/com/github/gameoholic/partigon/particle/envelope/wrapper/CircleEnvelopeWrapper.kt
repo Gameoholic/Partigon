@@ -9,9 +9,42 @@ object CircleEnvelopeWrapper {
 //todo: T can't be dtwo differents?
 
     /**
-     * The
+     * Represents the orientation of the circle relative to a line connecting 2 points
+     * in 2D/3D space.
+     * This enum provides a way to specify the direction/orientation of a circle relative
+     * to a line from point 1 to point 2.
+     *
+     * Visualize a line between point 1 and point 2. You're at point 1 and are facing point 2.
+     * Setting the orientation to RIGHT will make the circle start at point 1, and
+     * go around the line from the right, and finish at point 2.
      */
-    enum class CircleOrientation { RIGHT, LEFT, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP }
+    enum class CircleOrientation {
+        /**
+         * 2D Circle to the right of the line.
+         */
+        RIGHT,
+        /**
+         * 2D Circle to the left of the line.
+         */
+        LEFT,
+        /**
+         * 3D Circle from the right side of the line, below it.
+         */
+        RIGHT_DOWN,
+        /**
+         * 3D Circle from the right side of the line, above it.
+         */
+        RIGHT_UP,
+        /**
+         * 3D Circle from the left side of the line, below it.
+         */
+        LEFT_DOWN,
+        /**
+         * 3D Circle from the left side of the line, above it.
+         */
+        LEFT_UP
+    }
+
     enum class VectorComponent { X, Y, Z }
 
     fun <T> circleEnvelope(
