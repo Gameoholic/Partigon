@@ -8,31 +8,34 @@ import java.lang.IllegalArgumentException
 object CircleEnvelopeWrapper {
 //todo: T can't be dtwo differents?
 
-    enum class CircleLayout { RIGHT, LEFT, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP }
+    /**
+     * The
+     */
+    enum class CircleOrientation { RIGHT, LEFT, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP }
     enum class VectorComponent { X, Y, Z }
 
     fun <T> circleEnvelope(
         propertyType: Envelope.PropertyType,
         value1: T,
         value2: T,
-        circleLayout: CircleLayout,
+        circleLayout: CircleOrientation,
         vectorComponent: VectorComponent,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false
     ): TrigonometricEnvelope<T> {
         val trigFunc =
-            if ((circleLayout == CircleLayout.LEFT || circleLayout == CircleLayout.LEFT_UP || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.X)
+            if ((circleLayout == CircleOrientation.LEFT || circleLayout == CircleOrientation.LEFT_UP || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleLayout.LEFT || circleLayout == CircleLayout.LEFT_UP || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleLayout == CircleOrientation.LEFT || circleLayout == CircleOrientation.LEFT_UP || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleLayout == CircleLayout.RIGHT || circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
+            else if ((circleLayout == CircleOrientation.RIGHT || circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleLayout == CircleLayout.RIGHT || circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleLayout == CircleOrientation.RIGHT || circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleLayout.RIGHT_DOWN || circleLayout == CircleLayout.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+            else if ((circleLayout == CircleOrientation.RIGHT_DOWN || circleLayout == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleLayout == CircleLayout.RIGHT_UP || circleLayout == CircleLayout.LEFT_UP) && vectorComponent == VectorComponent.Y)
+            else if ((circleLayout == CircleOrientation.RIGHT_UP || circleLayout == CircleOrientation.LEFT_UP) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.COS
             else
                 throw IllegalArgumentException()
@@ -52,7 +55,7 @@ object CircleEnvelopeWrapper {
         propertyType: Envelope.PropertyType,
         value1: T,
         value2: T,
-        circleLayout: CircleLayout,
+        circleLayout: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false

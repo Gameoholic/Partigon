@@ -2,7 +2,6 @@ package com.github.gameoholic.partigon.commands
 
 
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
-import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
@@ -48,7 +47,7 @@ object TestCommand : CommandExecutor {
                     Envelope.PropertyType.POS_X,
                     0.0,
                     -4.0,
-                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
+                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
                     RepeatLoop(110),
                     completion = 0.25
                 ),
@@ -56,7 +55,7 @@ object TestCommand : CommandExecutor {
                     Envelope.PropertyType.POS_Z,
                     0.0,
                     -4.0,
-                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
+                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
                     RepeatLoop(110),
                     completion = 0.25
                 ),
@@ -64,7 +63,7 @@ object TestCommand : CommandExecutor {
                     Envelope.PropertyType.POS_Y,
                     0.0,
                     -4.0,
-                    CircleEnvelopeWrapper.CircleLayout.LEFT_UP,
+                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
                     RepeatLoop(110),
                     completion = 0.25
                 ),
