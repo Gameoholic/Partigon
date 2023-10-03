@@ -6,7 +6,6 @@ import com.github.gameoholic.partigon.particle.loop.Loop
 import java.lang.IllegalArgumentException
 
 object CircleEnvelopeWrapper {
-//todo: T can't be dtwo differents?
 
     /**
      * Represents the orientation of the circle relative to a line connecting 2 points
@@ -67,16 +66,16 @@ object CircleEnvelopeWrapper {
      *
      * @throws IllegalArgumentException If an invalid combination of circle orientation & vector component was provided.
      */
-    fun <T> circleEnvelope(
+    fun circleEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: T,
-        value2: T,
+        value1: Any,
+        value2: Any,
         circleOrientation: CircleOrientation,
         vectorComponent: VectorComponent,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false
-    ): TrigonometricEnvelope<T> {
+    ): TrigonometricEnvelope {
         val trigFunc =
             if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
@@ -104,7 +103,6 @@ object CircleEnvelopeWrapper {
         )
     }
 
-    //todo: make it work with offset too since it's a vector.
     /**
      * Trigonometric envelope wrapper that when applied on multiple properties,
      * creates a circle between 2 points.
@@ -122,15 +120,15 @@ object CircleEnvelopeWrapper {
      *
      * @throws IllegalArgumentException If the method doesn't support the property type provided.
      */
-    fun <T> circleEnvelope(
+    fun circleEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: T,
-        value2: T,
+        value1: Any,
+        value2: Any,
         circleOrientation: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,
         isAbsolute: Boolean = false
-    ): TrigonometricEnvelope<T> {
+    ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
                 Envelope.PropertyType.POS_X -> VectorComponent.X
@@ -150,6 +148,39 @@ object CircleEnvelopeWrapper {
             isAbsolute
         )
     }
+
+
+//    fun positionCircleEnvelope(
+//        value1: Any,
+//        value2: Any,
+//        circleOrientation: CircleOrientation,
+//        loop: Loop,
+//        completion: Double = 1.0,
+//        isAbsolute: Boolean = false
+//    ): List<TrigonometricEnvelope> {
+//        val envelopes = mutableListOf<TrigonometricEnvelope>()
+//
+//        //todo: the value1 will be a vector, and value2.
+//        envelopes += circleEnvelope(Prop,
+//            value1,
+//            value2,
+//            circleOrientation,
+//            loop,
+//            completion,
+//            isAbsolute)
+//
+//        return listOf(circleEnvelope(
+//            propertyType,
+//            value1,
+//            value2,
+//            circleOrientation,
+//            vectorComponent,
+//            loop,
+//            completion,
+//            isAbsolute
+//        ))
+//    }
+
 
 
 }

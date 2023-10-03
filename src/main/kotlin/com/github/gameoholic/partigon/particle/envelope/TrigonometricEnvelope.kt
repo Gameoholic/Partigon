@@ -18,10 +18,10 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
 //todo: if completion above 1.0 or below 0.0 throw exception, in all envelopes.
-open class TrigonometricEnvelope<T>(
+open class TrigonometricEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: T,
-    value2: T,
+    value1: Any,
+    value2: Any,
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,

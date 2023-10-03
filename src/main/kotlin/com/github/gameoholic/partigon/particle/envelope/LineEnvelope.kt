@@ -15,10 +15,10 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  *
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
-class LineEnvelope<T>(
+class LineEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: T,
-    value2: T,
+    value1: Any,
+    value2: Any,
     override val loop: Loop,
     override val completion: Double = 1.0,
     override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute, completion)

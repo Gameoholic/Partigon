@@ -3,6 +3,7 @@ package com.github.gameoholic.partigon.commands
 
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.loop.*
@@ -43,30 +44,11 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                circleEnvelope(
+                LineEnvelope(
                     Envelope.PropertyType.POS_X,
                     0.0,
-                    -4.0,
-                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
-                    RepeatLoop(110),
-                    completion = 0.25
-                ),
-                circleEnvelope(
-                    Envelope.PropertyType.POS_Z,
-                    0.0,
-                    -4.0,
-                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
-                    RepeatLoop(110),
-                    completion = 0.25
-                ),
-                circleEnvelope(
-                    Envelope.PropertyType.POS_Y,
-                    0.0,
-                    -4.0,
-                    CircleEnvelopeWrapper.CircleOrientation.RIGHT_UP,
-                    RepeatLoop(110),
-                    completion = 0.25
-                ),
+                    LineEnvelope(Envelope.PropertyType.POS_X, 0.0, 4.0, RepeatLoop(80)),
+                    RepeatLoop(80))
             )
             extra = 0.0
             animationInterval = 1
