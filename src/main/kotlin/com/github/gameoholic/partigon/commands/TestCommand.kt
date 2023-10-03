@@ -4,6 +4,8 @@ package com.github.gameoholic.partigon.commands
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.loop.*
 
 import org.bukkit.Bukkit
@@ -17,29 +19,54 @@ object TestCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
 
+//        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
+//            envelopes = listOf(
+//                TrigonometricEnvelope(
+//                    Envelope.PropertyType.POS_X,
+//                    0.0,
+//                    4.0,
+//                    TrigonometricEnvelope.TrigFunc.COS,
+//                    RepeatLoop(110),
+//                ),
+//                TrigonometricEnvelope(
+//                    Envelope.PropertyType.POS_Z,
+//                    0.0,
+//                    8.0,
+//                    TrigonometricEnvelope.TrigFunc.SIN,
+//                    RepeatLoop(110),
+//                )
+//            )
+//            extra = 0.0
+//            animationInterval = 1
+//            animationFrameAmount = 1
+//        }.start()
+
+
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                TrigonometricEnvelope( //(0,0) -> (4,4)
+                circleEnvelope(
                     Envelope.PropertyType.POS_X,
                     0.0,
-                    4.0,
-                    TrigonometricEnvelope.TrigFunc.COS,
+                    -4.0,
+                    CircleEnvelopeWrapper.CircleLayout.LEFT,
                     RepeatLoop(110),
-                    ),
-                TrigonometricEnvelope(
+                    completion = 0.25
+                ),
+                circleEnvelope(
                     Envelope.PropertyType.POS_Z,
                     0.0,
-                    4.0,
-                    TrigonometricEnvelope.TrigFunc.SIN,
+                    -4.0,
+                    CircleEnvelopeWrapper.CircleLayout.LEFT,
                     RepeatLoop(110),
-                )
+                    completion = 0.25
+                ),
             )
             extra = 0.0
             animationInterval = 1
             animationFrameAmount = 1
         }.start()
 
-        //todo: create CircleEnvelope, with enum denoting whether use sin or cos. add new trig funcs. change doc a bit to reflect changes.
+
         return true
 
         //Heart
