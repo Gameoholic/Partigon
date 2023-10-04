@@ -22,10 +22,16 @@ import kotlin.math.sin
 
 object TestCommand : CommandExecutor {
 
+    var degree = 0.0
+
     var part: PartigonParticle? = null
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
+        if (!args.isNullOrEmpty()) {
+            degree = args[0]!!.toDouble()
+            return true
+        }
         val theta = 30.0
         val thetaRadians = Math.toRadians(theta)
 
@@ -59,27 +65,27 @@ object TestCommand : CommandExecutor {
                     RepeatLoop(80),
                     false,
                     1.0,
-                    "sin(frame_index)"
+                    "0"
                 ),
                 BasicEnvelope(
                     Envelope.PropertyType.POS_Z,
                     RepeatLoop(80),
                     false,
                     1.0,
-                    "cos(frame_index)"
+                    "1"
                 ),
                 BasicEnvelope(
                     Envelope.PropertyType.POS_Y,
                     RepeatLoop(80),
                     false,
                     1.0,
-                    "0"
+                    "2"
                 )
 
             )
             extra = 0.0
             animationInterval = 1
-            animationFrameAmount = 1
+            animationFrameAmount = 5
         }.start()
 
 
