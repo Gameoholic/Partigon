@@ -1,11 +1,14 @@
 package com.github.gameoholic.partigon.commands
 
 
+import com.github.gameoholic.partigon.Utils
+import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
+import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
-import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
+import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
-import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.positionCircleEnvelopes
 import com.github.gameoholic.partigon.particle.loop.*
 
 import org.bukkit.Bukkit
@@ -14,41 +17,50 @@ import org.bukkit.Particle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.joml.Matrix2d
+import org.joml.Matrix2dc
+import org.joml.Matrix3d
+import org.joml.Vector2d
+import org.joml.Vector4f
+import kotlin.math.cos
+import kotlin.math.sin
 
 object TestCommand : CommandExecutor {
+
+    var part: PartigonParticle? = null
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
+        val theta = 30.0
+        val thetaRadians = Math.toRadians(theta)
 
-//        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
-//            envelopes = listOf(
-//                TrigonometricEnvelope(
-//                    Envelope.PropertyType.POS_X,
-//                    0.0,
-//                    4.0,
-//                    TrigonometricEnvelope.TrigFunc.COS,
-//                    RepeatLoop(110),
-//                ),
-//                TrigonometricEnvelope(
-//                    Envelope.PropertyType.POS_Z,
-//                    0.0,
-//                    8.0,
-//                    TrigonometricEnvelope.TrigFunc.SIN,
-//                    RepeatLoop(110),
-//                )
-//            )
-//            extra = 0.0
-//            animationInterval = 1
-//            animationFrameAmount = 1
-//        }.start()
+        org.bukkit.util.
 
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                LineEnvelope(
+                BasicEnvelope(
                     Envelope.PropertyType.POS_X,
-                    0.0,
-                    LineEnvelope(Envelope.PropertyType.POS_X, 0.0, 4.0, RepeatLoop(80)),
-                    RepeatLoop(80))
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "sin(frame_index)"
+                ),
+                BasicEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "cos(frame_index)"
+                ),
+                BasicEnvelope(
+                    Envelope.PropertyType.POS_Y,
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "0"
+                )
+
             )
             extra = 0.0
             animationInterval = 1

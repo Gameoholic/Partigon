@@ -25,7 +25,8 @@ open class TrigonometricEnvelope(
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
-    override val isAbsolute: Boolean = false
+    override val isAbsolute: Boolean = false,
+    var bonusTemp: Double = 1.0
 ) : BasicEnvelope(propertyType, loop, isAbsolute, completion) {
 
     override val envelopeExpression: String
@@ -59,11 +60,22 @@ open class TrigonometricEnvelope(
             nestedEnvelopesList.add(value2)
         }
 
-        //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
-        envelopeExpression = if (trigFunc == TrigFunc.COS)
-            "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+        val otherTrigFunc = if (trigFunc == TrigFunc.SIN) TrigFunc.COS
         else
-            "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+            TrigFunc.SIN
+
+        //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
+//        envelopeExpression = if (trigFunc == TrigFunc.COS)
+//            "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+//        else
+//            "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+        envelopeExpression = if (trigFunc == TrigFunc.COS)
+            "$value2String + (-$value2String) * ${1 - bonusTemp} * ${trigFunc.value}(pi * $animProgress * ${completion / 2})" +
+                " + (-$value2String) * $bonusTemp * ${otherTrigFunc.value}(pi * $animProgress * ${completion / 2})"
+        else
+            "($value2String) * ${1 - bonusTemp} * ${trigFunc.value}(pi * $animProgress * ${completion / 2})" +
+                " + ($value2String) * $bonusTemp * ${otherTrigFunc.value}(pi * $animProgress * ${completion / 2})"
+
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")

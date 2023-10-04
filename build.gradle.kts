@@ -32,6 +32,7 @@ dependencies {
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT") //the paper dev bundle is a compile-only dependency, paper itself provides it. No need to shade
 
     implementation("net.objecthunter", "exp4j","0.4.8")
+    implementation("org.apache.commons:commons-math3:3.6.1")
 }
 
 
