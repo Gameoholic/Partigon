@@ -7,7 +7,6 @@ Create complex particle animations with just a few lines of code!
 
 TODO:
 + Anchor position
-+ Better constructors and docs
 + More property types
-+ Fill loop
++ Copy and mirror particles
 + Change envelopes/unmodifiable properties mid-anim?
