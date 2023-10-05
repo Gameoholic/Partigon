@@ -2,7 +2,6 @@ package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.commands.TestCommand
 import com.github.gameoholic.partigon.particle.loop.Loop
-import com.github.gameoholic.partigon.util.LoggerUtil
 import net.objecthunter.exp4j.ExpressionBuilder
 import org.apache.commons.math3.linear.MatrixUtils
 import kotlin.math.cos
@@ -68,23 +67,34 @@ open class BasicEnvelope(
 //            doubleArrayOf(0.0, 1.0, 0.0), //row 2
 //            doubleArrayOf(-sin(thetaRadians), 0.0, cos(thetaRadians)) //row 3
 //        )
-        val matrixData = arrayOf( //Rz(theta)
+        val rotationMatrixData = arrayOf( //Rz(theta)
             doubleArrayOf(cos(thetaRadians), -sin(thetaRadians), 0.0), //row 1
             doubleArrayOf(sin(thetaRadians), cos(thetaRadians), 0.0), //row 2
             doubleArrayOf(0.0, 0.0, 1.0) //row 3
         )
-        val m = MatrixUtils.createRealMatrix(matrixData)
+        val rotationMatrix = MatrixUtils.createRealMatrix(rotationMatrixData)
 
 
-        val matrixData2 = arrayOf( //Points
+        val pointsMatrixData = arrayOf( //Points before anything. normal points
             doubleArrayOf(sin(loopedFrameIndex.toDouble()/6) + 10), //row 1
             doubleArrayOf(cos(loopedFrameIndex.toDouble()/6) + 10), //row 2
             doubleArrayOf(sin(loopedFrameIndex.toDouble()/6) + 10) //row 3
         )
-        val m2 = MatrixUtils.createRealMatrix(matrixData2)
+        val pointsMatrix = MatrixUtils.createRealMatrix(pointsMatrixData)
 
-        val newM = m.multiply(m2)
-        //todo: rotate around anchor point.
+        val anchorPointMatrixData = arrayOf( //The anchor point of the relative rotation
+            doubleArrayOf(10.0), //row 1
+            doubleArrayOf(10.0), //row 2
+            doubleArrayOf(10.0) //row 3
+        )
+        val anchorPointMatrix = MatrixUtils.createRealMatrix(anchorPointMatrixData)
+
+
+
+        val atPointM = pointsMatrix.add(anchorPointMatrix.scalarMultiply(-1.0)) //We transform all the points by the anchor point pos
+
+        val newM = rotationMatrix.multiply(atPointM).add(anchorPointMatrix) //rotate, and apply transformation matrix to move the points back to where they were
+
 
 
 
