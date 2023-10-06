@@ -6,6 +6,7 @@ import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.positionCircleEnvelopes
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
@@ -35,45 +36,17 @@ object TestCommand : CommandExecutor {
             degree = args[0]!!.toDouble()
             return true
         }
-        val theta = 30.0
-        val thetaRadians = Math.toRadians(theta)
-
-        val matrixData = arrayOf( //Rx(theta)
-            doubleArrayOf(1.0, 0.0, 0.0), //row 1
-            doubleArrayOf(0.0, cos(thetaRadians), -sin(thetaRadians)), //row 2
-            doubleArrayOf(0.0, sin(thetaRadians), cos(thetaRadians)) //row 3
-        )
-        val m = MatrixUtils.createRealMatrix(matrixData)
-
-
-        val matrixData2 = arrayOf( //Points
-            doubleArrayOf(1.0), //row 1
-            doubleArrayOf(1.0), //row 2
-            doubleArrayOf(1.0) //row 3
-        )
-        val m2 = MatrixUtils.createRealMatrix(matrixData2)
-
-        val newM = m.multiply(m2)
-
-        println(newM.data[0][0])
-        println(newM.data[1][0])
-        println(newM.data[2][0])
-
 
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                *positionCircleEnvelopes(
-                    Utils.Vector(0.0, 0.0, 0.0),
-                    Utils.Vector(5.0, 5.0, 5.0),
-                    CircleEnvelopeWrapper.CircleOrientation.LEFT,
-                    RepeatLoop(40)
-                ).toTypedArray()
-
-            )
+                TrigonometricEnvelope(Envelope.PropertyType.POS_X, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 4.0),
+                TrigonometricEnvelope(Envelope.PropertyType.POS_Z, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.SIN, RepeatLoop(40), completion = 4.0),
+                TrigonometricEnvelope(Envelope.PropertyType.POS_Y, -20.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 4.0),
+                )
             extra = 0.0
-            animationInterval = 1
-            animationFrameAmount = 5
+            animationInterval = 10
+            animationFrameAmount = 40
         }.start()
 
 
