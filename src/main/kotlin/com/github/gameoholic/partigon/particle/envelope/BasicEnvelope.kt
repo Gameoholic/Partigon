@@ -60,30 +60,30 @@ open class BasicEnvelope(
             .build()
             .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()
 
-//        if (propertyType == Envelope.PropertyType.POS_X) {
-//            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-//                Vector3D(valuePreRotation, 0.0, 0.0),
-//                Vector3D(0.0, 0.0, 0.0),
-//                TestCommand.degree,
-//                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Y
-//            ).x
-//        }
-//        else if (propertyType == Envelope.PropertyType.POS_Y) {
-//            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-//                Vector3D(0.0, valuePreRotation, 0.0),
-//                Vector3D(0.0, 0.0, 0.0),
-//                TestCommand.degree,
-//                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Y
-//            ).y
-//        }
-//        else if (propertyType == Envelope.PropertyType.POS_Z) {
-//            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-//                Vector3D(0.0, 0.0, valuePreRotation),
-//                Vector3D(0.0, 0.0, 0.0),
-//                TestCommand.degree,
-//                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Y
-//            ).z
-//        }
+        if (propertyType == Envelope.PropertyType.POS_X) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(valuePreRotation, 0.0, 0.0),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).x
+        }
+        else if (propertyType == Envelope.PropertyType.POS_Y) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(0.0, valuePreRotation, 0.0),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).y
+        }
+        else if (propertyType == Envelope.PropertyType.POS_Z) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(0.0, 0.0, valuePreRotation),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).z
+        }
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")

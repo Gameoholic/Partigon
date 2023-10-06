@@ -60,15 +60,11 @@ open class TrigonometricEnvelope(
             nestedEnvelopesList.add(value2)
         }
 
-        val otherTrigFunc = if (trigFunc == TrigFunc.SIN) TrigFunc.COS
-        else
-            TrigFunc.SIN
-
         //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
         envelopeExpression = if (trigFunc == TrigFunc.COS)
-            "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+            "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * $completion)"
         else
-            "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * ${completion / 2})"
+            "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion)"
 //        envelopeExpression = if (trigFunc == TrigFunc.COS)
 //            "$value2String + (-$value2String) * ${1 - bonusTemp} * ${trigFunc.value}(pi * $animProgress * ${completion / 2})" +
 //                " + (-$value2String) * $bonusTemp * ${otherTrigFunc.value}(pi * $animProgress * ${completion / 2})"

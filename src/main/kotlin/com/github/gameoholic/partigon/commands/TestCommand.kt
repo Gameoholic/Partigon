@@ -40,9 +40,9 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                TrigonometricEnvelope(Envelope.PropertyType.POS_X, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 4.0),
-                TrigonometricEnvelope(Envelope.PropertyType.POS_Z, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.SIN, RepeatLoop(40), completion = 4.0),
-                TrigonometricEnvelope(Envelope.PropertyType.POS_Y, -20.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 4.0),
+                TrigonometricEnvelope(Envelope.PropertyType.POS_X, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 2.0),
+                TrigonometricEnvelope(Envelope.PropertyType.POS_Z, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.SIN, RepeatLoop(40), completion = 2.0),
+                TrigonometricEnvelope(Envelope.PropertyType.POS_Y, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 2.0),
                 )
             extra = 0.0
             animationInterval = 10
