@@ -3,6 +3,7 @@ package com.github.gameoholic.partigon.particle.envelope
 import com.github.gameoholic.partigon.commands.TestCommand
 import com.github.gameoholic.partigon.particle.loop.Loop
 import net.objecthunter.exp4j.ExpressionBuilder
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.apache.commons.math3.linear.MatrixUtils
 import kotlin.math.cos
 import kotlin.math.sin
@@ -54,56 +55,35 @@ open class BasicEnvelope(
                 .replace("@ENV_$i@", nestedEnvelopeValue.toString())
         }
 
-        val theta = TestCommand.degree //angle in deg
-        val thetaRadians = Math.toRadians(theta)
+        val valuePreRotation = ExpressionBuilder(updatedEnvelopeExpression)
+            .variables("frame_index")
+            .build()
+            .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()
 
-//        val matrixData = arrayOf( //Rx(theta)
-//            doubleArrayOf(1.0, 0.0, 0.0), //row 1
-//            doubleArrayOf(0.0, cos(thetaRadians), -sin(thetaRadians)), //row 2
-//            doubleArrayOf(0.0, sin(thetaRadians), cos(thetaRadians)) //row 3
-//        )
-//        val matrixData = arrayOf( //Ry(theta)
-//            doubleArrayOf(cos(thetaRadians), 0.0, sin(thetaRadians)), //row 1
-//            doubleArrayOf(0.0, 1.0, 0.0), //row 2
-//            doubleArrayOf(-sin(thetaRadians), 0.0, cos(thetaRadians)) //row 3
-//        )
-        val rotationMatrixData = arrayOf( //Rz(theta)
-            doubleArrayOf(cos(thetaRadians), -sin(thetaRadians), 0.0), //row 1
-            doubleArrayOf(sin(thetaRadians), cos(thetaRadians), 0.0), //row 2
-            doubleArrayOf(0.0, 0.0, 1.0) //row 3
-        )
-        val rotationMatrix = MatrixUtils.createRealMatrix(rotationMatrixData)
-
-
-        val pointsMatrixData = arrayOf( //Points before anything. normal points
-            doubleArrayOf(sin(loopedFrameIndex.toDouble()/6) + 10), //row 1
-            doubleArrayOf(cos(loopedFrameIndex.toDouble()/6) + 10), //row 2
-            doubleArrayOf(sin(loopedFrameIndex.toDouble()/6) + 10) //row 3
-        )
-        val pointsMatrix = MatrixUtils.createRealMatrix(pointsMatrixData)
-
-        val anchorPointMatrixData = arrayOf( //The anchor point of the relative rotation
-            doubleArrayOf(10.0), //row 1
-            doubleArrayOf(10.0), //row 2
-            doubleArrayOf(10.0) //row 3
-        )
-        val anchorPointMatrix = MatrixUtils.createRealMatrix(anchorPointMatrixData)
-
-
-
-        val atPointM = pointsMatrix.add(anchorPointMatrix.scalarMultiply(-1.0)) //We transform all the points by the anchor point pos
-
-        val newM = rotationMatrix.multiply(atPointM).add(anchorPointMatrix) //rotate, and apply transformation matrix to move the points back to where they were
-
-
-
-
-        if (envelopeExpression == "0")
-            return newM.data[0][0]
-        else if (envelopeExpression == "1")
-            return newM.data[1][0]
-        else if (envelopeExpression == "2")
-            return newM.data[2][0]
+        if (propertyType == Envelope.PropertyType.POS_X) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(valuePreRotation, 0.0, 0.0),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).x
+        }
+        else if (propertyType == Envelope.PropertyType.POS_Y) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(0.0, valuePreRotation, 0.0),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).y
+        }
+        else if (propertyType == Envelope.PropertyType.POS_Z) {
+            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
+                Vector3D(0.0, 0.0, valuePreRotation),
+                Vector3D(0.0, 0.0, 0.0),
+                TestCommand.degree,
+                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
+            ).z
+        }
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")

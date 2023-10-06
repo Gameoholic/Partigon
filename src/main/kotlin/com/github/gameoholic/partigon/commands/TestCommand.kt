@@ -1,10 +1,13 @@
 package com.github.gameoholic.partigon.commands
 
 
+import com.github.gameoholic.partigon.Utils
 import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.positionCircleEnvelopes
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import org.apache.commons.math3.geometry.Vector
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
@@ -60,27 +63,12 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_X,
-                    RepeatLoop(80),
-                    false,
-                    1.0,
-                    "0"
-                ),
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_Z,
-                    RepeatLoop(80),
-                    false,
-                    1.0,
-                    "1"
-                ),
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_Y,
-                    RepeatLoop(80),
-                    false,
-                    1.0,
-                    "2"
-                )
+                *positionCircleEnvelopes(
+                    Utils.Vector(0.0, 0.0, 0.0),
+                    Utils.Vector(5.0, 5.0, 5.0),
+                    CircleEnvelopeWrapper.CircleOrientation.LEFT,
+                    RepeatLoop(40)
+                ).toTypedArray()
 
             )
             extra = 0.0
