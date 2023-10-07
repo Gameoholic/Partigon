@@ -1,20 +1,14 @@
 package com.github.gameoholic.partigon.commands
 
 
-import com.github.gameoholic.partigon.Utils
 import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
-import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
-import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
-import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.positionCircleEnvelopes
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
-import org.apache.commons.math3.geometry.Vector
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.apache.commons.math3.linear.MatrixUtils
-import org.apache.commons.math3.linear.RealVector
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle

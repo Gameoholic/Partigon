@@ -1,6 +1,6 @@
 package com.github.gameoholic.partigon.particle.envelope.wrapper
 
-import com.github.gameoholic.partigon.Utils
+import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.loop.Loop

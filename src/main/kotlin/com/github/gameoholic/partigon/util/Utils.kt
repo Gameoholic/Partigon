@@ -1,4 +1,4 @@
-package com.github.gameoholic.partigon
+package com.github.gameoholic.partigon.util
 
 object Utils {
 
