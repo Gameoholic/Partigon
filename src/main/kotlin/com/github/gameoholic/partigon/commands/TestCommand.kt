@@ -42,13 +42,15 @@ object TestCommand : CommandExecutor {
                         1.0,
                         TrigonometricEnvelope.TrigFunc.SIN,
                         RepeatLoop(80),
+                        completion = 2.0,
                     ),
                     TrigonometricEnvelope(
                         Envelope.PropertyType.POS_Y,
-                        -1.0,
-                        1.0,
+                        0.0,
+                        0.0,
                         TrigonometricEnvelope.TrigFunc.SIN,
                         RepeatLoop(80),
+                        completion = 2.0,
                     ),
                     TrigonometricEnvelope(
                         Envelope.PropertyType.POS_Z,
@@ -56,6 +58,7 @@ object TestCommand : CommandExecutor {
                         1.0,
                         TrigonometricEnvelope.TrigFunc.COS,
                         RepeatLoop(80),
+                        completion = 2.0,
                     ),
                     MatrixUtils.RotationMatrixOptions(
                         Utils.Vector(0.0, 0.0, 0.0),

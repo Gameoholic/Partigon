@@ -18,7 +18,7 @@ object CircleEnvelopeWrapper {
      * Setting the orientation to RIGHT will make the circle start at point 1, and
      * go around the line from the right, and finish at point 2.
      */
-    enum class CircleOrientation {
+    enum class CircleDirection {
         /**
          * 2D Circle to the right of the line.
          */
@@ -59,7 +59,7 @@ object CircleEnvelopeWrapper {
      * @param propertyType The property for the envelope to affect.
      * @param value1 The first value to interpolate.
      * @param value2 The second value to interpolate.
-     * @param circleOrientation The orientation/direction of the circle.
+     * @param circleDirection The orientation/direction of the circle.
      * @param vectorComponent The vector component to be used for this circle property.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
@@ -70,23 +70,23 @@ object CircleEnvelopeWrapper {
         propertyType: Envelope.PropertyType,
         value1: Any,
         value2: Any,
-        circleOrientation: CircleOrientation,
+        circleDirection: CircleDirection,
         vectorComponent: VectorComponent,
         loop: Loop,
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
         val trigFunc =
-            if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
+            if ((circleDirection == CircleDirection.LEFT || circleDirection == CircleDirection.LEFT_UP || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleDirection == CircleDirection.LEFT || circleDirection == CircleDirection.LEFT_UP || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleOrientation == CircleOrientation.RIGHT || circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
+            else if ((circleDirection == CircleDirection.RIGHT || circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((circleOrientation == CircleOrientation.RIGHT || circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((circleDirection == CircleDirection.RIGHT || circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleOrientation == CircleOrientation.RIGHT_DOWN || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+            else if ((circleDirection == CircleDirection.RIGHT_DOWN || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((circleOrientation == CircleOrientation.RIGHT_UP || circleOrientation == CircleOrientation.LEFT_UP) && vectorComponent == VectorComponent.Y)
+            else if ((circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.LEFT_UP) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.COS
             else
                 throw IllegalArgumentException("Invalid combination of circle orientation & vector component")
@@ -111,7 +111,7 @@ object CircleEnvelopeWrapper {
      * @param propertyType The property for the envelope to affect.
      * @param value1 The first value to interpolate.
      * @param value2 The second value to interpolate.
-     * @param circleOrientation The orientation/direction of the circle.
+     * @param circleDirection The orientation/direction of the circle.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
@@ -121,7 +121,7 @@ object CircleEnvelopeWrapper {
         propertyType: Envelope.PropertyType,
         value1: Any,
         value2: Any,
-        circleOrientation: CircleOrientation,
+        circleDirection: CircleDirection,
         loop: Loop,
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
@@ -137,7 +137,7 @@ object CircleEnvelopeWrapper {
             propertyType,
             value1,
             value2,
-            circleOrientation,
+            circleDirection,
             vectorComponent,
             loop,
             completion,
@@ -145,10 +145,10 @@ object CircleEnvelopeWrapper {
     }
 
 
-    fun positionCircleEnvelopes(
+    fun circleEnvelopeGroup(
         position1: Utils.Vector<Double>,
         position2: Utils.Vector<Double>,
-        circleOrientation: CircleOrientation,
+        circleDirection: CircleDirection,
         loop: Loop,
         completion: Double = 1.0,
     ): List<TrigonometricEnvelope> = listOf(
@@ -156,7 +156,7 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.POS_X,
                 position1.x,
                 position2.x,
-                circleOrientation,
+                circleDirection,
                 loop,
                 completion,
             ),
@@ -164,7 +164,7 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.POS_Y,
                 position1.y,
                 position2.y,
-                circleOrientation,
+                circleDirection,
                 loop,
                 completion,
             ),
@@ -172,7 +172,7 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.POS_Z,
                 position1.z,
                 position2.z,
-                circleOrientation,
+                circleDirection,
                 loop,
                 completion,
             )
