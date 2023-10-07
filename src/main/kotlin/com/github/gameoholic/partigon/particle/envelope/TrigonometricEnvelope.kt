@@ -62,12 +62,6 @@ open class TrigonometricEnvelope(
             "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * $completion)"
         else
             "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion)"
-//        envelopeExpression = if (trigFunc == TrigFunc.COS)
-//            "$value2String + (-$value2String) * ${1 - bonusTemp} * ${trigFunc.value}(pi * $animProgress * ${completion / 2})" +
-//                " + (-$value2String) * $bonusTemp * ${otherTrigFunc.value}(pi * $animProgress * ${completion / 2})"
-//        else
-//            "($value2String) * ${1 - bonusTemp} * ${trigFunc.value}(pi * $animProgress * ${completion / 2})" +
-//                " + ($value2String) * $bonusTemp * ${otherTrigFunc.value}(pi * $animProgress * ${completion / 2})"
 
         nestedEnvelopes = nestedEnvelopesList.toList()
 
