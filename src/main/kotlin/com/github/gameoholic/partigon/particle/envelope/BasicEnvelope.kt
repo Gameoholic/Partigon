@@ -1,13 +1,10 @@
 package com.github.gameoholic.partigon.particle.envelope
 
-import com.github.gameoholic.partigon.commands.TestCommand
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.MatrixUtils
 import net.objecthunter.exp4j.ExpressionBuilder
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
-import org.apache.commons.math3.linear.MatrixUtils
-import org.bukkit.Bukkit
-import kotlin.math.cos
-import kotlin.math.sin
+import java.lang.IllegalArgumentException
 
 
 /**
@@ -22,12 +19,12 @@ open class BasicEnvelope(
     override val completion: Double,
     override val envelopeExpression: String = "",
     override val nestedEnvelopes: List<Envelope> = listOf(),
-    override val envelopeGroup: PositionEnvelopeGroup? = null
+    override val envelopeGroup: EnvelopeGroup? = null
 ) : Envelope {
 
     override var disabled = false
 
-    override fun getValueAt(frameIndex: Int): Double? {
+    override fun getValueAt(frameIndex: Int, rawValue: Boolean): Double? {
         if (disabled)
             return null
 
@@ -55,41 +52,28 @@ open class BasicEnvelope(
                 .replace("@ENV_$i@", nestedEnvelopeValue.toString())
         }
 
+        // Apply transformations to the envelope, when belonging to a group. This is needed
+        // for shapes like circles, where in order to rotate it, all 3 values are needed
+        // to rotate it properly.
+        envelopeGroup?.let {
+            if (it.rotationMatrixOptions == null) return@let
 
-
-
-        val valuePreRotation = ExpressionBuilder(updatedEnvelopeExpression)
-            .variables("frame_index")
-            .build()
-            .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()
-
-        if (propertyType == Envelope.PropertyType.POS_X) {
-            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-                Vector3D(sin(loopedFrameIndex.toDouble()/6), 0.0, 0.0),
-                Vector3D(0.0, 0.0, 0.0),
-                TestCommand.degree,
-                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
-            ).x
+            val newPosition = MatrixUtils.applyRotationAroundPoint(
+                Vector3D(
+                    it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                    it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                    it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                ),
+                it.rotationMatrixOptions
+            )
+            return when (propertyType) {
+                Envelope.PropertyType.POS_X -> newPosition.x
+                Envelope.PropertyType.POS_Y -> newPosition.y
+                Envelope.PropertyType.POS_Z -> newPosition.z
+                else -> throw IllegalArgumentException("Non-position envelope cannot be inside of an envelope group.")
+            }
         }
-        else if (propertyType == Envelope.PropertyType.POS_Y) {
-            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-                Vector3D(0.0, sin(loopedFrameIndex.toDouble()/6), cos(loopedFrameIndex.toDouble()/6)),
-                Vector3D(0.0, 0.0, 0.0),
-                TestCommand.degree,
-                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
-            ).y
-        }
-        else if (propertyType == Envelope.PropertyType.POS_Z) {
-            return com.github.gameoholic.partigon.util.MatrixUtils.applyRotationAroundPoint(
-                Vector3D(0.0, 0.0, cos(loopedFrameIndex.toDouble()/6)),
-                Vector3D(0.0, 0.0, 0.0),
-                TestCommand.degree,
-                com.github.gameoholic.partigon.util.MatrixUtils.RotationType.X
-            ).z
-        }
-
-
-
+        //todo: apply individual transformations
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")

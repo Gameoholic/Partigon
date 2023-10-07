@@ -28,7 +28,7 @@ interface Envelope {
      */
     var disabled: Boolean
 
-    val envelopeGroup: PositionEnvelopeGroup?
+    val envelopeGroup: EnvelopeGroup?
 
     /**
      * How much of the animation is animated.
@@ -42,9 +42,10 @@ interface Envelope {
      * Retrieves the envelope's value for a certain frame t. Applies loop.
      *
      * @param frameIndex The frame index.
+     * @param rawValue Whether to return the value before any external transformations have been applied.
      * @return The value of the envelope at a frame t, or null if envelope is disabled.
      */
-    fun getValueAt(frameIndex: Int): Double?
+    fun getValueAt(frameIndex: Int, rawValue: Boolean = false): Double?
 
     /**
      * Nested envelopes are property-less envelopes that produce a value used for the parent envelope(s).

@@ -38,7 +38,7 @@ object MatrixUtils {
 
     data class RotationMatrixOptions(val rotPoint: Vector3D, val angle: Double, val rotationType: RotationType)
 
-    fun applyRotationAroundPoint(
+    fun applyRotationAroundPoint( //todo: replace vector3d with partigon vector.
         point: Vector3D,
         options: RotationMatrixOptions
     ): Vector3D {
