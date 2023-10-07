@@ -7,9 +7,9 @@ import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
+import com.github.gameoholic.partigon.util.MatrixUtils
 import com.github.gameoholic.partigon.util.Utils
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
-import org.apache.commons.math3.linear.MatrixUtils
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -33,27 +33,6 @@ object TestCommand : CommandExecutor {
         }
 
 
-        val theta = degree
-        val thetaRadians = Math.toRadians(theta)
-
-        val matrixData = arrayOf( //Rx(theta)
-            doubleArrayOf(1.0, 0.0, 0.0), //row 1
-            doubleArrayOf(0.0, cos(thetaRadians), -sin(thetaRadians)), //row 2
-            doubleArrayOf(0.0, sin(thetaRadians), cos(thetaRadians)) //row 3
-        )
-        val m = MatrixUtils.createRealMatrix(matrixData)
-
-
-        val matrixData2 = arrayOf( //Points
-            doubleArrayOf(1.0), //row 1
-            doubleArrayOf(1.0), //row 2
-            doubleArrayOf(1.0) //row 3
-        )
-        val m2 = MatrixUtils.createRealMatrix(matrixData2)
-
-        val newM = m.multiply(m2)
-
-
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
                 *EnvelopeGroup(
@@ -75,10 +54,10 @@ object TestCommand : CommandExecutor {
                         1.0,
                         "cos(frame_index/6)"
                     ),
-                    com.github.gameoholic.partigon.util.MatrixUtils.RotationMatrixOptions(
+                    MatrixUtils.RotationMatrixOptions(
                         Utils.Vector(0.0, 0.0, 0.0),
                         degree,
-                        com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Z
+                        MatrixUtils.RotationType.Z
                     )
                 ).getEnvelopes().toTypedArray()
 
