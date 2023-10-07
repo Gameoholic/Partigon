@@ -38,17 +38,61 @@ object TestCommand : CommandExecutor {
         }
 
 
+        val theta = degree
+        val thetaRadians = Math.toRadians(theta)
+
+        val matrixData = arrayOf( //Rx(theta)
+            doubleArrayOf(1.0, 0.0, 0.0), //row 1
+            doubleArrayOf(0.0, cos(thetaRadians), -sin(thetaRadians)), //row 2
+            doubleArrayOf(0.0, sin(thetaRadians), cos(thetaRadians)) //row 3
+        )
+        val m = MatrixUtils.createRealMatrix(matrixData)
+
+
+        val matrixData2 = arrayOf( //Points
+            doubleArrayOf(1.0), //row 1
+            doubleArrayOf(1.0), //row 2
+            doubleArrayOf(1.0) //row 3
+        )
+        val m2 = MatrixUtils.createRealMatrix(matrixData2)
+
+        val newM = m.multiply(m2)
+
+        println(newM.data[0][0])
+        println(newM.data[1][0])
+        println(newM.data[2][0])
+
+
+
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                TrigonometricEnvelope(Envelope.PropertyType.POS_X, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 2.0),
-                TrigonometricEnvelope(Envelope.PropertyType.POS_Z, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.SIN, RepeatLoop(40), completion = 2.0),
-                TrigonometricEnvelope(Envelope.PropertyType.POS_Y, -3.0, 3.0, TrigonometricEnvelope.TrigFunc.COS, RepeatLoop(40), completion = 2.0),
+                BasicEnvelope(
+                    Envelope.PropertyType.POS_X,
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "sin(frame_index/6)"
+                ),
+                BasicEnvelope(
+                    Envelope.PropertyType.POS_Y,
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "0.0"
+                ),
+                BasicEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    RepeatLoop(80),
+                    false,
+                    1.0,
+                    "cos(frame_index/6)"
                 )
-            extra = 0.0
-            animationInterval = 10
-            animationFrameAmount = 40
-        }.start()
 
+            )
+            extra = 0.0
+            animationInterval = 1
+            animationFrameAmount = 5
+        }.start()
 
         return true
 
