@@ -28,7 +28,7 @@ interface Envelope {
      */
     var disabled: Boolean
 
-    val envelopeGroup: EnvelopeGroup?
+    var envelopeGroup: EnvelopeGroup?
 
     /**
      * How much of the animation is animated.

@@ -2,9 +2,18 @@ package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.util.MatrixUtils
 
-class EnvelopeGroup(val rotationMatrixOptions: MatrixUtils.RotationMatrixOptions?) {
-    lateinit var envelopeX: Envelope
-    lateinit var envelopeY: Envelope
-    lateinit var envelopeZ: Envelope
+class EnvelopeGroup(
+    val envelopeX: Envelope,
+    val envelopeY: Envelope,
+    val envelopeZ: Envelope,
+    val rotationMatrixOptions: MatrixUtils.RotationMatrixOptions?
+) {
+    //todo: support for <3 amount of envelopes.
 
+    fun getEnvelopes(): List<Envelope> {
+        envelopeX.envelopeGroup = this
+        envelopeY.envelopeGroup = this
+        envelopeZ.envelopeGroup = this
+        return listOf(envelopeX, envelopeY, envelopeZ)
+    }
 }

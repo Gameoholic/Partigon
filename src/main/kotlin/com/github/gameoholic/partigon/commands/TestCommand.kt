@@ -6,6 +6,7 @@ import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.positionCircleEnvelopes
@@ -66,24 +67,27 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_X,
-                    RepeatLoop(80),
-                    1.0,
-                    "sin(frame_index/6)"
-                ),
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_Y,
-                    RepeatLoop(80),
-                    1.0,
-                    "0.0"
-                ),
-                BasicEnvelope(
-                    Envelope.PropertyType.POS_Z,
-                    RepeatLoop(80),
-                    1.0,
-                    "cos(frame_index/6)"
-                )
+                *EnvelopeGroup(
+                    BasicEnvelope(
+                        Envelope.PropertyType.POS_X,
+                        RepeatLoop(80),
+                        1.0,
+                        "sin(frame_index/6)"
+                    ),
+                    BasicEnvelope(
+                        Envelope.PropertyType.POS_Y,
+                        RepeatLoop(80),
+                        1.0,
+                        "0.0"
+                    ),
+                    BasicEnvelope(
+                        Envelope.PropertyType.POS_Z,
+                        RepeatLoop(80),
+                        1.0,
+                        "cos(frame_index/6)"
+                    ),
+                    com.github.gameoholic.partigon.util.MatrixUtils.RotationMatrixOptions()
+                ).getEnvelopes().toTypedArray()
 
             )
             extra = 0.0

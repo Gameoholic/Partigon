@@ -5,6 +5,7 @@ import com.github.gameoholic.partigon.util.MatrixUtils
 import net.objecthunter.exp4j.ExpressionBuilder
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import java.lang.IllegalArgumentException
+import java.lang.RuntimeException
 
 
 /**
@@ -18,11 +19,16 @@ open class BasicEnvelope(
     override val loop: Loop,
     override val completion: Double,
     override val envelopeExpression: String = "",
-    override val nestedEnvelopes: List<Envelope> = listOf(),
-    override val envelopeGroup: EnvelopeGroup? = null
+    override val nestedEnvelopes: List<Envelope> = listOf()
 ) : Envelope {
 
     override var disabled = false
+    override var envelopeGroup: EnvelopeGroup? = null
+        protected set(value) {
+            if (field != null)
+                throw RuntimeException("Cannot change envelope's group once it's been assigned to one.")
+            field = value
+        }
 
     override fun getValueAt(frameIndex: Int, rawValue: Boolean): Double? {
         if (disabled)
