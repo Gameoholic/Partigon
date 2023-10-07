@@ -24,7 +24,7 @@ open class BasicEnvelope(
 
     override var disabled = false
     override var envelopeGroup: EnvelopeGroup? = null
-        protected set(value) {
+        set(value) {
             if (field != null)
                 throw RuntimeException("Cannot change envelope's group once it's been assigned to one.")
             field = value
@@ -61,24 +61,28 @@ open class BasicEnvelope(
         // Apply transformations to the envelope, when belonging to a group. This is needed
         // for shapes like circles, where in order to rotate it, all 3 values are needed
         // to rotate it properly.
-        envelopeGroup?.let {
-            if (it.rotationMatrixOptions == null) return@let
+        if (!rawValue)
+            envelopeGroup?.let {
+                if (it.rotationMatrixOptions == null) return@let
 
-            val newPosition = MatrixUtils.applyRotationAroundPoint(
-                Vector3D(
+                val vec = Vector3D(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                ),
-                it.rotationMatrixOptions
-            )
-            return when (propertyType) {
-                Envelope.PropertyType.POS_X -> newPosition.x
-                Envelope.PropertyType.POS_Y -> newPosition.y
-                Envelope.PropertyType.POS_Z -> newPosition.z
-                else -> throw IllegalArgumentException("Non-position envelope cannot be inside of an envelope group.")
+                )
+                println("x = ${vec.x}, y= ${vec.y}, z=${vec.z}")
+                val newPosition = MatrixUtils.applyRotationAroundPoint(
+                    vec,
+                    it.rotationMatrixOptions
+                )
+                println(newPosition)
+                return when (propertyType) {
+                    Envelope.PropertyType.POS_X -> newPosition.x
+                    Envelope.PropertyType.POS_Y -> newPosition.y
+                    Envelope.PropertyType.POS_Z -> newPosition.z
+                    else -> throw IllegalArgumentException("Non-position envelope cannot be inside of an envelope group.")
+                }
             }
-        }
         //todo: apply individual transformations
 
         return ExpressionBuilder(updatedEnvelopeExpression)

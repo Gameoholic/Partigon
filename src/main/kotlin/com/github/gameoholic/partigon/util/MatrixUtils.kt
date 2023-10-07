@@ -42,6 +42,7 @@ object MatrixUtils {
         point: Vector3D,
         options: RotationMatrixOptions
     ): Vector3D {
+        println("ANGLE IS ${options.angle}")
         val angleRadians = Math.toRadians(options.angle)
 
         val pointMatrix = MatrixUtils.createRealMatrix(
@@ -51,6 +52,7 @@ object MatrixUtils {
                 doubleArrayOf(point.z)
             )
         )
+        println("Received point ${point.x}, ${point.y}, ${point.z}")
 
         val rotationPointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
@@ -82,6 +84,8 @@ object MatrixUtils {
         val newX = newPointMatrix.data[0][0]
         val newY = newPointMatrix.data[1][0]
         val newZ = newPointMatrix.data[2][0]
+        println("Transforming point by ${options.angle} on ${options.rotationType}, new point is ${newX}, $newY, $newZ")
+
         return Vector3D(newX, newY, newZ)
     }
 

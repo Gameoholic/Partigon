@@ -35,7 +35,6 @@ object TestCommand : CommandExecutor {
 
         if (!args.isNullOrEmpty()) {
             degree = args[0]!!.toDouble()
-            return true
         }
 
 
@@ -86,7 +85,11 @@ object TestCommand : CommandExecutor {
                         1.0,
                         "cos(frame_index/6)"
                     ),
-                    com.github.gameoholic.partigon.util.MatrixUtils.RotationMatrixOptions()
+                    com.github.gameoholic.partigon.util.MatrixUtils.RotationMatrixOptions(
+                        Vector3D(0.0, 0.0, 0.0),
+                        degree,
+                        com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Z
+                    )
                 ).getEnvelopes().toTypedArray()
 
             )
