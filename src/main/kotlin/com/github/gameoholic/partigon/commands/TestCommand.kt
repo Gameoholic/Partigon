@@ -7,6 +7,7 @@ import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
+import com.github.gameoholic.partigon.util.Utils
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.apache.commons.math3.linear.MatrixUtils
 import org.bukkit.Bukkit
@@ -75,7 +76,7 @@ object TestCommand : CommandExecutor {
                         "cos(frame_index/6)"
                     ),
                     com.github.gameoholic.partigon.util.MatrixUtils.RotationMatrixOptions(
-                        Vector3D(0.0, 0.0, 0.0),
+                        Utils.Vector(0.0, 0.0, 0.0),
                         degree,
                         com.github.gameoholic.partigon.util.MatrixUtils.RotationType.Z
                     )
