@@ -36,13 +36,13 @@ object MatrixUtils {
 
     }
 
+    data class RotationMatrixOptions(val rotPoint: Vector3D, val angle: Double, val rotationType: RotationType)
+
     fun applyRotationAroundPoint(
         point: Vector3D,
-        rotPoint: Vector3D,
-        angle: Double,
-        rotationType: RotationType
+        options: RotationMatrixOptions
     ): Vector3D {
-        val angleRadians = Math.toRadians(angle)
+        val angleRadians = Math.toRadians(options.angle)
 
         val pointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
@@ -54,9 +54,9 @@ object MatrixUtils {
 
         val rotationPointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
-                doubleArrayOf(rotPoint.x),
-                doubleArrayOf(rotPoint.y),
-                doubleArrayOf(rotPoint.z)
+                doubleArrayOf(options.rotPoint.x),
+                doubleArrayOf(options.rotPoint.y),
+                doubleArrayOf(options.rotPoint.z)
             )
         )
 
@@ -67,7 +67,7 @@ object MatrixUtils {
         val transformedPointMatrix =
             pointMatrix.add(rotationPointMatrix.scalarMultiply(-1.0))
 
-        val rotationMatrix = rotationType.rotationMatrix.invoke(angleRadians)
+        val rotationMatrix = options.rotationType.rotationMatrix.invoke(angleRadians)
 
         /**
          * We multiply the matrices to rotate the point.

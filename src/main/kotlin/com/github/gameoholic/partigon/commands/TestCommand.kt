@@ -69,21 +69,18 @@ object TestCommand : CommandExecutor {
                 BasicEnvelope(
                     Envelope.PropertyType.POS_X,
                     RepeatLoop(80),
-                    false,
                     1.0,
                     "sin(frame_index/6)"
                 ),
                 BasicEnvelope(
                     Envelope.PropertyType.POS_Y,
                     RepeatLoop(80),
-                    false,
                     1.0,
                     "0.0"
                 ),
                 BasicEnvelope(
                     Envelope.PropertyType.POS_Z,
                     RepeatLoop(80),
-                    false,
                     1.0,
                     "cos(frame_index/6)"
                 )

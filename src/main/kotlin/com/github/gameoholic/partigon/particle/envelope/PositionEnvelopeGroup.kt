@@ -1,5 +1,5 @@
 package com.github.gameoholic.partigon.particle.envelope
 
-class EnvelopeGroup {
+class PositionEnvelopeGroup {
     val envelopes = mutableListOf<Envelope>()
 }
