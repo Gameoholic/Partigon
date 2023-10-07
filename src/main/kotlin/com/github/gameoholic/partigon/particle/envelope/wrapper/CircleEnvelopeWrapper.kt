@@ -146,8 +146,8 @@ object CircleEnvelopeWrapper {
 
 
     fun positionCircleEnvelopes(
-        position1: Utils.Vector,
-        position2: Utils.Vector,
+        position1: Utils.Vector<Double>,
+        position2: Utils.Vector<Double>,
         circleOrientation: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,

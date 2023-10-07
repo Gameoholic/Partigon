@@ -6,6 +6,7 @@ import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partig
 import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
+import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.MatrixUtils
 import com.github.gameoholic.partigon.util.Utils
@@ -24,7 +25,6 @@ object TestCommand : CommandExecutor {
 
     var degree = 0.0
 
-    var part: PartigonParticle? = null
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
@@ -36,23 +36,26 @@ object TestCommand : CommandExecutor {
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
                 *EnvelopeGroup(
-                    BasicEnvelope(
+                    TrigonometricEnvelope(
                         Envelope.PropertyType.POS_X,
-                        RepeatLoop(80),
+                        -1.0,
                         1.0,
-                        "sin(frame_index/6)"
+                        TrigonometricEnvelope.TrigFunc.SIN,
+                        RepeatLoop(80),
                     ),
-                    BasicEnvelope(
+                    TrigonometricEnvelope(
                         Envelope.PropertyType.POS_Y,
-                        RepeatLoop(80),
+                        -1.0,
                         1.0,
-                        "0.0"
+                        TrigonometricEnvelope.TrigFunc.SIN,
+                        RepeatLoop(80),
                     ),
-                    BasicEnvelope(
+                    TrigonometricEnvelope(
                         Envelope.PropertyType.POS_Z,
-                        RepeatLoop(80),
+                        -1.0,
                         1.0,
-                        "cos(frame_index/6)"
+                        TrigonometricEnvelope.TrigFunc.COS,
+                        RepeatLoop(80),
                     ),
                     MatrixUtils.RotationMatrixOptions(
                         Utils.Vector(0.0, 0.0, 0.0),
