@@ -28,12 +28,6 @@ interface Envelope {
      */
     var disabled: Boolean
 
-    /**
-     * Whether the envelope's values are absolute, or are relative
-     * to the original value of the property that the object was
-     * created with.
-     */
-    val isAbsolute: Boolean
 
     /**
      * How much of the animation is animated.

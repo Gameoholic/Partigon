@@ -151,51 +151,30 @@ class PartigonParticle(
             }
             when (envelopePropertyType) {
                 Envelope.PropertyType.POS_X -> {
-                    if (envelope.isAbsolute)
-                        newLocation.x = envelopeValue
-                    else
                         newLocation.x += envelopeValue
                 }
 
                 Envelope.PropertyType.POS_Y -> {
-                    if (envelope.isAbsolute)
-                        newLocation.y = envelopeValue
-                    else
                         newLocation.y += envelopeValue
                 }
 
                 Envelope.PropertyType.POS_Z -> {
-                    if (envelope.isAbsolute)
-                        newLocation.z = envelopeValue
-                    else
                         newLocation.z += envelopeValue
                 }
 
                 Envelope.PropertyType.COUNT -> {
-                    if (envelope.isAbsolute)
-                        newCount = envelopeValue.toInt()
-                    else
                         newCount += envelopeValue.toInt()
                 }
 
                 Envelope.PropertyType.OFFSET_X -> {
-                    if (envelope.isAbsolute)
-                        newOffset.x = envelopeValue
-                    else
                         newOffset.x += envelopeValue
                 }
 
                 Envelope.PropertyType.OFFSET_Y -> {
-                    if (envelope.isAbsolute)
-                        newOffset.y = envelopeValue
-                    else
                         newOffset.y += envelopeValue
                 }
 
                 Envelope.PropertyType.OFFSET_Z -> {
-                    if (envelope.isAbsolute)
-                        newOffset.z = envelopeValue
-                    else
                         newOffset.z += envelopeValue
                 }
 

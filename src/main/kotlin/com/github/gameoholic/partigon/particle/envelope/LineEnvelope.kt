@@ -11,7 +11,6 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param value1 The first value to interpolate.
  * @param value2 The second value to interpolate.
  * @param loop The loop to be used with the envelope.
- * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
  *
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
@@ -20,8 +19,7 @@ class LineEnvelope(
     value1: Any,
     value2: Any,
     override val loop: Loop,
-    override val completion: Double = 1.0,
-    override val isAbsolute: Boolean = false): BasicEnvelope(propertyType, loop, isAbsolute, completion)
+    override val completion: Double = 1.0): BasicEnvelope(propertyType, loop, completion)
 {
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>

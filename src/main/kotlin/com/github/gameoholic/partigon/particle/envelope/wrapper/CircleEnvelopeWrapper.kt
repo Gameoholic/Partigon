@@ -63,7 +63,6 @@ object CircleEnvelopeWrapper {
      * @param vectorComponent The vector component to be used for this circle property.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
-     * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
      *
      * @throws IllegalArgumentException If an invalid combination of circle orientation & vector component was provided.
      */
@@ -75,8 +74,6 @@ object CircleEnvelopeWrapper {
         vectorComponent: VectorComponent,
         loop: Loop,
         completion: Double = 1.0,
-        isAbsolute: Boolean = false,
-        bonusTemp: Double = 1.0,
     ): TrigonometricEnvelope {
         val trigFunc =
             if ((circleOrientation == CircleOrientation.LEFT || circleOrientation == CircleOrientation.LEFT_UP || circleOrientation == CircleOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
@@ -101,8 +98,6 @@ object CircleEnvelopeWrapper {
             trigFunc,
             loop,
             completion * 4,
-            isAbsolute,
-            bonusTemp
         )
     }
 
@@ -119,7 +114,6 @@ object CircleEnvelopeWrapper {
      * @param circleOrientation The orientation/direction of the circle.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
-     * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
      *
      * @throws IllegalArgumentException If the method doesn't support the property type provided.
      */
@@ -130,8 +124,6 @@ object CircleEnvelopeWrapper {
         circleOrientation: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,
-        isAbsolute: Boolean = false,
-        bonusTemp: Double = 1.0,
     ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
@@ -149,8 +141,6 @@ object CircleEnvelopeWrapper {
             vectorComponent,
             loop,
             completion,
-            isAbsolute,
-            bonusTemp
         )
     }
 
@@ -161,8 +151,6 @@ object CircleEnvelopeWrapper {
         circleOrientation: CircleOrientation,
         loop: Loop,
         completion: Double = 1.0,
-        isAbsolute: Boolean = false,
-        bonusTemp: Double = 1.0
     ): List<TrigonometricEnvelope> = listOf(
             circleEnvelope(
                 Envelope.PropertyType.POS_X,
@@ -171,8 +159,6 @@ object CircleEnvelopeWrapper {
                 circleOrientation,
                 loop,
                 completion,
-                isAbsolute,
-                bonusTemp
             ),
             circleEnvelope(
                 Envelope.PropertyType.POS_Y,
@@ -181,8 +167,6 @@ object CircleEnvelopeWrapper {
                 circleOrientation,
                 loop,
                 completion,
-                isAbsolute,
-                bonusTemp
             ),
             circleEnvelope(
                 Envelope.PropertyType.POS_Z,
@@ -191,8 +175,6 @@ object CircleEnvelopeWrapper {
                 circleOrientation,
                 loop,
                 completion,
-                isAbsolute,
-                bonusTemp
             )
         )
 

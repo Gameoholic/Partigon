@@ -15,12 +15,10 @@ import kotlin.math.sin
  * @param propertyType The property for the envelope to affect.
  * @param envelopeExpression The mathematical expression of the envelope. frame_index is the variable that corresponds to the tick.
  * @param loop The loop to be used with the envelope.
- * @param isAbsolute Whether the values are absolute, or relative to the original particle's values.
  */
 open class BasicEnvelope(
     override val propertyType: Envelope.PropertyType,
     override val loop: Loop,
-    override val isAbsolute: Boolean,
     override val completion: Double,
     override val envelopeExpression: String = "",
     override val nestedEnvelopes: List<Envelope> = listOf()
