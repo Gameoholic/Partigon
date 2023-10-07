@@ -65,17 +65,14 @@ open class BasicEnvelope(
             envelopeGroup?.let {
                 if (it.rotationMatrixOptions == null) return@let
 
-                val vec = Vector3D(
-                    it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                )
-                println("x = ${vec.x}, y= ${vec.y}, z=${vec.z}")
                 val newPosition = MatrixUtils.applyRotationAroundPoint(
-                    vec,
+                    Vector3D(
+                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                    ),
                     it.rotationMatrixOptions
                 )
-                println(newPosition)
                 return when (propertyType) {
                     Envelope.PropertyType.POS_X -> newPosition.x
                     Envelope.PropertyType.POS_Y -> newPosition.y

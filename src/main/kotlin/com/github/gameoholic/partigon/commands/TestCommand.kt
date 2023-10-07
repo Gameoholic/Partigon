@@ -58,11 +58,6 @@ object TestCommand : CommandExecutor {
 
         val newM = m.multiply(m2)
 
-        println(newM.data[0][0])
-        println(newM.data[1][0])
-        println(newM.data[2][0])
-
-
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
