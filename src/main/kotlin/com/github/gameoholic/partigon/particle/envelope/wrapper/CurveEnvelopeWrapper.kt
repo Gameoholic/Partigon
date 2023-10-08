@@ -103,7 +103,7 @@ object CurveEnvelopeWrapper {
             value2,
             trigFunc,
             loop,
-            completion * 2,
+            completion,
         )
     }
 
@@ -156,8 +156,8 @@ object CurveEnvelopeWrapper {
      * Envelope wrapper that creates a curve between 2 points
      * in 3D space, with rotations.
      *
-     * @param position1 The first value to interpolate.
-     * @param position2 The second value to interpolate.
+     * @param position1 The first position to interpolate.
+     * @param position2 The second position to interpolate.
      * @param curveOrientation The orientation of the curve.
      * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
@@ -166,8 +166,8 @@ object CurveEnvelopeWrapper {
      * @return The envelope group used to create the curve.
      */
     fun curveEnvelopeGroup(
-        position1: Utils.Vector<Double>,
-        position2: Utils.Vector<Double>,
+        position1: Utils.Vector<Any>,
+        position2: Utils.Vector<Any>,
         curveOrientation: CurveOrientation,
         rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,

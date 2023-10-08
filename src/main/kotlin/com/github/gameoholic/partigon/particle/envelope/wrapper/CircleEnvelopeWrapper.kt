@@ -133,8 +133,8 @@ object CircleEnvelopeWrapper {
      * Envelope wrapper that creates a circle between 2 points
      * in the XZ plane, with rotations.
      *
-     * @param position1 The first value to interpolate.
-     * @param position2 The second value to interpolate.
+     * @param position1 The first position to interpolate.
+     * @param position2 The second position to interpolate.
      * @param circleDirection The direction of the circle.
      * @param rotationOptions The list of the rotations to apply to the circle.
      * @param loop The loop to be used with the envelope.
