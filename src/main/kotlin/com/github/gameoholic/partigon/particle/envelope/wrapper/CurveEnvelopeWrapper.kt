@@ -65,11 +65,11 @@ object CurveEnvelopeWrapper {
      * @param value1 The first value to interpolate.
      * @param value2 The second value to interpolate.
      * @param curveOrientation The orientation of the curve.
-     * @param vectorComponent The vector component to be used for this circle property.
+     * @param vectorComponent The vector component to be used for this curve property.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse.
      *
-     * @throws IllegalArgumentException If an invalid combination of circle orientation & vector component was provided.
+     * @throws IllegalArgumentException If an invalid combination of curve orientation & vector component was provided.
      * @return The trigonometric envelope to be used on this property to create the curve.
      */
     fun curveEnvelope(
@@ -111,7 +111,7 @@ object CurveEnvelopeWrapper {
      * Trigonometric envelope wrapper that when applied on multiple properties,
      * creates a curve between 2 points.
      * This automatically determines the trigonometric function to use based
-     * on the circle orientation and the property type.
+     * on the curve orientation and the property type.
      * This method may only be used with vector property types (POS_X, POS_Y, POS_Z), and is preferred
      * if you are dealing with position envelopes.
      *
@@ -159,7 +159,7 @@ object CurveEnvelopeWrapper {
      * @param position1 The first value to interpolate.
      * @param position2 The second value to interpolate.
      * @param curveOrientation The orientation of the curve.
-     * @param rotationOptions The list of the rotations to apply to the circle.
+     * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse.
      *
