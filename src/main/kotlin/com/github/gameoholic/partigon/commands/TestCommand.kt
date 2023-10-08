@@ -40,7 +40,6 @@ object TestCommand : CommandExecutor {
             degree2 = args[1]!!.toDouble()
         }
 
-
         prevParticle?.stop()
         prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(

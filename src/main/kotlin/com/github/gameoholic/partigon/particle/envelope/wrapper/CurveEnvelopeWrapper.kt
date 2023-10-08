@@ -4,6 +4,9 @@ import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.MatrixUtils
+import com.github.gameoholic.partigon.util.Utils.x
+import com.github.gameoholic.partigon.util.Utils.y
+import com.github.gameoholic.partigon.util.Utils.z
 import java.lang.IllegalArgumentException
 
 object CurveEnvelopeWrapper {
@@ -200,5 +203,9 @@ object CurveEnvelopeWrapper {
         rotationOptions
     )
 
+    fun test() {
+        val a = Triple(0.0, "asd", 0.0)
+        a.z
+    }
 
 }
