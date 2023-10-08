@@ -9,7 +9,7 @@ import java.lang.IllegalArgumentException
 object CircleEnvelopeWrapper {
 
     /**
-     * Represents the orientation of the circle relative to a line connecting 2 points
+     * Represents the direction of the circle relative to a line connecting 2 points
      * on the XZ plane.
      * This enum provides a way to specify the direction of a circle relative
      * to a line from point 1 to point 2.
