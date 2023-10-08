@@ -7,12 +7,12 @@ import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.MatrixUtils
 import java.lang.IllegalArgumentException
 
-object CircleEnvelopeWrapper {
+object TrigonometricEnvelopeWrapper {
 
     /**
      * Represents the orientation of the circle relative to a line connecting 2 points
-     * in 2D space.
-     * This enum provides a way to specify the direction of a circle relative
+     * in 2D/3D space.
+     * This enum provides a way to specify the direction/orientation of a circle relative
      * to a line from point 1 to point 2.
      *
      * Visualize a line between point 1 and point 2. You're at point 1 and are facing point 2.
@@ -29,6 +29,26 @@ object CircleEnvelopeWrapper {
          * 2D Circle to the left of the line.
          */
         LEFT,
+
+        /**
+         * 3D Circle from the right side of the line, below it.
+         */
+        RIGHT_DOWN,
+
+        /**
+         * 3D Circle from the right side of the line, above it.
+         */
+        RIGHT_UP,
+
+        /**
+         * 3D Circle from the left side of the line, below it.
+         */
+        LEFT_DOWN,
+
+        /**
+         * 3D Circle from the left side of the line, above it.
+         */
+        LEFT_UP
     }
 
     /**
@@ -62,14 +82,18 @@ object CircleEnvelopeWrapper {
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
         val trigFunc =
-            if (circleDirection == CircleDirection.LEFT && vectorComponent == VectorComponent.X)
+            if ((circleDirection == CircleDirection.LEFT || circleDirection == CircleDirection.LEFT_UP || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if (circleDirection == CircleDirection.LEFT && vectorComponent == VectorComponent.Z)
+            else if ((circleDirection == CircleDirection.LEFT || circleDirection == CircleDirection.LEFT_UP || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if (circleDirection == CircleDirection.RIGHT && vectorComponent == VectorComponent.X)
+            else if ((circleDirection == CircleDirection.RIGHT || circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if (circleDirection == CircleDirection.RIGHT && vectorComponent == VectorComponent.Z)
+            else if ((circleDirection == CircleDirection.RIGHT || circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
+            else if ((circleDirection == CircleDirection.RIGHT_DOWN || circleDirection == CircleDirection.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.SIN
+            else if ((circleDirection == CircleDirection.RIGHT_UP || circleDirection == CircleDirection.LEFT_UP) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.COS
             else
                 throw IllegalArgumentException("Invalid combination of circle orientation & vector component")
 
