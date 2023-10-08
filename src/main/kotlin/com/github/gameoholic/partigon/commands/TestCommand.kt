@@ -3,10 +3,7 @@ package com.github.gameoholic.partigon.commands
 
 import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
-import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
-import com.github.gameoholic.partigon.particle.envelope.Envelope
-import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
-import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
+import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
@@ -43,6 +40,12 @@ object TestCommand : CommandExecutor {
         prevParticle?.stop()
         prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
+
+                LineEnvelope(Envelope.PropertyType.POS_X,
+                    ConstantEnvelope(Envelope.PropertyType.NONE, "0.0"),
+                    ConstantEnvelope(Envelope.PropertyType.NONE, "2.0"),
+                    RepeatLoop(120)
+                ),
                 *circleEnvelopeGroup(
                     Utils.Pair(0.0, 0.0),
                     Utils.Pair(1.0, 1.0),
