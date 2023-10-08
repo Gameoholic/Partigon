@@ -158,7 +158,7 @@ object CircleEnvelopeWrapper {
             loop,
             completion,
         ),
-        StaticEnvelope(Envelope.PropertyType.POS_Y, 0.0),
+        ConstantEnvelope(Envelope.PropertyType.POS_Y, 0.0),
         circleEnvelope(
             Envelope.PropertyType.POS_Z,
             position1.z,
