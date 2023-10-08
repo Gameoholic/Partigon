@@ -41,7 +41,7 @@ object MatrixUtils {
     fun applyRotationAroundPoint(
         point: Utils.Vector<Double>,
         options: RotationMatrixOptions
-    ): Vector3D {
+    ): Utils.Vector<Double> {
         val angleRadians = Math.toRadians(options.angle)
 
         val pointMatrix = MatrixUtils.createRealMatrix(
@@ -83,7 +83,7 @@ object MatrixUtils {
         val newY = newPointMatrix.data[1][0]
         val newZ = newPointMatrix.data[2][0]
 
-        return Vector3D(newX, newY, newZ)
+        return Utils.Vector(newX, newY, newZ)
     }
 
 

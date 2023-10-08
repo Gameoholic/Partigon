@@ -2,6 +2,7 @@ package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.MatrixUtils
+import com.github.gameoholic.partigon.util.Utils
 import net.objecthunter.exp4j.ExpressionBuilder
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import java.lang.IllegalArgumentException
@@ -65,11 +66,13 @@ open class BasicEnvelope(
             envelopeGroup?.let {
                 if (it.rotationMatrixOptions == null) return@let
 
+
                 it.rotationMatrixOptions.forEach {
                     rotationOptions ->
+
                 }
                 val newPosition = MatrixUtils.applyRotationAroundPoint(
-                    Vector3D(
+                    Utils.Vector(
                         it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                         it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                         it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
