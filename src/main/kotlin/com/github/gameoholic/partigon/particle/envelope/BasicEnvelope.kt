@@ -67,18 +67,25 @@ open class BasicEnvelope(
                 if (it.rotationMatrixOptions == null) return@let
 
 
+                // get positions from other envelopes
+                var newPosition = Utils.Vector(
+                    it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                    it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                    it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                )
+                // apply all rotation matrices
                 it.rotationMatrixOptions.forEach {
                     rotationOptions ->
-
+                    newPosition = MatrixUtils.applyRotationAroundPoint(
+                        Utils.Vector(
+                            newPosition.x,
+                            newPosition.y,
+                            newPosition.z
+                        ),
+                        rotationOptions
+                    )
                 }
-                val newPosition = MatrixUtils.applyRotationAroundPoint(
-                    Utils.Vector(
-                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                    ),
-                    it.rotationMatrixOptions
-                )
+
                 return when (propertyType) {
                     Envelope.PropertyType.POS_X -> newPosition.x
                     Envelope.PropertyType.POS_Y -> newPosition.y

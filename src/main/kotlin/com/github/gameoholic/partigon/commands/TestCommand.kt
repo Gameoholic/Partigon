@@ -38,17 +38,19 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                    *circleEnvelopeGroup(
-                        Utils.Vector(0.0, 0.0, 0.0),
-                        Utils.Vector(1.0, 0.0, 1.0),
-                        CircleEnvelopeWrapper.CircleDirection.RIGHT_DOWN,
+                *circleEnvelopeGroup(
+                    Utils.Vector(0.0, 0.0, 0.0),
+                    Utils.Vector(1.0, 0.0, 1.0),
+                    CircleEnvelopeWrapper.CircleDirection.RIGHT_DOWN,
+                    listOf(
                         MatrixUtils.RotationMatrixOptions(
                             Utils.Vector(0.0, 0.0, 0.0),
                             degree,
                             MatrixUtils.RotationType.Z
-                        ),
-                        RepeatLoop(40)
-                    ).getEnvelopes().toTypedArray()
+                        )
+                    ),
+                    RepeatLoop(40)
+                ).getEnvelopes().toTypedArray()
             )
             extra = 0.0
             animationInterval = 20
