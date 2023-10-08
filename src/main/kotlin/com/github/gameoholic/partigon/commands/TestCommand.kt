@@ -7,6 +7,9 @@ import com.github.gameoholic.partigon.particle.envelope.BasicEnvelope
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.MatrixUtils
 import com.github.gameoholic.partigon.util.Utils
@@ -35,38 +38,17 @@ object TestCommand : CommandExecutor {
 
         partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                *EnvelopeGroup(
-                    TrigonometricEnvelope(
-                        Envelope.PropertyType.POS_X,
-                        -1.0,
-                        1.0,
-                        TrigonometricEnvelope.TrigFunc.SIN,
-                        RepeatLoop(80),
-                        completion = 2.0,
-                    ),
-                    TrigonometricEnvelope(
-                        Envelope.PropertyType.POS_Y,
-                        0.0,
-                        0.0,
-                        TrigonometricEnvelope.TrigFunc.SIN,
-                        RepeatLoop(80),
-                        completion = 2.0,
-                    ),
-                    TrigonometricEnvelope(
-                        Envelope.PropertyType.POS_Z,
-                        -1.0,
-                        1.0,
-                        TrigonometricEnvelope.TrigFunc.COS,
-                        RepeatLoop(80),
-                        completion = 2.0,
-                    ),
-                    MatrixUtils.RotationMatrixOptions(
+                    *circleEnvelopeGroup(
                         Utils.Vector(0.0, 0.0, 0.0),
-                        degree,
-                        MatrixUtils.RotationType.Z
-                    )
-                ).getEnvelopes().toTypedArray()
-
+                        Utils.Vector(1.0, 0.0, 1.0),
+                        CircleEnvelopeWrapper.CircleDirection.LEFT_UP,
+                        MatrixUtils.RotationMatrixOptions(
+                            Utils.Vector(0.0, 0.0, 0.0),
+                            degree,
+                            MatrixUtils.RotationType.Z
+                        ),
+                        RepeatLoop(80)
+                    ).getEnvelopes().toTypedArray()
             )
             extra = 0.0
             animationInterval = 1

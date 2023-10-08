@@ -1,9 +1,12 @@
 package com.github.gameoholic.partigon.particle.envelope.wrapper
 
+import com.github.gameoholic.partigon.commands.TestCommand
 import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.MatrixUtils
 import java.lang.IllegalArgumentException
 
 object CircleEnvelopeWrapper {
@@ -23,22 +26,27 @@ object CircleEnvelopeWrapper {
          * 2D Circle to the right of the line.
          */
         RIGHT,
+
         /**
          * 2D Circle to the left of the line.
          */
         LEFT,
+
         /**
          * 3D Circle from the right side of the line, below it.
          */
         RIGHT_DOWN,
+
         /**
          * 3D Circle from the right side of the line, above it.
          */
         RIGHT_UP,
+
         /**
          * 3D Circle from the left side of the line, below it.
          */
         LEFT_DOWN,
+
         /**
          * 3D Circle from the left side of the line, above it.
          */
@@ -97,7 +105,7 @@ object CircleEnvelopeWrapper {
             value2,
             trigFunc,
             loop,
-            completion * 4,
+            completion * 2,
         )
     }
 
@@ -149,35 +157,36 @@ object CircleEnvelopeWrapper {
         position1: Utils.Vector<Double>,
         position2: Utils.Vector<Double>,
         circleDirection: CircleDirection,
+        rotationOptions: MatrixUtils.RotationMatrixOptions,
         loop: Loop,
         completion: Double = 1.0,
-    ): List<TrigonometricEnvelope> = listOf(
-            circleEnvelope(
-                Envelope.PropertyType.POS_X,
-                position1.x,
-                position2.x,
-                circleDirection,
-                loop,
-                completion,
-            ),
-            circleEnvelope(
-                Envelope.PropertyType.POS_Y,
-                position1.y,
-                position2.y,
-                circleDirection,
-                loop,
-                completion,
-            ),
-            circleEnvelope(
-                Envelope.PropertyType.POS_Z,
-                position1.z,
-                position2.z,
-                circleDirection,
-                loop,
-                completion,
-            )
-        )
-
+    ): EnvelopeGroup = EnvelopeGroup(
+        circleEnvelope(
+            Envelope.PropertyType.POS_X,
+            position1.x,
+            position2.x,
+            circleDirection,
+            loop,
+            completion,
+        ),
+        circleEnvelope(
+            Envelope.PropertyType.POS_Y,
+            position1.y,
+            position2.y,
+            circleDirection,
+            loop,
+            completion,
+        ),
+        circleEnvelope(
+            Envelope.PropertyType.POS_Z,
+            position1.z,
+            position2.z,
+            circleDirection,
+            loop,
+            completion,
+        ),
+        rotationOptions
+    )
 
 
 }
