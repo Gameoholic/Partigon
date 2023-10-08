@@ -64,7 +64,7 @@ open class BasicEnvelope(
         // to rotate it properly.
         if (!rawValue)
             envelopeGroup?.let {
-                if (it.rotationMatrixOptions == null) return@let
+                if (it.rotationMatrixOptions.isEmpty()) return@let
 
                 var newPosition = MatrixUtils.applyRotationsAroundPoint(
                     Utils.Vector(

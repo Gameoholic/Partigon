@@ -47,7 +47,7 @@ object TestCommand : CommandExecutor {
                 *circleEnvelopeGroup(
                     Utils.Pair(0.0, 0.0),
                     Utils.Pair(1.0, 1.0),
-                    CircleEnvelopeWrapper.CircleDirection.RIGHT_DOWN,
+                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
                     listOf(
                         MatrixUtils.RotationMatrixOptions(
                             Utils.Vector(0.0, 0.0, 0.0),
