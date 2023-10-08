@@ -27,16 +27,22 @@ import kotlin.math.sin
 object TestCommand : CommandExecutor {
 
     var degree = 0.0
+    var degree2 = 0.0
 
+    var prevParticle: PartigonParticle? = null
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
         if (!args.isNullOrEmpty()) {
             degree = args[0]!!.toDouble()
         }
+        if (!args.isNullOrEmpty() && args.size > 1) {
+            degree2 = args[1]!!.toDouble()
+        }
 
 
-        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
+        prevParticle?.stop()
+        prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
                     Utils.Vector(0.0, 0.0, 0.0),
@@ -47,6 +53,11 @@ object TestCommand : CommandExecutor {
                             Utils.Vector(0.0, 0.0, 0.0),
                             degree,
                             MatrixUtils.RotationType.Z
+                        ),
+                        MatrixUtils.RotationMatrixOptions(
+                            Utils.Vector(0.0, 0.0, 0.0),
+                            degree2,
+                            MatrixUtils.RotationType.X
                         )
                     ),
                     RepeatLoop(40)
@@ -55,7 +66,8 @@ object TestCommand : CommandExecutor {
             extra = 0.0
             animationInterval = 20
             animationFrameAmount = 40
-        }.start()
+        }
+        prevParticle?.start()
 
         return true
 

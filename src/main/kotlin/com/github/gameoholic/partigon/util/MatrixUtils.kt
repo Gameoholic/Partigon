@@ -36,7 +36,11 @@ object MatrixUtils {
 
     }
 
-    data class RotationMatrixOptions(val rotPoint: Utils.Vector<Double>, val angle: Double, val rotationType: RotationType)
+    data class RotationMatrixOptions(
+        val rotPoint: Utils.Vector<Double>,
+        val angle: Double,
+        val rotationType: RotationType
+    )
 
     fun applyRotationAroundPoint(
         point: Utils.Vector<Double>,
@@ -86,5 +90,15 @@ object MatrixUtils {
         return Utils.Vector(newX, newY, newZ)
     }
 
+    fun applyRotationsAroundPoint(
+        point: Utils.Vector<Double>,
+        options: List<RotationMatrixOptions>
+    ): Utils.Vector<Double> {
+        var newPoint = point
+        options.forEach {
+            newPoint = applyRotationAroundPoint(newPoint, it)
+        }
+        return newPoint
+    }
 
 }
