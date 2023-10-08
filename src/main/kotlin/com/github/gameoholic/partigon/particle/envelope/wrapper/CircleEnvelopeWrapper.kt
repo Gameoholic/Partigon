@@ -140,7 +140,6 @@ object CircleEnvelopeWrapper {
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
-     * @throws IllegalArgumentException If the method doesn't support the property type provided.
      * @return The envelope group used to create the circle.
      */
     fun circleEnvelopeGroup(
