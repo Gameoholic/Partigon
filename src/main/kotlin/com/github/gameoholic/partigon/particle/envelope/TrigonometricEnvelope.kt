@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.EnvelopeTriple
 import com.github.gameoholic.partigon.util.LoggerUtil
 
 //TODO: fix extra frames bug
@@ -19,8 +20,8 @@ import com.github.gameoholic.partigon.util.LoggerUtil
 //todo: if completion above 1.0 or below 0.0 throw exception, in all envelopes.
 open class TrigonometricEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: Any,
-    value2: Any,
+    value1: Envelope,
+    value2: Envelope,
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
@@ -32,11 +33,6 @@ open class TrigonometricEnvelope(
     enum class TrigFunc(val value: String) { SIN("sin"), COS("cos"), TAN("tan"), COT("cot"), COSEC("cosec"), SEC("sec") }
 
     init {
-        if ((value1 !is Int && value1 !is Double && value1 !is Envelope)
-            || (value2 !is Int && value2 !is Double && value2 !is Envelope)
-        )
-            throw IllegalArgumentException("Unsupported value types.")
-
         val animProgress = "frame_index / ${(loop.envelopeDuration - 1)}" //The animation progress, from 0.0 to 1.0
 
         val nestedEnvelopesList = mutableListOf<Envelope>()

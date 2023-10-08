@@ -8,8 +8,11 @@ import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWr
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
+import com.github.gameoholic.partigon.util.DoubleTriple
+import com.github.gameoholic.partigon.util.EnvelopePair
 import com.github.gameoholic.partigon.util.MatrixUtils
 import com.github.gameoholic.partigon.util.Utils
+import com.github.gameoholic.partigon.util.Utils.envelope
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -40,24 +43,23 @@ object TestCommand : CommandExecutor {
         prevParticle?.stop()
         prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-
                 LineEnvelope(Envelope.PropertyType.POS_X,
                     ConstantEnvelope(Envelope.PropertyType.NONE, "0.0"),
                     ConstantEnvelope(Envelope.PropertyType.NONE, "2.0"),
                     RepeatLoop(120)
                 ),
                 *circleEnvelopeGroup(
-                    Utils.Pair(0.0, 0.0),
-                    Utils.Pair(1.0, 1.0),
+                    EnvelopePair(0.0.envelope, 0.0.envelope),
+                    EnvelopePair(1.0.envelope, 1.0.envelope),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT,
                     listOf(
                         MatrixUtils.RotationMatrixOptions(
-                            Utils.Vector(0.0, 0.0, 0.0),
+                            DoubleTriple(0.0, 0.0, 0.0),
                             degree,
                             MatrixUtils.RotationType.Z
                         ),
                         MatrixUtils.RotationMatrixOptions(
-                            Utils.Vector(0.0, 0.0, 0.0),
+                            DoubleTriple(0.0, 0.0, 0.0),
                             degree2,
                             MatrixUtils.RotationType.X
                         )

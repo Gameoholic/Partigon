@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.EnvelopeTriple
 import com.github.gameoholic.partigon.util.LoggerUtil
 
 
@@ -16,8 +17,8 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  */
 class LineEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: Any,
-    value2: Any,
+    value1: Envelope,
+    value2: Envelope,
     override val loop: Loop,
     override val completion: Double = 1.0): BasicEnvelope(propertyType, loop, completion, "", listOf())
 {
@@ -25,13 +26,9 @@ class LineEnvelope(
     override val nestedEnvelopes: List<Envelope>
 
     init {
-        if ((value1 !is Int && value1 !is Double && value1 !is Envelope)
-            || (value2 !is Int && value2 !is Double && value2 !is Envelope))
-            throw IllegalArgumentException("Unsupported value types.")
-
         val nestedEnvelopesList = mutableListOf<Envelope>()
         var value1String = value1.toString()
-        if (value1 is Envelope) {
+        if (value1 is Envelope) { //todo: it's all envelopes now so it needs to be re-worked
             /**
              * Since we don't know the actual nested envelope value initialization-time,
              * we give it a placeholder (@ENV_X@) and replace it with the nested envelope's

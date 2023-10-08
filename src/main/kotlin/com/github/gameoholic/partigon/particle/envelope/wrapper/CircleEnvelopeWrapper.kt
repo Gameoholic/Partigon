@@ -1,9 +1,8 @@
 package com.github.gameoholic.partigon.particle.envelope.wrapper
 
 import com.github.gameoholic.partigon.particle.envelope.*
-import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.particle.loop.Loop
-import com.github.gameoholic.partigon.util.MatrixUtils
+import com.github.gameoholic.partigon.util.*
 import java.lang.IllegalArgumentException
 
 object CircleEnvelopeWrapper {
@@ -54,8 +53,8 @@ object CircleEnvelopeWrapper {
      */
     fun circleEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: Any,
-        value2: Any,
+        value1: Envelope,
+        value2: Envelope,
         circleDirection: CircleDirection,
         vectorComponent: VectorComponent,
         loop: Loop,
@@ -104,8 +103,8 @@ object CircleEnvelopeWrapper {
      */
     fun circleEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: Any,
-        value2: Any,
+        value1: Envelope,
+        value2: Envelope,
         circleDirection: CircleDirection,
         loop: Loop,
         completion: Double = 1.0,
@@ -133,8 +132,8 @@ object CircleEnvelopeWrapper {
      * Envelope wrapper that creates a circle between 2 points
      * in the XZ plane, with rotations.
      *
-     * @param position1 The first position to interpolate.
-     * @param position2 The second position to interpolate.
+     * @param position1 The first position to interpolate (x,z).
+     * @param position2 The second position to interpolate (x,z).
      * @param circleDirection The direction of the circle.
      * @param rotationOptions The list of the rotations to apply to the circle.
      * @param loop The loop to be used with the envelope.
@@ -143,8 +142,8 @@ object CircleEnvelopeWrapper {
      * @return The envelope group used to create the circle.
      */
     fun circleEnvelopeGroup(
-        position1: Utils.Pair<Any>,
-        position2: Utils.Pair<Any>,
+        position1: EnvelopePair,
+        position2: EnvelopePair,
         circleDirection: CircleDirection,
         rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,
@@ -152,8 +151,8 @@ object CircleEnvelopeWrapper {
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(
             Envelope.PropertyType.POS_X,
-            position1.x,
-            position2.x,
+            position1.first,
+            position2.first,
             circleDirection,
             loop,
             completion,
@@ -161,8 +160,8 @@ object CircleEnvelopeWrapper {
         ConstantEnvelope(Envelope.PropertyType.POS_Y, 0.0),
         circleEnvelope(
             Envelope.PropertyType.POS_Z,
-            position1.z,
-            position2.z,
+            position1.second,
+            position2.second,
             circleDirection,
             loop,
             completion,

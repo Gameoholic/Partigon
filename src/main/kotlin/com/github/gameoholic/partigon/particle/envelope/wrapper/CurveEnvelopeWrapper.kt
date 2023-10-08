@@ -1,12 +1,8 @@
 package com.github.gameoholic.partigon.particle.envelope.wrapper
 
 import com.github.gameoholic.partigon.particle.envelope.*
-import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.particle.loop.Loop
-import com.github.gameoholic.partigon.util.MatrixUtils
-import com.github.gameoholic.partigon.util.Utils.x
-import com.github.gameoholic.partigon.util.Utils.y
-import com.github.gameoholic.partigon.util.Utils.z
+import com.github.gameoholic.partigon.util.*
 import java.lang.IllegalArgumentException
 
 object CurveEnvelopeWrapper {
@@ -77,8 +73,8 @@ object CurveEnvelopeWrapper {
      */
     fun curveEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: Any,
-        value2: Any,
+        value1: Envelope,
+        value2: Envelope,
         curveOrientation: CurveOrientation,
         vectorComponent: VectorComponent,
         loop: Loop,
@@ -129,8 +125,8 @@ object CurveEnvelopeWrapper {
      */
     fun curveEnvelope(
         propertyType: Envelope.PropertyType,
-        value1: Any,
-        value2: Any,
+        value1: Envelope,
+        value2: Envelope,
         curveOrientation: CurveOrientation,
         loop: Loop,
         completion: Double = 1.0,
@@ -159,8 +155,8 @@ object CurveEnvelopeWrapper {
      * Envelope wrapper that creates a curve between 2 points
      * in 3D space, with rotations.
      *
-     * @param position1 The first position to interpolate.
-     * @param position2 The second position to interpolate.
+     * @param position1 The first position to interpolate (x,y,z).
+     * @param position2 The second position to interpolate (x,y,z).
      * @param curveOrientation The orientation of the curve.
      * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
@@ -169,8 +165,8 @@ object CurveEnvelopeWrapper {
      * @return The envelope group used to create the curve.
      */
     fun curveEnvelopeGroup(
-        position1: Utils.Vector<Any>,
-        position2: Utils.Vector<Any>,
+        position1: EnvelopeTriple,
+        position2: EnvelopeTriple,
         curveOrientation: CurveOrientation,
         rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,

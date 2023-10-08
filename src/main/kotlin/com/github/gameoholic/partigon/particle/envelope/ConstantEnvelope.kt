@@ -19,7 +19,7 @@ class ConstantEnvelope(
     override val nestedEnvelopes: List<Envelope>
     init {
         if ((value !is Int && value !is Double && value !is Envelope))
-            throw IllegalArgumentException("Unsupported value types.")
+            throw IllegalArgumentException("Unsupported value type value - ${value::class}.")
 
         val nestedEnvelopesList = mutableListOf<Envelope>()
         var valueString = value.toString()

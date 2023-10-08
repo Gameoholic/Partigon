@@ -1,10 +1,8 @@
 package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
-import com.github.gameoholic.partigon.util.MatrixUtils
-import com.github.gameoholic.partigon.util.Utils
+import com.github.gameoholic.partigon.util.*
 import net.objecthunter.exp4j.ExpressionBuilder
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 
@@ -67,7 +65,7 @@ open class BasicEnvelope(
                 if (it.rotationMatrixOptions.isEmpty()) return@let
 
                 var newPosition = MatrixUtils.applyRotationsAroundPoint(
-                    Utils.Vector(
+                    Triple(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
@@ -80,7 +78,6 @@ open class BasicEnvelope(
                     else -> throw IllegalArgumentException("Non-position envelope cannot be inside of an envelope group.")
                 }
             }
-        //todo: apply individual transformations
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")

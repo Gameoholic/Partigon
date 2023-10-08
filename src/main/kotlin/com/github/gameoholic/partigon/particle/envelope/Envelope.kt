@@ -43,7 +43,7 @@ interface Envelope {
      *
      * @param frameIndex The frame index.
      * @param rawValue Whether to return the value before any external transformations have been applied.
-     * @return The value of the envelope at a frame t, or null if envelope is disabled.
+     * @return The value of the envelope at a frame t, or null if envelope is disabled. If rawValue set to true, returns the value before any external transformations have been applied.
      */
     fun getValueAt(frameIndex: Int, rawValue: Boolean = false): Double?
 
