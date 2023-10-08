@@ -31,11 +31,11 @@ object CircleEnvelopeWrapper {
     }
 
     /**
-     * Represents the component (X,Y,Z) of a vector.
-     * This is used in circle envelopes with circle orientations to automatically
+     * Represents the component (X,Z) of a vector.
+     * This is used in circle envelopes with circle directions to automatically
      * determine the trigonometric function to use.
      */
-    enum class VectorComponent { X, Y, Z }
+    enum class VectorComponent { X, Z }
 
     /**
      * Envelope wrapper that when applied on multiple properties,
