@@ -41,18 +41,18 @@ object TestCommand : CommandExecutor {
                     *circleEnvelopeGroup(
                         Utils.Vector(0.0, 0.0, 0.0),
                         Utils.Vector(1.0, 0.0, 1.0),
-                        CircleEnvelopeWrapper.CircleDirection.LEFT_UP,
+                        CircleEnvelopeWrapper.CircleDirection.RIGHT_DOWN,
                         MatrixUtils.RotationMatrixOptions(
                             Utils.Vector(0.0, 0.0, 0.0),
                             degree,
                             MatrixUtils.RotationType.Z
                         ),
-                        RepeatLoop(80)
+                        RepeatLoop(40)
                     ).getEnvelopes().toTypedArray()
             )
             extra = 0.0
-            animationInterval = 1
-            animationFrameAmount = 5
+            animationInterval = 20
+            animationFrameAmount = 40
         }.start()
 
         return true

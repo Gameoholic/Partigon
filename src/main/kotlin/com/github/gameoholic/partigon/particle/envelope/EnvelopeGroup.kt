@@ -6,7 +6,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope,
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    val rotationMatrixOptions: MatrixUtils.RotationMatrixOptions?
+    val rotationMatrixOptions: List<MatrixUtils.RotationMatrixOptions>?
 ) {
     //todo: support for <3 amount of envelopes.
 

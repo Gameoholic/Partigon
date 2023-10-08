@@ -39,7 +39,7 @@ object MatrixUtils {
     data class RotationMatrixOptions(val rotPoint: Utils.Vector<Double>, val angle: Double, val rotationType: RotationType)
 
     fun applyRotationAroundPoint(
-        point: Vector3D,
+        point: Utils.Vector<Double>,
         options: RotationMatrixOptions
     ): Vector3D {
         val angleRadians = Math.toRadians(options.angle)

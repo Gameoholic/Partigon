@@ -65,6 +65,9 @@ open class BasicEnvelope(
             envelopeGroup?.let {
                 if (it.rotationMatrixOptions == null) return@let
 
+                it.rotationMatrixOptions.forEach {
+                    rotationOptions ->
+                }
                 val newPosition = MatrixUtils.applyRotationAroundPoint(
                     Vector3D(
                         it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,

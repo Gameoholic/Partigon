@@ -157,7 +157,7 @@ object CircleEnvelopeWrapper {
         position1: Utils.Vector<Double>,
         position2: Utils.Vector<Double>,
         circleDirection: CircleDirection,
-        rotationOptions: MatrixUtils.RotationMatrixOptions,
+        rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
