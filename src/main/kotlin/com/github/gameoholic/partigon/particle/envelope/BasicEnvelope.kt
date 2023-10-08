@@ -19,8 +19,8 @@ open class BasicEnvelope(
     override val propertyType: Envelope.PropertyType,
     override val loop: Loop,
     override val completion: Double,
-    override val envelopeExpression: String = "",
-    override val nestedEnvelopes: List<Envelope> = listOf()
+    override val envelopeExpression: String,
+    override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
 
     override var disabled = false

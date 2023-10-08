@@ -1,10 +1,8 @@
 package com.github.gameoholic.partigon.particle.envelope.wrapper
 
 import com.github.gameoholic.partigon.commands.TestCommand
+import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.util.Utils
-import com.github.gameoholic.partigon.particle.envelope.Envelope
-import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
-import com.github.gameoholic.partigon.particle.envelope.TrigonometricEnvelope
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.MatrixUtils
 import java.lang.IllegalArgumentException
@@ -154,8 +152,8 @@ object CircleEnvelopeWrapper {
 
 
     fun circleEnvelopeGroup(
-        position1: Utils.Vector<Double>,
-        position2: Utils.Vector<Double>,
+        position1: Utils.Pair<Double>,
+        position2: Utils.Pair<Double>,
         circleDirection: CircleDirection,
         rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,
@@ -169,14 +167,7 @@ object CircleEnvelopeWrapper {
             loop,
             completion,
         ),
-        circleEnvelope(
-            Envelope.PropertyType.POS_Y,
-            position1.y,
-            position2.y,
-            circleDirection,
-            loop,
-            completion,
-        ),
+        StaticEnvelope(Envelope.PropertyType.POS_Y, 0.0),
         circleEnvelope(
             Envelope.PropertyType.POS_Z,
             position1.z,

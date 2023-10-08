@@ -24,7 +24,7 @@ open class TrigonometricEnvelope(
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
-) : BasicEnvelope(propertyType, loop, completion) {
+) : BasicEnvelope(propertyType, loop, completion, "", listOf()) {
 
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>

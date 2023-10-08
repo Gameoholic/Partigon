@@ -19,7 +19,7 @@ class LineEnvelope(
     value1: Any,
     value2: Any,
     override val loop: Loop,
-    override val completion: Double = 1.0): BasicEnvelope(propertyType, loop, completion)
+    override val completion: Double = 1.0): BasicEnvelope(propertyType, loop, completion, "", listOf())
 {
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
@@ -47,7 +47,7 @@ class LineEnvelope(
             nestedEnvelopesList.add(value2)
         }
 
-        envelopeExpression = "$value1 + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1})"
+        envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1})"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created line envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
