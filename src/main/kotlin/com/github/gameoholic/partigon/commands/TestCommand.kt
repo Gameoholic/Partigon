@@ -45,8 +45,8 @@ object TestCommand : CommandExecutor {
         prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
-                    Utils.Vector(0.0, 0.0, 0.0),
-                    Utils.Vector(1.0, 0.0, 1.0),
+                    Utils.Pair(0.0, 0.0),
+                    Utils.Pair(1.0, 1.0),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT_DOWN,
                     listOf(
                         MatrixUtils.RotationMatrixOptions(

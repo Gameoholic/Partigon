@@ -9,7 +9,7 @@ class StaticEnvelope(
 ) :
     BasicEnvelope(
         propertyType,
-        RepeatLoop(0),
+        RepeatLoop(Int.MAX_VALUE), // It doesn't matter what value we provide here as long as it's >0. I chose a high number to avoid logger spam when loop resets
         1.0,
         "",
         listOf()
