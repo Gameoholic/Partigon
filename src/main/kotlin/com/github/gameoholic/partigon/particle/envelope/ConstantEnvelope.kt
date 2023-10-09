@@ -1,5 +1,6 @@
 package com.github.gameoholic.partigon.particle.envelope
 
+import com.github.gameoholic.partigon.particle.loop.ContinueLoop
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.LoggerUtil
 
@@ -15,9 +16,9 @@ class ConstantEnvelope(
     value: Number
 ) :
     BasicEnvelope(
-        propertyType, //todo: make loop lengths nullable so I don't have to do this stupid thing here
+        propertyType,
         "",
-        RepeatLoop(Int.MAX_VALUE), // It doesn't matter what value we provide here as long as it's >0. I chose a high number to avoid logger spam when loop resets
+        ContinueLoop(0),
         1.0,
         listOf()
     ) {
