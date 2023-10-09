@@ -10,9 +10,15 @@ package com.github.gameoholic.partigon.particle.loop
  * on point1, but one frame before it.
  *
  * @param duration The duration of the loop, both directions included. Must be even.
+ *
+ * @throws IllegalArgumentException If loop duration was not above 0.
  */ //todo: investigate if still works with odd. if not throw exception.
 class BounceLoop(override val duration: Int) : Loop {
     override val envelopeDuration = duration / 2 + 1
+    init {
+        if (duration <= 0)
+            throw IllegalArgumentException("Bounce loop duration must be above 0.")
+    }
     override fun applyLoop(frameIndex: Int): Int {
         //For loop index 0,1,2,3 half loop index will be 0,1,2,0
         val loopIndex = frameIndex % duration

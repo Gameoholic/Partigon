@@ -41,7 +41,7 @@ object TestCommand : CommandExecutor {
                     EnvelopePair((-1.0).envelope, 0.0.envelope),
                     EnvelopePair(0.0.envelope, (1.0).envelope),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT,
-                    RepeatLoop(80),
+                    RepeatLoop(0),
                     rotationOptions = listOf(
                         MatrixUtils.RotationOptions(
                             DoubleTriple(0.0, 0.0, 0.0),
