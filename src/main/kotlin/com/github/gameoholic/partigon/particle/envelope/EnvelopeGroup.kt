@@ -17,7 +17,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_X, 0.0),
     val envelopeY: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_Y, 0.0),
     val envelopeZ: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_Z, 0.0),
-    val rotationMatrixOptions: List<MatrixUtils.RotationMatrixOptions>
+    val rotationMatrixOptions: List<MatrixUtils.RotationMatrixOptions> = listOf()
 ) {
     init {
         if (envelopeX.envelopeGroup != null || envelopeY.envelopeGroup != null || envelopeZ.envelopeGroup != null)

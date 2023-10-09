@@ -145,8 +145,8 @@ object CircleEnvelopeWrapper {
         position1: EnvelopePair,
         position2: EnvelopePair,
         circleDirection: CircleDirection,
-        rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
         loop: Loop,
+        rotationOptions: List<MatrixUtils.RotationMatrixOptions> = listOf(),
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(

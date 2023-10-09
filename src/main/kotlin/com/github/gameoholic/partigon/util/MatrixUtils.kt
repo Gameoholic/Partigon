@@ -42,6 +42,7 @@ object MatrixUtils {
         val rotationType: RotationType
     )
 
+
     fun applyRotationAroundPoint(
         point: DoubleTriple,
         options: RotationMatrixOptions

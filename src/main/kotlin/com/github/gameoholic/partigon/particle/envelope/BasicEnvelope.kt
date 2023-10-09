@@ -9,15 +9,19 @@ import java.lang.RuntimeException
 
 /**
  * Basic envelope that animates a property of a particle animation with an expression.
+ * It is preferred not to use this, and use other envelopes that extend this class instead.
+ *
  * @param propertyType The property for the envelope to affect.
  * @param envelopeExpression The mathematical expression of the envelope. frame_index is the variable that corresponds to the tick.
  * @param loop The loop to be used with the envelope.
+ * @param completion How much of the animation to animate. Should be above 0.0. 1.0 for its entirety.
+ * @param nestedEnvelopes The nested envelopes.
  */
 open class BasicEnvelope(
     override val propertyType: Envelope.PropertyType,
+    override val envelopeExpression: String,
     override val loop: Loop,
     override val completion: Double,
-    override val envelopeExpression: String,
     override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
 
@@ -56,7 +60,6 @@ open class BasicEnvelope(
             updatedEnvelopeExpression = updatedEnvelopeExpression
                 .replace("@ENV_$i@", nestedEnvelopeValue.toString())
         }
-
         // Apply transformations to the envelope, when belonging to a group. This is needed
         // for shapes like circles, where in order to rotate it, all 3 values are needed
         // to rotate it properly.

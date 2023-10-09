@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
+import com.github.gameoholic.partigon.util.EnvelopeTriple
 
 
 /**
@@ -28,13 +29,14 @@ interface Envelope {
      */
     var disabled: Boolean
 
+    /**
+     * The envelope group the envelope belongs to. Null if doesn't belong to one.
+     */
     var envelopeGroup: EnvelopeGroup?
 
     /**
      * How much of the animation is animated.
-     * When used with circle envelopes, for example, if you set it to 0.5,
-     * only half of the circle would be animated.
-     * The value should be between 0 and 1.
+     * The value should be above 0.0. Set to 1.0 for the full animation.
      */
     val completion: Double
 

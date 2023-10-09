@@ -12,15 +12,13 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param value1 The first value to interpolate.
  * @param value2 The second value to interpolate.
  * @param loop The loop to be used with the envelope.
- *
- * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
 class LineEnvelope(
     override val propertyType: Envelope.PropertyType,
     value1: Envelope,
     value2: Envelope,
     override val loop: Loop,
-    override val completion: Double = 1.0): BasicEnvelope(propertyType, loop, completion, "", listOf())
+    override val completion: Double = 1.0): BasicEnvelope(propertyType, "", loop, completion, listOf())
 {
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>

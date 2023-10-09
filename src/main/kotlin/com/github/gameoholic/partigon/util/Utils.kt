@@ -15,5 +15,5 @@ val <T> Triple<*,*,T>.z
 
 object Utils {
     val Number.envelope: ConstantEnvelope
-        get() = ConstantEnvelope(Envelope.PropertyType.NONE, "$this")
+        get() = ConstantEnvelope(Envelope.PropertyType.NONE, this)
 }

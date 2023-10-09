@@ -25,7 +25,7 @@ open class TrigonometricEnvelope(
     trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
-) : BasicEnvelope(propertyType, loop, completion, "", listOf()) {
+) : BasicEnvelope(propertyType, "", loop, completion, listOf()) {
 
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
@@ -60,8 +60,7 @@ open class TrigonometricEnvelope(
             "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion)"
 
         nestedEnvelopes = nestedEnvelopesList.toList()
-
-        LoggerUtil.debug("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
+        LoggerUtil.info("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
 
     }
 

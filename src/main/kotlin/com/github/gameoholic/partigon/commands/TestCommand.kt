@@ -7,6 +7,7 @@ import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
+import com.github.gameoholic.partigon.particle.loop.BounceLoop
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.DoubleTriple
 import com.github.gameoholic.partigon.util.EnvelopePair
@@ -43,16 +44,12 @@ object TestCommand : CommandExecutor {
         prevParticle?.stop()
         prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
             envelopes = listOf(
-                LineEnvelope(Envelope.PropertyType.POS_X,
-                    ConstantEnvelope(Envelope.PropertyType.NONE, "0.0"),
-                    ConstantEnvelope(Envelope.PropertyType.NONE, "2.0"),
-                    RepeatLoop(120)
-                ),
                 *circleEnvelopeGroup(
-                    EnvelopePair(0.0.envelope, 0.0.envelope),
-                    EnvelopePair(1.0.envelope, 1.0.envelope),
+                    EnvelopePair((-1.0).envelope, 0.0.envelope),
+                    EnvelopePair(0.0.envelope, (1.0).envelope),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT,
-                    listOf(
+                    RepeatLoop(40),
+                    rotationOptions = listOf(
                         MatrixUtils.RotationMatrixOptions(
                             DoubleTriple(0.0, 0.0, 0.0),
                             degree,
@@ -64,12 +61,11 @@ object TestCommand : CommandExecutor {
                             MatrixUtils.RotationType.X
                         )
                     ),
-                    RepeatLoop(40)
                 ).getEnvelopes().toTypedArray()
             )
             extra = 0.0
-            animationInterval = 20
-            animationFrameAmount = 40
+            animationInterval = 1
+            animationFrameAmount = 1
         }
         prevParticle?.start()
 
