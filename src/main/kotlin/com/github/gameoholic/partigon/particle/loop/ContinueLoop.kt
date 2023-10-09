@@ -1,8 +1,10 @@
 package com.github.gameoholic.partigon.particle.loop
 
 /**
- * When loop reaches end, will continue running the animation, disregarding the loop.
- * This loop does not affect the frame index.
+ * This loop does not affect the frame index. Nothing changes when
+ * loop reaches end, the animation continues.
+ *
+ * @param duration The duration of the loop (used for envelope calculations).
  */
 class ContinueLoop(override val duration: Int) : Loop {
     override val envelopeDuration = duration

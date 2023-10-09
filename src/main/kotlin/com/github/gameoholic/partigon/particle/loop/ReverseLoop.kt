@@ -1,8 +1,9 @@
 package com.github.gameoholic.partigon.particle.loop
 
 /**
- * When loop reaches end, will reverse the animation, playing it the same way but from point 2 to point 1.
- * Loop duration is for both directions included.
+ * When loop reaches end, reverses the animation, playing it the same way but from point 2 to point 1,
+ * and vice versa.
+ * @param duration The duration of the loop, both directions included.
  */
 class ReverseLoop(override val duration: Int): Loop {
     override val envelopeDuration = duration / 2
