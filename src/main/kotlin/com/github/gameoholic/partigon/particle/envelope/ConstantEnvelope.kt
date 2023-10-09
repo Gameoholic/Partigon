@@ -5,16 +5,14 @@ import com.github.gameoholic.partigon.util.LoggerUtil
 
 
 /**
- * An envelope used for holding a constant value.
+ * An envelope used for holding a constant Numeric value.
  *
  * @param propertyType The property for the envelope to affect.
  * @param value The value.
- *
- * @throws IllegalArgumentException If value is neither a Number nor an Envelope.
  */
-class ConstantEnvelope( //todo: remopve support for passing envelopes .non ested ones.
+class ConstantEnvelope(
     propertyType: Envelope.PropertyType,
-    value: Any
+    value: Number
 ) :
     BasicEnvelope(
         propertyType, //todo: make loop lengths nullable so I don't have to do this stupid thing here
@@ -25,28 +23,11 @@ class ConstantEnvelope( //todo: remopve support for passing envelopes .non ested
     ) {
 
     override val envelopeExpression: String
-    override val nestedEnvelopes: List<Envelope>
+    override val nestedEnvelopes: List<Envelope> = listOf()
     init {
-        if ((value !is Number && value !is Envelope))
-            throw IllegalArgumentException("Unsupported value type $value")
+        envelopeExpression = value.toString()
 
-        val nestedEnvelopesList = mutableListOf<Envelope>()
-        var valueString = value.toString()
-        if (value is Envelope) {
-            /**
-             * Since we don't know the actual nested envelope value initialization-time,
-             * we give it a placeholder (@ENV_X@) and replace it with the nested envelope's
-             * value every tick.
-             */
-            valueString = "@ENV_0@"
-            nestedEnvelopesList.add(value)
-        }
-
-        envelopeExpression = "$valueString"
-        nestedEnvelopes = nestedEnvelopesList.toList()
-
-        LoggerUtil.debug("Created static envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
-
+        LoggerUtil.debug("Created constant envelope: $envelopeExpression")
     }
 
 }
