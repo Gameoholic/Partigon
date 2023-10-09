@@ -67,7 +67,7 @@ open class BasicEnvelope(
             envelopeGroup?.let {
                 if (it.rotationMatrixOptions.isEmpty()) return@let
 
-                var newPosition = MatrixUtils.applyRotationsAroundPoint(
+                var newPosition = MatrixUtils.applyRotationsForPoint(
                     Triple(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,

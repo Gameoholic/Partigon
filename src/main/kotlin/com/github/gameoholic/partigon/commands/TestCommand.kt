@@ -3,26 +3,19 @@ package com.github.gameoholic.partigon.commands
 
 import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
-import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
-import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
-import com.github.gameoholic.partigon.particle.loop.BounceLoop
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.DoubleTriple
 import com.github.gameoholic.partigon.util.EnvelopePair
 import com.github.gameoholic.partigon.util.MatrixUtils
-import com.github.gameoholic.partigon.util.Utils
 import com.github.gameoholic.partigon.util.Utils.envelope
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
-import kotlin.math.cos
-import kotlin.math.sin
 
 
 object TestCommand : CommandExecutor {
@@ -48,17 +41,17 @@ object TestCommand : CommandExecutor {
                     EnvelopePair((-1.0).envelope, 0.0.envelope),
                     EnvelopePair(0.0.envelope, (1.0).envelope),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT,
-                    RepeatLoop(40),
+                    RepeatLoop(80),
                     rotationOptions = listOf(
-                        MatrixUtils.RotationMatrixOptions(
+                        MatrixUtils.RotationOptions(
                             DoubleTriple(0.0, 0.0, 0.0),
                             degree,
-                            MatrixUtils.RotationType.Z
+                            MatrixUtils.RotationType.Z_AXIS
                         ),
-                        MatrixUtils.RotationMatrixOptions(
+                        MatrixUtils.RotationOptions(
                             DoubleTriple(0.0, 0.0, 0.0),
                             degree2,
-                            MatrixUtils.RotationType.X
+                            MatrixUtils.RotationType.X_AXIS
                         )
                     ),
                 ).getEnvelopes().toTypedArray()

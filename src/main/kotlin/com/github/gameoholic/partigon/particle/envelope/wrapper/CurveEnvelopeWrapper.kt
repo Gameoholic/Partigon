@@ -50,7 +50,7 @@ object CurveEnvelopeWrapper {
     }
 
     /**
-     * Represents the component (X,Y,Z) of a vector.
+     * Represents the component (X_AXIS,Y_AXIS,Z_AXIS) of a vector.
      * This is used in curve envelopes with curve orientations to automatically
      * determine the trigonometric function to use.
      */
@@ -168,7 +168,7 @@ object CurveEnvelopeWrapper {
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
         curveOrientation: CurveOrientation,
-        rotationOptions: List<MatrixUtils.RotationMatrixOptions>,
+        rotationOptions: List<MatrixUtils.RotationOptions>,
         loop: Loop,
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(

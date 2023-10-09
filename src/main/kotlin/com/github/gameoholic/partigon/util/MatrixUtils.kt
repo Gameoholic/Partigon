@@ -1,15 +1,21 @@
 package com.github.gameoholic.partigon.util
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
-import java.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
-
+//todo: figure out extensions and this rotationtype enum down below
 object MatrixUtils {
+
+    /**
+     * The type of the rotation to use. It will then rotate around the axis
+     * of the component.
+     */
     enum class RotationType(val rotationMatrix: (Double) -> (RealMatrix)) {
-        X({ angle ->
+        /**
+         * Will rotate around the X axis.
+         */
+        X_AXIS({ angle ->
             val rotationMatrixData = arrayOf(
                 doubleArrayOf(1.0, 0.0, 0.0),
                 doubleArrayOf(0.0, cos(angle), -sin(angle)),
@@ -17,7 +23,10 @@ object MatrixUtils {
             )
             MatrixUtils.createRealMatrix(rotationMatrixData)
         }),
-        Y({ angle ->
+        /**
+         * Will rotate around the Y axis.
+         */
+        Y_AXIS({ angle ->
             val rotationMatrixData = arrayOf(
                 doubleArrayOf(cos(angle), 0.0, sin(angle)),
                 doubleArrayOf(0.0, 1.0, 0.0), //row 2
@@ -25,7 +34,10 @@ object MatrixUtils {
             )
             MatrixUtils.createRealMatrix(rotationMatrixData)
         }),
-        Z({ angle ->
+        /**
+         * Will rotate around the Z axis.
+         */
+        Z_AXIS({ angle ->
             val rotationMatrixData = arrayOf(
                 doubleArrayOf(cos(angle), -sin(angle), 0.0),
                 doubleArrayOf(sin(angle), cos(angle), 0.0),
@@ -35,17 +47,28 @@ object MatrixUtils {
         })
 
     }
-
-    data class RotationMatrixOptions(
-        val rotPoint: DoubleTriple,
+    /**
+     * The options for the rotation.
+     * @param rotationPoint The point of reference for the rotation. It will rotate around it.
+     * @param angle The angle of the rotation, in degrees.
+     * @param rotationType The type of rotation.
+     */
+    data class RotationOptions(
+        val rotationPoint: DoubleTriple,
         val angle: Double,
         val rotationType: RotationType
     )
 
 
-    fun applyRotationAroundPoint(
+    /**
+     * Applies a rotation to a point, given a point and rotation options.
+     * @param point The point to rotate.
+     * @param options The rotation options.
+     * @return The new point with the rotation applied.
+     */
+    fun applyRotationForPoint(
         point: DoubleTriple,
-        options: RotationMatrixOptions
+        options: RotationOptions
     ): DoubleTriple {
         val angleRadians = Math.toRadians(options.angle)
 
@@ -59,9 +82,9 @@ object MatrixUtils {
 
         val rotationPointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
-                doubleArrayOf(options.rotPoint.x),
-                doubleArrayOf(options.rotPoint.y),
-                doubleArrayOf(options.rotPoint.z)
+                doubleArrayOf(options.rotationPoint.x),
+                doubleArrayOf(options.rotationPoint.y),
+                doubleArrayOf(options.rotationPoint.z)
             )
         )
 
@@ -91,13 +114,19 @@ object MatrixUtils {
         return DoubleTriple(newX, newY, newZ)
     }
 
-    fun applyRotationsAroundPoint(
+    /**
+     * Applies multiple rotations to a point, given a point and a list of rotation options.
+     * @param point The point to rotate.
+     * @param options The rotation options list.
+     * @return The new point with all the rotations applied.
+     */
+    fun applyRotationsForPoint(
         point: DoubleTriple,
-        options: List<RotationMatrixOptions>
+        options: List<RotationOptions>
     ): DoubleTriple {
         var newPoint = point
         options.forEach {
-            newPoint = applyRotationAroundPoint(newPoint, it)
+            newPoint = applyRotationForPoint(newPoint, it)
         }
         return newPoint
     }

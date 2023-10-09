@@ -6,9 +6,9 @@ import java.lang.RuntimeException
 /**
  * Used for grouping multiple position envelopes together.
  * Sets the group of the envelopes provided to this one on init.
- * @param envelopeX The envelope used for the X position.
- * @param envelopeY The envelope used for the Y position.
- * @param envelopeZ The envelope used for the Z position.
+ * @param envelopeX The envelope used for the X_AXIS position.
+ * @param envelopeY The envelope used for the Y_AXIS position.
+ * @param envelopeZ The envelope used for the Z_AXIS position.
  * @param rotationMatrixOptions List of rotation options to be used on the positions.
  *
  * @throws RuntimeException If one of the envelopes already has a group assigned.
@@ -17,7 +17,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_X, 0.0),
     val envelopeY: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_Y, 0.0),
     val envelopeZ: Envelope = ConstantEnvelope(Envelope.PropertyType.POS_Z, 0.0),
-    val rotationMatrixOptions: List<MatrixUtils.RotationMatrixOptions> = listOf()
+    val rotationMatrixOptions: List<MatrixUtils.RotationOptions> = listOf()
 ) {
     init {
         if (envelopeX.envelopeGroup != null || envelopeY.envelopeGroup != null || envelopeZ.envelopeGroup != null)

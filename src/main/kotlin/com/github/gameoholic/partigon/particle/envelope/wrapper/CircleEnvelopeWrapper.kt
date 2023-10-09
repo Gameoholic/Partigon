@@ -30,7 +30,7 @@ object CircleEnvelopeWrapper {
     }
 
     /**
-     * Represents the component (X,Z) of a vector.
+     * Represents the component (X_AXIS,Z_AXIS) of a vector.
      * This is used in circle envelopes with circle directions to automatically
      * determine the trigonometric function to use.
      */
@@ -146,7 +146,7 @@ object CircleEnvelopeWrapper {
         position2: EnvelopePair,
         circleDirection: CircleDirection,
         loop: Loop,
-        rotationOptions: List<MatrixUtils.RotationMatrixOptions> = listOf(),
+        rotationOptions: List<MatrixUtils.RotationOptions> = listOf(),
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(
