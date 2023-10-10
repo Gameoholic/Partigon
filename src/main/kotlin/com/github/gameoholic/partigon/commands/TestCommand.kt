@@ -4,6 +4,7 @@ package com.github.gameoholic.partigon.commands
 import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.envelope.Envelope
+import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelope
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
@@ -24,35 +25,65 @@ import org.bukkit.util.Vector
 
 object TestCommand : CommandExecutor {
 
-
-    var prevParticle: PartigonParticle? = null
-
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
         //todo now: envelope group recieve offset too, same for circle envelope wrappers., clone/mirror particles
-        prevParticle?.stop()
 
-        prevParticle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
+        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
+                    EnvelopeGroup.EnvelopeGroupType.POSITION,
                     EnvelopePair((-3.0).envelope, 0.0.envelope),
                     EnvelopePair(0.0.envelope, (3.0).envelope),
                     CircleEnvelopeWrapper.CircleDirection.RIGHT,
                     RepeatLoop(100),
                 ).getEnvelopes().toTypedArray(),
 
-                circleEnvelope(Envelope.PropertyType.OFFSET_X, (3.0).envelope, 0.0.envelope,
-                    CircleEnvelopeWrapper.CircleDirection.RIGHT, CircleEnvelopeWrapper.VectorComponent.X, RepeatLoop(100)),
-
-                circleEnvelope(Envelope.PropertyType.OFFSET_Z, 0.0.envelope, (-3.0).envelope,
-                    CircleEnvelopeWrapper.CircleDirection.RIGHT, CircleEnvelopeWrapper.VectorComponent.Z, RepeatLoop(100))
+                *circleEnvelopeGroup(
+                    EnvelopeGroup.EnvelopeGroupType.OFFSET,
+                    EnvelopePair((3.0).envelope, 0.0.envelope),
+                    EnvelopePair(0.0.envelope, (-3.0).envelope),
+                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
+                    RepeatLoop(100),
+                ).getEnvelopes().toTypedArray(),
             )
             extra = 0.05
             count = 0
             animationInterval = 1
             animationFrameAmount = 1
-        }
-        prevParticle?.start()
+        }.start()
+
+        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
+            envelopes = listOf(
+                *circleEnvelopeGroup(
+                    EnvelopeGroup.EnvelopeGroupType.POSITION,
+                    EnvelopePair((-3.0).envelope, 0.0.envelope),
+                    EnvelopePair(0.0.envelope, (3.0).envelope),
+                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
+                    RepeatLoop(100),
+                    rotationOptions = listOf(
+                        MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 90.0, MatrixUtils.RotationType.X_AXIS)
+                    )
+                ).getEnvelopes().toTypedArray(),
+
+                *circleEnvelopeGroup(
+                    EnvelopeGroup.EnvelopeGroupType.OFFSET,
+                    EnvelopePair((3.0).envelope, 0.0.envelope),
+                    EnvelopePair(0.0.envelope, (-3.0).envelope),
+                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
+                    RepeatLoop(100),
+                    rotationOptions = listOf(
+                        MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 90.0, MatrixUtils.RotationType.X_AXIS)
+                    )
+                ).getEnvelopes().toTypedArray(),
+            )
+            extra = 0.05
+            count = 0
+            animationInterval = 1
+            animationFrameAmount = 1
+        }.start()
+
+
 
 
         return true

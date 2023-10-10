@@ -78,7 +78,10 @@ open class BasicEnvelope(
                     Envelope.PropertyType.POS_X -> newPosition.x
                     Envelope.PropertyType.POS_Y -> newPosition.y
                     Envelope.PropertyType.POS_Z -> newPosition.z
-                    else -> throw IllegalArgumentException("Non-position envelope cannot be inside of an envelope group.")
+                    Envelope.PropertyType.OFFSET_X -> newPosition.x
+                    Envelope.PropertyType.OFFSET_Y -> newPosition.y
+                    Envelope.PropertyType.OFFSET_Z -> newPosition.z
+                    else -> throw IllegalArgumentException("Non-position/offset envelope cannot be inside of an envelope group.")
                 }
             }
 

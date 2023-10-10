@@ -30,7 +30,7 @@ object CircleEnvelopeWrapper {
     }
 
     /**
-     * Represents the component (X_AXIS,Z_AXIS) of a vector.
+     * Represents the component (X, Z) of a vector.
      * This is used in circle envelopes with circle directions to automatically
      * determine the trigonometric function to use.
      */
@@ -84,12 +84,12 @@ object CircleEnvelopeWrapper {
 
     /**
      * Envelope wrapper that when applied on multiple properties,
-     * creates a circle between 2 points in the XZ plane.
+     * creates a circle between 2 points/offsets in the XZ plane.
      *
      * This automatically determines the trigonometric function to use based
      * on the circle orientation and the property type.
-     * This method may only be used with vector property types (POS_X, POS_Y, POS_Z), and is preferred
-     * if you are dealing with position envelopes.
+     * This method may only be used with the following vector property types: POS_X, POS_Z, OFFSET_X, OFFSET_Z, and is preferred
+     * if you are dealing with position/offset envelopes.
      *
      * @param propertyType The property for the envelope to affect.
      * @param value1 The first value to interpolate.
@@ -99,7 +99,7 @@ object CircleEnvelopeWrapper {
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
      * @throws IllegalArgumentException If the method doesn't support the property type provided.
-     * @return The trigonometric envelope to be used on this position property to create the circle.
+     * @return The trigonometric envelope to be used on this property to create the circle.
      */
     fun circleEnvelope(
         propertyType: Envelope.PropertyType,
@@ -113,7 +113,9 @@ object CircleEnvelopeWrapper {
             when (propertyType) {
                 Envelope.PropertyType.POS_X -> VectorComponent.X
                 Envelope.PropertyType.POS_Z -> VectorComponent.Z
-                else -> throw IllegalArgumentException()
+                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
+                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
 
         return circleEnvelope(
@@ -129,19 +131,21 @@ object CircleEnvelopeWrapper {
 
 
     /**
-     * Envelope wrapper that creates a circle between 2 points
+     * Envelope wrapper that creates a circle between 2 points/offsets
      * in the XZ plane, with rotations.
      *
-     * @param position1 The first position to interpolate (x,z).
-     * @param position2 The second position to interpolate (x,z).
+     * @param envelopeGroupType The type of property (offset/position)
+     * @param position1 The first position to interpolate (X, Z).
+     * @param position2 The second position to interpolate (X, Z).
      * @param circleDirection The direction of the circle.
-     * @param rotationOptions The list of the rotations to apply to the circle.
+     * @param rotationOptions The list of rotations to apply to the circle.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
      * @return The envelope group used to create the circle.
      */
     fun circleEnvelopeGroup(
+        envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopePair,
         position2: EnvelopePair,
         circleDirection: CircleDirection,
@@ -150,16 +154,27 @@ object CircleEnvelopeWrapper {
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(
-            Envelope.PropertyType.POS_X,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_X
+            else
+                Envelope.PropertyType.OFFSET_X,
             position1.first,
             position2.first,
             circleDirection,
             loop,
             completion,
         ),
-        ConstantEnvelope(Envelope.PropertyType.POS_Y, 0.0),
+        ConstantEnvelope(
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Y
+            else
+                Envelope.PropertyType.OFFSET_Y, 0.0
+        ),
         circleEnvelope(
-            Envelope.PropertyType.POS_Z,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Z
+            else
+                Envelope.PropertyType.OFFSET_Z,
             position1.second,
             position2.second,
             circleDirection,

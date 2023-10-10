@@ -12,7 +12,7 @@ import java.lang.RuntimeException
  * @param rotationMatrixOptions List of rotation options to be used on the components.
  *
  * @throws RuntimeException If one of the envelopes already has a group assigned.
- * @throws IllegalArgumentException If one of the envelopes' properties is invalid.
+ * @throws IllegalArgumentException If the group doesn't support one of the envelopes' properties.
  */
 class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
@@ -20,13 +20,15 @@ class EnvelopeGroup(
     val envelopeZ: Envelope,
     val rotationMatrixOptions: List<MatrixUtils.RotationOptions> = listOf()
 ) {
+    enum class EnvelopeGroupType { POSITION, OFFSET }
+
     init {
         if (envelopeX.envelopeGroup != null || envelopeY.envelopeGroup != null || envelopeZ.envelopeGroup != null)
             throw RuntimeException("Envelopes may only have one envelope group assigned to them.")
         if (envelopeX.propertyType != Envelope.PropertyType.POS_X && envelopeX.propertyType != Envelope.PropertyType.OFFSET_X &&
             envelopeY.propertyType != Envelope.PropertyType.POS_Y && envelopeY.propertyType != Envelope.PropertyType.OFFSET_Y &&
             envelopeZ.propertyType != Envelope.PropertyType.POS_Z && envelopeZ.propertyType != Envelope.PropertyType.OFFSET_Z)
-            throw IllegalArgumentException("One of the envelopes' properties is invalid.")
+            throw IllegalArgumentException("One of the envelopes' properties is invalid for group.")
         envelopeX.envelopeGroup = this
         envelopeY.envelopeGroup = this
         envelopeZ.envelopeGroup = this
