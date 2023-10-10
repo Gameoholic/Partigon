@@ -8,8 +8,9 @@ import com.github.gameoholic.partigon.util.*
 
 object LineEnvelopeWrapper {
     /**
-     * Envelope wrapper that creates a straight line between 2 points.
+     * Envelope wrapper that creates a straight line between 2 points/offsets.
      *
+     * @param envelopeGroupType The type of property (offset/position)
      * @param position1 The first position to interpolate (x,y,z).
      * @param position2 The second position to interpolate (x,y,z).
      * @param rotationOptions The list of the rotations to apply to the curve.
@@ -19,6 +20,7 @@ object LineEnvelopeWrapper {
      * @return The envelope group used to create the line.
      */
     fun lineEnvelopeGroup(
+        envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
         rotationOptions: List<MatrixUtils.RotationOptions>,
@@ -26,21 +28,30 @@ object LineEnvelopeWrapper {
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         LineEnvelope(
-            Envelope.PropertyType.POS_X,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_X
+            else
+                Envelope.PropertyType.OFFSET_X,
             position1.x,
             position2.x,
             loop,
             completion
         ),
         LineEnvelope(
-            Envelope.PropertyType.POS_Y,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Y
+            else
+                Envelope.PropertyType.OFFSET_Y,
             position1.y,
             position2.y,
             loop,
             completion
         ),
         LineEnvelope(
-            Envelope.PropertyType.POS_Z,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Z
+            else
+                Envelope.PropertyType.OFFSET_Z,
             position1.z,
             position2.z,
             loop,

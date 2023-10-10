@@ -88,7 +88,8 @@ object CircleEnvelopeWrapper {
      *
      * This automatically determines the trigonometric function to use based
      * on the circle orientation and the property type.
-     * This method may only be used with the following vector property types: POS_X, POS_Z, OFFSET_X, OFFSET_Z, and is preferred
+     * This method may only be used with the following vector property
+     * types: POS_X, POS_Z, OFFSET_X, OFFSET_Z, and is preferred
      * if you are dealing with position/offset envelopes.
      *
      * @param propertyType The property for the envelope to affect.

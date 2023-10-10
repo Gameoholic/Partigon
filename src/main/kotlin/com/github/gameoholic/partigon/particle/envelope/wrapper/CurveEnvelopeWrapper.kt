@@ -108,11 +108,12 @@ object CurveEnvelopeWrapper {
 
     /**
      * Trigonometric envelope wrapper that when applied on multiple properties,
-     * creates a curve between 2 points.
+     * creates a curve between 2 points/offsets.
      * This automatically determines the trigonometric function to use based
      * on the curve orientation and the property type.
-     * This method may only be used with vector property types (POS_X, POS_Y, POS_Z), and is preferred
-     * if you are dealing with position envelopes.
+     * This method may only be used with the follwing vector property
+     * types: POS_X, POS_Y, POS_Z, OFFSET_X, OFFSET_Y, OFFSET_Z, and is preferred
+     * if you are dealing with position/offset envelopes.
      *
      * @param propertyType The property for the envelope to affect.
      * @param value1 The first value to interpolate.
@@ -136,7 +137,10 @@ object CurveEnvelopeWrapper {
                 Envelope.PropertyType.POS_X -> VectorComponent.X
                 Envelope.PropertyType.POS_Y -> VectorComponent.Y
                 Envelope.PropertyType.POS_Z -> VectorComponent.Z
-                else -> throw IllegalArgumentException()
+                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
+                Envelope.PropertyType.OFFSET_Y -> VectorComponent.Y
+                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
 
         return curveEnvelope(
@@ -152,9 +156,10 @@ object CurveEnvelopeWrapper {
 
 
     /**
-     * Envelope wrapper that creates a curve between 2 points
+     * Envelope wrapper that creates a curve between 2 points/offsets
      * in 3D space, with rotations.
      *
+     * @param envelopeGroupType The type of property (offset/position)
      * @param position1 The first position to interpolate (x,y,z).
      * @param position2 The second position to interpolate (x,y,z).
      * @param curveOrientation The orientation of the curve.
@@ -165,6 +170,7 @@ object CurveEnvelopeWrapper {
      * @return The envelope group used to create the curve.
      */
     fun curveEnvelopeGroup(
+        envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
         curveOrientation: CurveOrientation,
@@ -173,7 +179,10 @@ object CurveEnvelopeWrapper {
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         curveEnvelope(
-            Envelope.PropertyType.POS_X,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_X
+            else
+                Envelope.PropertyType.OFFSET_X,
             position1.x,
             position2.x,
             curveOrientation,
@@ -181,7 +190,10 @@ object CurveEnvelopeWrapper {
             completion,
         ),
         curveEnvelope(
-            Envelope.PropertyType.POS_Y,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Y
+            else
+                Envelope.PropertyType.OFFSET_Y,
             position1.y,
             position2.y,
             curveOrientation,
@@ -189,7 +201,10 @@ object CurveEnvelopeWrapper {
             completion,
         ),
         curveEnvelope(
-            Envelope.PropertyType.POS_Z,
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Z
+            else
+                Envelope.PropertyType.OFFSET_Z,
             position1.z,
             position2.z,
             curveOrientation,
