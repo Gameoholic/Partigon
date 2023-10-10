@@ -199,9 +199,4 @@ object CurveEnvelopeWrapper {
         rotationOptions
     )
 
-    fun test() {
-        val a = Triple(0.0, "asd", 0.0)
-        a.z
-    }
-
 }
