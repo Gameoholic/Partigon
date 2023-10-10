@@ -27,10 +27,9 @@ object TestCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
-        //todo now: add offset support to curve & line wrappers
-        //todo now: envelope group recieve offset too, same for circle envelope wrappers., clone/mirror particles
+        //todo now: clone/mirror particles
 
-        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
+        val particle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
                     EnvelopeGroup.EnvelopeGroupType.POSITION,
@@ -50,11 +49,11 @@ object TestCommand : CommandExecutor {
             )
             extra = 0.05
             count = 0
-            animationInterval = 1
-            animationFrameAmount = 1
-        }.start()
+        }
+        particle.start()
 
-        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
+
+        partigonParticle(particle) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
                     EnvelopeGroup.EnvelopeGroupType.POSITION,
@@ -76,14 +75,9 @@ object TestCommand : CommandExecutor {
                     rotationOptions = listOf(
                         MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
                     )
-                ).getEnvelopes().toTypedArray(),
+                ).getEnvelopes().toTypedArray()
             )
-            extra = 0.05
-            count = 0
-            animationInterval = 1
-            animationFrameAmount = 1
         }.start()
-
 
 
 

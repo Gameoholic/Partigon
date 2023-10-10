@@ -65,14 +65,14 @@ open class BasicEnvelope(
         // to rotate it properly.
         if (!rawValue)
             envelopeGroup?.let {
-                if (it.rotationMatrixOptions.isEmpty()) return@let
+                if (it.rotationOptions.isEmpty()) return@let
 
                 var newPosition = MatrixUtils.applyRotationsForPoint(
                     Triple(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                ), it.rotationMatrixOptions)
+                ), it.rotationOptions)
 
                 return when (propertyType) {
                     Envelope.PropertyType.POS_X -> newPosition.x

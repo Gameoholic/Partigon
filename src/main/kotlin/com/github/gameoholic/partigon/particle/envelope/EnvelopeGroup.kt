@@ -9,7 +9,7 @@ import java.lang.RuntimeException
  * @param envelopeX The envelope used for the X component.
  * @param envelopeY The envelope used for the Y component.
  * @param envelopeZ The envelope used for the Z component.
- * @param rotationMatrixOptions List of rotation options to be used on the components.
+ * @param rotationOptions List of rotation options to be used on the components.
  *
  * @throws RuntimeException If one of the envelopes already has a group assigned.
  * @throws IllegalArgumentException If the group doesn't support one of the envelopes' properties.
@@ -18,7 +18,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    val rotationMatrixOptions: List<MatrixUtils.RotationOptions> = listOf()
+    val rotationOptions: List<MatrixUtils.RotationOptions> = listOf()
 ) {
     enum class EnvelopeGroupType { POSITION, OFFSET }
 

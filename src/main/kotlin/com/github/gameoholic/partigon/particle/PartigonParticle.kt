@@ -47,6 +47,22 @@ class PartigonParticle(
             particleType: Particle,
             block: Builder.() -> Unit
         ) = Builder(location, particleType).apply(block).build()
+
+        /**
+         * Copies the constructor properties from an existing particle,
+         * and allows you to provide new ones.
+         */
+        inline fun partigonParticle(
+            particle: PartigonParticle,
+            block: Builder.() -> Unit
+        ) = Builder(particle.location, particle.particleType).apply {
+            envelopes = particle.envelopes
+            count = particle.count
+            offset = particle.offset
+            animationFrameAmount = particle.animationFrameAmount
+            animationInterval = particle.animationInterval
+            extra = particle.extra
+        }.apply(block).build()
     }
 
     class Builder(
