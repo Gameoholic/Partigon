@@ -14,7 +14,7 @@ import java.lang.RuntimeException
  * @param propertyType The property for the envelope to affect.
  * @param envelopeExpression The mathematical expression of the envelope. frame_index is the variable that corresponds to the tick.
  * @param loop The loop to be used with the envelope.
- * @param completion How much of the animation to animate. Should be above 0.0. 1.0 for its entirety.
+ * @param completion How much of the animation to animate. Must be positive. 1.0 for its entirety.
  * @param nestedEnvelopes The nested envelopes.
  */
 open class BasicEnvelope(

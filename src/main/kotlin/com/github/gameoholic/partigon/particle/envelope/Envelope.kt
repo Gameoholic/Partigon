@@ -36,7 +36,7 @@ interface Envelope {
 
     /**
      * How much of the animation is animated.
-     * The value should be above 0.0. Set to 1.0 for the full animation.
+     * The value should be positive. Set to 1.0 for the full animation.
      */
     val completion: Double
 

@@ -12,6 +12,7 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param value1 The first value to interpolate.
  * @param value2 The second value to interpolate.
  * @param loop The loop to be used with the envelope.
+ * @param completion How much of the animation to animate. Must be positive. 1.0 for its entirety.
  */
 class LineEnvelope(
     override val propertyType: Envelope.PropertyType,

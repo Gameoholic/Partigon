@@ -11,13 +11,13 @@ import com.github.gameoholic.partigon.util.LoggerUtil
  * @param propertyType The property for the envelope to affect.
  * @param value1 The first value to interpolate.
  * @param value2 The second value to interpolate.
- * @param completion How much of the animation will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+ * @param completion How much of the animation will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc. Must be positive.
  * @param trigFunc The trigonometric function to use to animate the curve.
  * @param loop The loop to be used with the envelope.
  *
  * @throws IllegalArgumentException If either value1 or value2 is not a double or an integer.
  */
-//todo: if completion above 1.0 or below 0.0 throw exception, in all envelopes.
+//todo: if completion below 0.0 throw exception, in all envelopes and wrappers.
 open class TrigonometricEnvelope(
     override val propertyType: Envelope.PropertyType,
     value1: Envelope,

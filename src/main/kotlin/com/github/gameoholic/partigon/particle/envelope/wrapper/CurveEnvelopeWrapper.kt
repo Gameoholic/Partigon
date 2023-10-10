@@ -160,7 +160,7 @@ object CurveEnvelopeWrapper {
      * @param curveOrientation The orientation of the curve.
      * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
-     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse.
+     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse. Must be positive.
      *
      * @return The envelope group used to create the curve.
      */
