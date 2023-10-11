@@ -6,8 +6,6 @@ plugins {
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing
 
-    kotlin("plugin.serialization") version "1.9.0"
-    
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
@@ -33,7 +31,6 @@ dependencies {
 
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT") //the paper dev bundle is a compile-only dependency, paper itself provides it. No need to shade
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("net.objecthunter", "exp4j","0.4.8")
     implementation("org.apache.commons:commons-math3:3.6.1")
 }
