@@ -26,9 +26,6 @@ import org.bukkit.util.Vector
 object TestCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-
-        //todo now: clone/mirror particles
-
         val particle = partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
             envelopes = listOf(
                 *circleEnvelopeGroup(
@@ -54,28 +51,8 @@ object TestCommand : CommandExecutor {
 
 
         partigonParticle(particle) {
-            envelopes = listOf(
-                *circleEnvelopeGroup(
-                    EnvelopeGroup.EnvelopeGroupType.POSITION,
-                    EnvelopePair((-3.0).envelope, 0.0.envelope),
-                    EnvelopePair(0.0.envelope, (3.0).envelope),
-                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
-                    RepeatLoop(100),
-                    rotationOptions = listOf(
-                        MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
-                    )
-                ).getEnvelopes().toTypedArray(),
-
-                *circleEnvelopeGroup(
-                    EnvelopeGroup.EnvelopeGroupType.OFFSET,
-                    EnvelopePair((3.0).envelope, 0.0.envelope),
-                    EnvelopePair(0.0.envelope, (-3.0).envelope),
-                    CircleEnvelopeWrapper.CircleDirection.RIGHT,
-                    RepeatLoop(100),
-                    rotationOptions = listOf(
-                        MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
-                    )
-                ).getEnvelopes().toTypedArray()
+            rotationOptions = listOf(
+                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 45.0, MatrixUtils.RotationType.X_AXIS)
             )
         }.start()
 

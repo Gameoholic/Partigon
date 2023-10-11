@@ -18,7 +18,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    val rotationOptions: List<MatrixUtils.RotationOptions> = listOf()
+    var rotationOptions: List<MatrixUtils.RotationOptions> = listOf() //needs to be var, so PartigonParticle can add additional rotations on top
 ) {
     enum class EnvelopeGroupType { POSITION, OFFSET }
 

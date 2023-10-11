@@ -2,7 +2,7 @@ package com.github.gameoholic.partigon.particle
 
 import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.particle.envelope.Envelope
-import com.github.gameoholic.partigon.util.LoggerUtil
+import com.github.gameoholic.partigon.util.*
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.scheduler.BukkitRunnable
@@ -13,7 +13,7 @@ import java.util.*
 //todo: add link to the documentation here, also, write the documentation you lazy shit
 /**
  * Represents a particle animation, that's spawned every tick.
- * The particle's properties are controlled via envelope,
+ * The particle's properties are controlled via envelopes,
  * which interpolate them over time.
  */
 class PartigonParticle(
@@ -25,6 +25,7 @@ class PartigonParticle(
     val animationFrameAmount: Int,
     val animationInterval: Int,
     val extra: Double,
+    val rotationOptions: List<MatrixUtils.RotationOptions>
 ) {
 
     private constructor(
@@ -38,7 +39,8 @@ class PartigonParticle(
             builder.offset,
             builder.animationFrameAmount,
             builder.animationInterval,
-            builder.extra
+            builder.extra,
+            builder.rotationOptions
         )
 
     companion object {
@@ -62,6 +64,8 @@ class PartigonParticle(
             animationFrameAmount = particle.animationFrameAmount
             animationInterval = particle.animationInterval
             extra = particle.extra
+            rotationOptions = particle.rotationOptions
+
         }.apply(block).build()
     }
 
@@ -75,6 +79,7 @@ class PartigonParticle(
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
         var extra: Double = 0.0
+        var rotationOptions: List<MatrixUtils.RotationOptions> = listOf()
 
         fun build() = PartigonParticle(this)
     }
@@ -85,6 +90,15 @@ class PartigonParticle(
         private set
     private var task: BukkitTask? = null
     private var delay = animationInterval
+
+    init {
+        //Add rotation for every group, on top of whatever rotations they already have
+        val groups = envelopes.mapNotNull { it.envelopeGroup }.distinct()
+        groups.forEach {
+            println("Adding to group $it $rotationOptions")
+            it.rotationOptions = rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
+        }
+    }
 
     /**
      * Resets and starts the particle animation.
@@ -161,10 +175,12 @@ class PartigonParticle(
             val envelopePropertyType = envelope.propertyType
             val envelopeValue = envelope.getValueAt(frameIndex)
             LoggerUtil.debug("Applying envelope $envelope. Envelope value is $envelopeValue", id)
+
             if (envelopeValue == null) {
                 LoggerUtil.debug("Envelop disabled, not applying it.", id)
                 continue
             }
+
             when (envelopePropertyType) {
                 Envelope.PropertyType.POS_X -> {
                         newLocation.x += envelopeValue
