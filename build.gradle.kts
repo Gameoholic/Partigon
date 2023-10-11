@@ -8,6 +8,8 @@ plugins {
 
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
     id("com.github.johnrengelman.shadow") version "7.0.0"
+
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 group = "com.github.gameoholic"
@@ -33,6 +35,7 @@ dependencies {
 
     implementation("net.objecthunter", "exp4j","0.4.8")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 }
 
 
