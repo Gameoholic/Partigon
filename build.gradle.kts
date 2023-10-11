@@ -6,6 +6,8 @@ plugins {
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing
 
+    kotlin("plugin.serialization") version "1.9.0"
+    
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
