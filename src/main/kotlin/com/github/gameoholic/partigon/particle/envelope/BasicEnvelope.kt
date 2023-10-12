@@ -2,6 +2,7 @@ package com.github.gameoholic.partigon.particle.envelope
 
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
@@ -67,7 +68,7 @@ open class BasicEnvelope(
             envelopeGroup?.let {
                 if (it.rotationOptions.isEmpty()) return@let
 
-                var newPosition = MatrixUtils.applyRotationsForPoint(
+                var newPosition = RotationUtil.applyRotationsForPoint(
                     Triple(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,

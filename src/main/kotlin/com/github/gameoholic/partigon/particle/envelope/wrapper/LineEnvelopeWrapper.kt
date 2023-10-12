@@ -5,6 +5,8 @@ import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.LineEnvelope
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.rotation.RotationOptions
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 
 object LineEnvelopeWrapper {
     /**
@@ -23,7 +25,7 @@ object LineEnvelopeWrapper {
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
-        rotationOptions: List<MatrixUtils.RotationOptions>,
+        rotationOptions: List<RotationOptions>,
         loop: Loop,
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(

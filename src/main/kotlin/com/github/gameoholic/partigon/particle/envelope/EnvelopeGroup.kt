@@ -1,6 +1,7 @@
 package com.github.gameoholic.partigon.particle.envelope
 
-import com.github.gameoholic.partigon.util.MatrixUtils
+import com.github.gameoholic.partigon.util.rotation.RotationOptions
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.RuntimeException
 
 /**
@@ -18,7 +19,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    var rotationOptions: List<MatrixUtils.RotationOptions> = listOf() //needs to be var, so PartigonParticle can add additional rotations on top
+    var rotationOptions: List<RotationOptions> = listOf() //needs to be var, so PartigonParticle can add additional rotations on top
 ) {
     enum class EnvelopeGroupType { POSITION, OFFSET }
 

@@ -1,71 +1,23 @@
-package com.github.gameoholic.partigon.util
+package com.github.gameoholic.partigon.util.rotation
+
+import com.github.gameoholic.partigon.util.DoubleTriple
+import com.github.gameoholic.partigon.util.x
+import com.github.gameoholic.partigon.util.y
+import com.github.gameoholic.partigon.util.z
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
 import kotlin.math.sin
+
 //todo: figure out extensions and this rotationtype enum down below
-object MatrixUtils {
-
-    /**
-     * The type of the rotation to use. It will then rotate around the axis
-     * of the component.
-     */
-    enum class RotationType(val rotationMatrix: (Double) -> (RealMatrix)) {
-        /**
-         * Will rotate around the X axis.
-         */
-        X_AXIS({ angle ->
-            val rotationMatrixData = arrayOf(
-                doubleArrayOf(1.0, 0.0, 0.0),
-                doubleArrayOf(0.0, cos(angle), -sin(angle)),
-                doubleArrayOf(0.0, sin(angle), cos(angle))
-            )
-            MatrixUtils.createRealMatrix(rotationMatrixData)
-        }),
-        /**
-         * Will rotate around the Y axis.
-         */
-        Y_AXIS({ angle ->
-            val rotationMatrixData = arrayOf(
-                doubleArrayOf(cos(angle), 0.0, sin(angle)),
-                doubleArrayOf(0.0, 1.0, 0.0), //row 2
-                doubleArrayOf(-sin(angle), 0.0, cos(angle))
-            )
-            MatrixUtils.createRealMatrix(rotationMatrixData)
-        }),
-        /**
-         * Will rotate around the Z axis.
-         */
-        Z_AXIS({ angle ->
-            val rotationMatrixData = arrayOf(
-                doubleArrayOf(cos(angle), -sin(angle), 0.0),
-                doubleArrayOf(sin(angle), cos(angle), 0.0),
-                doubleArrayOf(0.0, 0.0, 1.0)
-            )
-            MatrixUtils.createRealMatrix(rotationMatrixData)
-        })
-
-    }
-    /**
-     * The options for the rotation.
-     * @param rotationPoint The point of reference for the rotation. It will rotate around it.
-     * @param angle The angle of the rotation, in degrees.
-     * @param rotationType The type of rotation.
-     */
-    data class RotationOptions(
-        val rotationPoint: DoubleTriple,
-        val angle: Double,
-        val rotationType: RotationType
-    )
-
-
+internal object RotationUtil {
     /**
      * Applies a rotation to a point, given a point and rotation options.
      * @param point The point to rotate.
      * @param options The rotation options.
      * @return The new point with the rotation applied.
      */
-    fun applyRotationForPoint(
+    private fun applyRotationForPoint(
         point: DoubleTriple,
         options: RotationOptions
     ): DoubleTriple {
@@ -94,7 +46,7 @@ object MatrixUtils {
         val transformedPointMatrix =
             pointMatrix.add(rotationPointMatrix.scalarMultiply(-1.0))
 
-        val rotationMatrix = options.rotationType.rotationMatrix.invoke(angleRadians)
+        val rotationMatrix = getRotationMatrix(options.rotationType, angleRadians)
 
         /**
          * We multiply the matrices to rotate the point.
@@ -128,6 +80,40 @@ object MatrixUtils {
             newPoint = applyRotationForPoint(newPoint, it)
         }
         return newPoint
+    }
+
+    /**
+     * Gets the rotation matrix for a rotation around a certain axis with an angle.
+     * @param rotationType The rotation type, around which axis to rotate.
+     * @param angle The angle in which to rotate, in radians.
+     * @return The rotation matrix
+     */
+    private fun getRotationMatrix(rotationType: RotationType, angle: Double): RealMatrix {
+        return when (rotationType) {
+            RotationType.X_AXIS -> MatrixUtils.createRealMatrix(
+                arrayOf(
+                    doubleArrayOf(1.0, 0.0, 0.0),
+                    doubleArrayOf(0.0, cos(angle), -sin(angle)),
+                    doubleArrayOf(0.0, sin(angle), cos(angle))
+                )
+            )
+
+            RotationType.Y_AXIS -> MatrixUtils.createRealMatrix(
+                arrayOf(
+                    doubleArrayOf(cos(angle), 0.0, sin(angle)),
+                    doubleArrayOf(0.0, 1.0, 0.0), //row 2
+                    doubleArrayOf(-sin(angle), 0.0, cos(angle))
+                )
+            )
+
+            RotationType.Z_AXIS -> MatrixUtils.createRealMatrix(
+                arrayOf(
+                    doubleArrayOf(cos(angle), -sin(angle), 0.0),
+                    doubleArrayOf(sin(angle), cos(angle), 0.0),
+                    doubleArrayOf(0.0, 0.0, 1.0)
+                )
+            )
+        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.github.gameoholic.partigon.commands
 
 
-import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticleBuilder
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
@@ -13,8 +12,10 @@ import com.github.gameoholic.partigon.particle.loop.BounceLoop
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.DoubleTriple
 import com.github.gameoholic.partigon.util.EnvelopePair
-import com.github.gameoholic.partigon.util.MatrixUtils
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import com.github.gameoholic.partigon.util.Utils.envelope
+import com.github.gameoholic.partigon.util.rotation.RotationOptions
+import com.github.gameoholic.partigon.util.rotation.RotationType
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -27,29 +28,7 @@ object TestCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
-        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
-            envelopes = listOf(
-                curveEnvelope(
-                    Envelope.PropertyType.POS_Z,
-                    0.0.envelope, 4.0.envelope,
-                    CurveEnvelopeWrapper.CurveOrientation.RIGHT,
-                    RepeatLoop(200),
-                    completion = 0.5,
-                ),
-                curveEnvelope(
-                    Envelope.PropertyType.POS_X,
-                    0.0.envelope, 4.0.envelope,
-                    CurveEnvelopeWrapper.CurveOrientation.RIGHT,
-                    RepeatLoop(200),
-                    completion = 0.5,
-                )
-            )
-            extra = 0.05
-            count = 0
-        }.start()
 
-
-        return true
         //Define basic animation
         fun builder() =
             partigonParticleBuilder(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
@@ -85,30 +64,30 @@ object TestCommand : CommandExecutor {
         //Mirror all particles:
         val particle2 = builder().apply {
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.X_AXIS)
             )
         }.build().start()
         val particle3 = builder().apply {
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Z_AXIS)
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.Z_AXIS)
             )
         }.build().start()
         val particle4 = builder().apply {
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS),
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Z_AXIS)
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.X_AXIS),
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.Z_AXIS)
             )
         }.build().start()
         val particle5 = builder().apply {
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, MatrixUtils.RotationType.Y_AXIS),
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Z_AXIS)
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, RotationType.Y_AXIS),
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.Z_AXIS)
             )
         }.build().start()
         val particle6 = builder().apply {
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, MatrixUtils.RotationType.Y_AXIS),
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, RotationType.Y_AXIS),
+                RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, RotationType.X_AXIS)
             )
         }.build().start()
 

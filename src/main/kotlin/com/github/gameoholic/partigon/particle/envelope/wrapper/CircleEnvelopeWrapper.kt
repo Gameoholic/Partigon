@@ -3,6 +3,8 @@ package com.github.gameoholic.partigon.particle.envelope.wrapper
 import com.github.gameoholic.partigon.particle.envelope.*
 import com.github.gameoholic.partigon.particle.loop.Loop
 import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.rotation.RotationOptions
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.IllegalArgumentException
 
 object CircleEnvelopeWrapper {
@@ -151,7 +153,7 @@ object CircleEnvelopeWrapper {
         position2: EnvelopePair,
         circleDirection: CircleDirection,
         loop: Loop,
-        rotationOptions: List<MatrixUtils.RotationOptions> = listOf(),
+        rotationOptions: List<RotationOptions> = listOf(),
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(

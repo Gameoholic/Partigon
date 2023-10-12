@@ -3,6 +3,8 @@ package com.github.gameoholic.partigon.particle
 import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.rotation.RotationOptions
+import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.scheduler.BukkitRunnable
@@ -25,7 +27,7 @@ class PartigonParticle(
     val animationFrameAmount: Int,
     val animationInterval: Int,
     val extra: Double,
-    val rotationOptions: List<MatrixUtils.RotationOptions>
+    val rotationOptions: List<RotationOptions>
 ) {
 
     private constructor(
@@ -88,7 +90,7 @@ class PartigonParticle(
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
         var extra: Double = 0.0
-        var rotationOptions: List<MatrixUtils.RotationOptions> = listOf()
+        var rotationOptions: List<RotationOptions> = listOf()
 
         fun build() = PartigonParticle(this)
     }
