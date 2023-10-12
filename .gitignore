@@ -115,7 +115,7 @@ gradle-app.setting
 run/
 
 # Testing command
-src/main/kotlin/com/github/gameoholic/partigon/commands
+src/main/kotlin/com/github/gameoholic/partigon/commands/
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
