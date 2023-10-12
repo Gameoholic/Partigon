@@ -58,13 +58,16 @@ class PartigonParticle(
             particle: PartigonParticle,
             block: Builder.() -> Unit
         ) = Builder(particle.location, particle.particleType).apply {
-            envelopes = particle.envelopes
-            count = particle.count
-            offset = particle.offset
-            animationFrameAmount = particle.animationFrameAmount
-            animationInterval = particle.animationInterval
-            extra = particle.extra
-            rotationOptions = particle.rotationOptions
+            // We don't want to copy references
+
+
+            envelopes = copiedParticle.envelopes
+            count = copiedParticle.count
+            offset = copiedParticle.offset
+            animationFrameAmount = copiedParticle.animationFrameAmount
+            animationInterval = copiedParticle.animationInterval
+            extra = copiedParticle.extra
+            rotationOptions = copiedParticle.rotationOptions
 
         }.apply(block).build()
     }
@@ -75,7 +78,7 @@ class PartigonParticle(
     ) {
         var envelopes: List<Envelope> = listOf()
         var count: Int = 1
-        var offset: Vector = Vector(0, 0, 0)
+        var offset: Vector = Vector(0.0, 0.0, 0.0)
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
         var extra: Double = 0.0
@@ -83,7 +86,6 @@ class PartigonParticle(
 
         fun build() = PartigonParticle(this)
     }
-
 
     val id = UUID.randomUUID()!!
     var frameIndex = -1
@@ -95,7 +97,6 @@ class PartigonParticle(
         //Add rotation for every group, on top of whatever rotations they already have
         val groups = envelopes.mapNotNull { it.envelopeGroup }.distinct()
         groups.forEach {
-            println("Adding to group $it $rotationOptions")
             it.rotationOptions = rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
         }
     }
@@ -167,6 +168,7 @@ class PartigonParticle(
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
 
+        // We add envelope values, to the initial values provided in the constructor (envelopes are relative, not absolute)
         var newLocation = location.clone()
         var newCount = count
         var newOffset = offset.clone()

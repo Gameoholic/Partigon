@@ -1,5 +1,4 @@
 package com.github.gameoholic.partigon.util
-
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
@@ -53,6 +52,7 @@ object MatrixUtils {
      * @param angle The angle of the rotation, in degrees.
      * @param rotationType The type of rotation.
      */
+    @Serializable
     data class RotationOptions(
         val rotationPoint: DoubleTriple,
         val angle: Double,
