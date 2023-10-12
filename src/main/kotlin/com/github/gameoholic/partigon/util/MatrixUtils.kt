@@ -52,7 +52,6 @@ object MatrixUtils {
      * @param angle The angle of the rotation, in degrees.
      * @param rotationType The type of rotation.
      */
-    @Serializable
     data class RotationOptions(
         val rotationPoint: DoubleTriple,
         val angle: Double,

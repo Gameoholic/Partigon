@@ -50,6 +50,12 @@ class PartigonParticle(
             block: Builder.() -> Unit
         ) = Builder(location, particleType).apply(block).build()
 
+        inline fun partigonParticleBuilder(
+            location: Location,
+            particleType: Particle,
+            block: Builder.() -> Unit
+        ) = Builder(location, particleType).apply(block)
+
 //        /**
 //         * Copies the constructor properties from an existing particle,
 //         * and allows you to provide new ones.
@@ -73,8 +79,8 @@ class PartigonParticle(
     }
 
     class Builder(
-        val location: Location,
-        val particleType: Particle
+        var location: Location,
+        var particleType: Particle
     ) {
         var envelopes: List<Envelope> = listOf()
         var count: Int = 1
