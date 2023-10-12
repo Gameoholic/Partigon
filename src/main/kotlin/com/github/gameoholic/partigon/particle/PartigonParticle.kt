@@ -3,8 +3,8 @@ package com.github.gameoholic.partigon.particle
 import com.github.gameoholic.partigon.Partigon
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.Utils.envelope
 import com.github.gameoholic.partigon.util.rotation.RotationOptions
-import com.github.gameoholic.partigon.util.rotation.RotationUtil
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.scheduler.BukkitRunnable
@@ -19,15 +19,16 @@ import java.util.*
  * which interpolate them over time.
  */
 class PartigonParticle(
-    val location: Location,
+    val origin: Location,
     val particleType: Particle,
     val envelopes: List<Envelope>,
-    val count: Int,
-    val offset: Vector,
+    val location: EnvelopeTriple,
+    val count: Envelope,
+    val offset: EnvelopeTriple,
+    val extra: Envelope,
+    val rotationOptions: List<RotationOptions>,
     val animationFrameAmount: Int,
     val animationInterval: Int,
-    val extra: Double,
-    val rotationOptions: List<RotationOptions>
 ) {
 
     private constructor(
@@ -39,10 +40,10 @@ class PartigonParticle(
             builder.envelopes,
             builder.count,
             builder.offset,
+            builder.extra,
+            builder.rotationOptions,
             builder.animationFrameAmount,
             builder.animationInterval,
-            builder.extra,
-            builder.rotationOptions
         )
 
     companion object {
@@ -64,12 +65,12 @@ class PartigonParticle(
         var particleType: Particle
     ) {
         var envelopes: List<Envelope> = listOf()
-        var count: Int = 1
-        var offset: Vector = Vector(0.0, 0.0, 0.0)
+        var count: Envelope = 1.0.envelope
+        var offset: EnvelopeTriple = EnvelopeTriple(0.0.envelope, 0.0.envelope, 0.0.envelope)
+        var extra: Envelope = 0.0.envelope
+        var rotationOptions: List<RotationOptions> = listOf()
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
-        var extra: Double = 0.0
-        var rotationOptions: List<RotationOptions> = listOf()
 
         fun build() = PartigonParticle(this)
     }
@@ -155,20 +156,13 @@ class PartigonParticle(
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
 
-        // We add envelope values, to the initial values provided in the constructor (envelopes are relative, not absolute)
-        var newLocation = location.clone()
-        var newCount = count
-        var newOffset = offset.clone()
+        var newLocation = origin.clone()
 
-        for (envelope in envelopes.filter { !it.disabled }) {
-            val envelopePropertyType = envelope.propertyType
-            val envelopeValue = envelope.getValueAt(frameIndex)
-            LoggerUtil.debug("Applying envelope $envelope. Envelope value is $envelopeValue", id)
-
-            if (envelopeValue == null) {
-                LoggerUtil.debug("Envelop disabled, not applying it.", id)
-                continue
-            }
+        location.x.getValueAt(frameIndex)
+        envelopes.forEach {
+            val envelopePropertyType = it.propertyType
+            val envelopeValue = it.getValueAt(frameIndex)
+            LoggerUtil.debug("Applying envelope $it. Envelope value is $envelopeValue", id)
 
             when (envelopePropertyType) {
                 Envelope.PropertyType.POS_X -> {

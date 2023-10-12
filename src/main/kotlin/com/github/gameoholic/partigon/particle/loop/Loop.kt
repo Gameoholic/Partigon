@@ -16,10 +16,9 @@ interface Loop {
     val envelopeDuration: Int
 
     /**
-     * Applies the loop for a given frame index, returning a potentially different index
-     * or disabling the envelope.
-     * @return The frame index to be used for the envelope, or null if envelope should be disabled.
+     * Applies the loop for a given frame index, returning a potentially different index.
+     * @return The frame index to be used for the envelope.
      */
-    fun applyLoop(frameIndex: Int): Int?
+    fun applyLoop(frameIndex: Int): Int
 
 }

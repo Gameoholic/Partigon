@@ -24,10 +24,6 @@ interface Envelope {
      * The envelope math expression, with parameter frame_index.
      */
     val envelopeExpression: String
-    /**
-     * Whether the envelope will not affect the particle animation anymore.
-     */
-    var disabled: Boolean
 
     /**
      * The envelope group the envelope belongs to. Null if doesn't belong to one.
@@ -45,9 +41,9 @@ interface Envelope {
      *
      * @param frameIndex The frame index.
      * @param rawValue Whether to return the value before any external transformations have been applied.
-     * @return The value of the envelope at a frame t, or null if envelope is disabled. If rawValue set to true, returns the value before any external transformations have been applied.
+     * @return The value of the envelope at a frame t. If rawValue set to true, returns the value before any external transformations have been applied.
      */
-    fun getValueAt(frameIndex: Int, rawValue: Boolean = false): Double?
+    fun getValueAt(frameIndex: Int, rawValue: Boolean = false): Double
 
     /**
      * Nested envelopes are property-less envelopes that produce a value used for the parent envelope(s).

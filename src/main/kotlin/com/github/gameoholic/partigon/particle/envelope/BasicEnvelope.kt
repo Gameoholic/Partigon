@@ -26,7 +26,6 @@ open class BasicEnvelope(
     override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
 
-    override var disabled = false
     override var envelopeGroup: EnvelopeGroup? = null
         set(value) {
             if (field != null)
@@ -34,10 +33,7 @@ open class BasicEnvelope(
             field = value
         }
 
-    override fun getValueAt(frameIndex: Int, rawValue: Boolean): Double? {
-        if (disabled)
-            return null
-
+    override fun getValueAt(frameIndex: Int, rawValue: Boolean): Double {
         /**
          * We don't use the actual frame index with the envelope,
          * as the loop might modify it for different purposes.
@@ -45,19 +41,11 @@ open class BasicEnvelope(
          * differ from the original frame index.
          */
         val loopedFrameIndex = loop.applyLoop(frameIndex)
-        if (loopedFrameIndex == null) { //If envelope should be disabled because of loop condition
-            disabled = true
-            return null
-        }
 
         var updatedEnvelopeExpression = envelopeExpression
         //If there are nested envelopes, apply them recursively
         for (i in nestedEnvelopes.indices) {
             val nestedEnvelopeValue = nestedEnvelopes[i].getValueAt(frameIndex)
-            if (nestedEnvelopeValue == null) { //If envelope should be disabled because of nested envelope's loop condition
-                disabled = true
-                return null
-            }
             updatedEnvelopeExpression = updatedEnvelopeExpression
                 .replace("@ENV_$i@", nestedEnvelopeValue.toString())
         }
