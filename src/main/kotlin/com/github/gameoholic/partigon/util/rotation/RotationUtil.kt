@@ -9,7 +9,6 @@ import org.apache.commons.math3.linear.RealMatrix
 import kotlin.math.cos
 import kotlin.math.sin
 
-//todo: figure out extensions and this rotationtype enum down below
 internal object RotationUtil {
     /**
      * Applies a rotation to a point, given a point and rotation options.
