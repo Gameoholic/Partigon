@@ -50,26 +50,26 @@ class PartigonParticle(
             block: Builder.() -> Unit
         ) = Builder(location, particleType).apply(block).build()
 
-        /**
-         * Copies the constructor properties from an existing particle,
-         * and allows you to provide new ones.
-         */
-        inline fun partigonParticle(
-            particle: PartigonParticle,
-            block: Builder.() -> Unit
-        ) = Builder(particle.location, particle.particleType).apply {
-            // We don't want to copy references
-
-
-            envelopes = copiedParticle.envelopes
-            count = copiedParticle.count
-            offset = copiedParticle.offset
-            animationFrameAmount = copiedParticle.animationFrameAmount
-            animationInterval = copiedParticle.animationInterval
-            extra = copiedParticle.extra
-            rotationOptions = copiedParticle.rotationOptions
-
-        }.apply(block).build()
+//        /**
+//         * Copies the constructor properties from an existing particle,
+//         * and allows you to provide new ones.
+//         */
+//        inline fun partigonParticle(
+//            particle: PartigonParticle,
+//            block: Builder.() -> Unit
+//        ) = Builder(particle.location, particle.particleType).apply {
+//            // We don't want to copy references
+//
+//
+//            envelopes = copiedParticle.envelopes
+//            count = copiedParticle.count
+//            offset = copiedParticle.offset
+//            animationFrameAmount = copiedParticle.animationFrameAmount
+//            animationInterval = copiedParticle.animationInterval
+//            extra = copiedParticle.extra
+//            rotationOptions = copiedParticle.rotationOptions
+//
+//        }.apply(block).build()
     }
 
     class Builder(
@@ -97,7 +97,7 @@ class PartigonParticle(
         //Add rotation for every group, on top of whatever rotations they already have
         val groups = envelopes.mapNotNull { it.envelopeGroup }.distinct()
         groups.forEach {
-            it.rotationOptions = rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
+            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
         }
     }
 
