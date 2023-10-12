@@ -1,6 +1,8 @@
 package com.github.gameoholic.partigon.util.rotation
 
+import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.util.DoubleTriple
+import com.github.gameoholic.partigon.util.EnvelopeTriple
 
 /**
  * The options for the rotation.
@@ -9,7 +11,7 @@ import com.github.gameoholic.partigon.util.DoubleTriple
  * @param rotationType The type of rotation.
  */
 data class RotationOptions(
-    val rotationPoint: DoubleTriple,
-    val angle: Double,
+    val rotationPoint: EnvelopeTriple,
+    val angle: Envelope,
     val rotationType: RotationType
 )

@@ -1,11 +1,10 @@
 package com.github.gameoholic.partigon.util.rotation
 
-import com.github.gameoholic.partigon.util.DoubleTriple
-import com.github.gameoholic.partigon.util.x
-import com.github.gameoholic.partigon.util.y
-import com.github.gameoholic.partigon.util.z
+import com.github.gameoholic.partigon.util.*
+import com.github.gameoholic.partigon.util.Utils.envelope
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
+import java.lang.RuntimeException
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -18,9 +17,13 @@ internal object RotationUtil {
      */
     private fun applyRotationForPoint(
         point: DoubleTriple,
-        options: RotationOptions
+        options: RotationOptions,
+        frameIndex: Int
     ): DoubleTriple {
-        val angleRadians = Math.toRadians(options.angle)
+        val angleRadians = Math.toRadians(
+            options.angle.getValueAt(frameIndex)
+                ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
+        )
 
         val pointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
@@ -32,9 +35,18 @@ internal object RotationUtil {
 
         val rotationPointMatrix = MatrixUtils.createRealMatrix(
             arrayOf(
-                doubleArrayOf(options.rotationPoint.x),
-                doubleArrayOf(options.rotationPoint.y),
-                doubleArrayOf(options.rotationPoint.z)
+                doubleArrayOf(
+                    options.rotationPoint.x.getValueAt(frameIndex)
+                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
+                ),
+                doubleArrayOf(
+                    options.rotationPoint.y.getValueAt(frameIndex)
+                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
+                ),
+                doubleArrayOf(
+                    options.rotationPoint.z.getValueAt(frameIndex)
+                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
+                )
             )
         )
 
@@ -72,13 +84,19 @@ internal object RotationUtil {
      */
     fun applyRotationsForPoint(
         point: DoubleTriple,
-        options: List<RotationOptions>
+        options: List<RotationOptions>,
+        frameIndex: Int
     ): DoubleTriple {
-        var newPoint = point
+        //The point that was received is of envelopes, we get the value then convert to doubles
+        var newPoint = DoubleTriple(
+            point.x,
+            point.y,
+            point.z
+        )
         options.forEach {
-            newPoint = applyRotationForPoint(newPoint, it)
+            newPoint = applyRotationForPoint(newPoint, it, frameIndex)
         }
-        return newPoint
+        return DoubleTriple(newPoint.x, newPoint.y, newPoint.z)
     }
 
     /**

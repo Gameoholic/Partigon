@@ -73,7 +73,7 @@ open class BasicEnvelope(
                     it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
                     it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                ), it.rotationOptions)
+                ), it.rotationOptions, frameIndex)
 
                 return when (propertyType) {
                     Envelope.PropertyType.POS_X -> newPosition.x
