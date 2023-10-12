@@ -1,13 +1,15 @@
 package com.github.gameoholic.partigon.commands
 
 
-import com.github.gameoholic.partigon.particle.PartigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticle
 import com.github.gameoholic.partigon.particle.PartigonParticle.Companion.partigonParticleBuilder
 import com.github.gameoholic.partigon.particle.envelope.Envelope
 import com.github.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper
 import com.github.gameoholic.partigon.particle.envelope.wrapper.CircleEnvelopeWrapper.circleEnvelopeGroup
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CurveEnvelopeWrapper
+import com.github.gameoholic.partigon.particle.envelope.wrapper.CurveEnvelopeWrapper.curveEnvelope
+import com.github.gameoholic.partigon.particle.loop.BounceLoop
 import com.github.gameoholic.partigon.particle.loop.RepeatLoop
 import com.github.gameoholic.partigon.util.DoubleTriple
 import com.github.gameoholic.partigon.util.EnvelopePair
@@ -25,9 +27,32 @@ object TestCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
 
+        partigonParticle(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
+            envelopes = listOf(
+                curveEnvelope(
+                    Envelope.PropertyType.POS_Z,
+                    0.0.envelope, 4.0.envelope,
+                    CurveEnvelopeWrapper.CurveOrientation.RIGHT,
+                    RepeatLoop(200),
+                    completion = 0.5,
+                ),
+                curveEnvelope(
+                    Envelope.PropertyType.POS_X,
+                    0.0.envelope, 4.0.envelope,
+                    CurveEnvelopeWrapper.CurveOrientation.RIGHT,
+                    RepeatLoop(200),
+                    completion = 0.5,
+                )
+            )
+            extra = 0.05
+            count = 0
+        }.start()
 
+
+        return true
+        //Define basic animation
         fun builder() =
-            partigonParticleBuilder(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.FLAME) {
+            partigonParticleBuilder(Location(Bukkit.getWorld("world"), 0.0, 100.0, 0.0), Particle.END_ROD) {
                 envelopes = listOf(
                     *circleEnvelopeGroup(
                         EnvelopeGroup.EnvelopeGroupType.POSITION,
@@ -44,12 +69,20 @@ object TestCommand : CommandExecutor {
                         CircleEnvelopeWrapper.CircleDirection.RIGHT,
                         RepeatLoop(100),
                     ).getEnvelopes().toTypedArray(),
+
+                    curveEnvelope(
+                        Envelope.PropertyType.POS_Y,
+                        0.0.envelope, 4.0.envelope,
+                        CurveEnvelopeWrapper.CurveOrientation.RIGHT_ABOVE,
+                        BounceLoop(200),
+                    )
                 )
                 extra = 0.05
                 count = 0
             }
 
         val particle1 = builder().build().start()
+        //Mirror all particles:
         val particle2 = builder().apply {
             this.rotationOptions = listOf(
                 MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
@@ -66,13 +99,16 @@ object TestCommand : CommandExecutor {
                 MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Z_AXIS)
             )
         }.build().start()
-
-
         val particle5 = builder().apply {
-            particleType = ParticleType.En
             this.rotationOptions = listOf(
-                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Y_AXIS),
+                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, MatrixUtils.RotationType.Y_AXIS),
                 MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.Z_AXIS)
+            )
+        }.build().start()
+        val particle6 = builder().apply {
+            this.rotationOptions = listOf(
+                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 270.0, MatrixUtils.RotationType.Y_AXIS),
+                MatrixUtils.RotationOptions(DoubleTriple(0.0, 0.0, 0.0), 180.0, MatrixUtils.RotationType.X_AXIS)
             )
         }.build().start()
 
@@ -83,10 +119,10 @@ object TestCommand : CommandExecutor {
 
 
 
+
+
         return true
     }
-
-
 
 
 }

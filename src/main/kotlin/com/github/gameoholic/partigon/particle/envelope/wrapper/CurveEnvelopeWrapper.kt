@@ -29,24 +29,34 @@ object CurveEnvelopeWrapper {
         LEFT,
 
         /**
+         * 2D curve above the line.
+         */
+        ABOVE,
+
+        /**
+         * 2D curve below the line.
+         */
+        BELOW,
+
+        /**
          * 3D curve from the right side of the line, below it.
          */
-        RIGHT_DOWN,
+        RIGHT_BELOW,
 
         /**
          * 3D curve from the right side of the line, above it.
          */
-        RIGHT_UP,
+        RIGHT_ABOVE,
 
         /**
          * 3D curve from the left side of the line, below it.
          */
-        LEFT_DOWN,
+        LEFT_BELOW,
 
         /**
          * 3D curve from the left side of the line, above it.
          */
-        LEFT_UP
+        LEFT_ABOVE
     }
 
     /**
@@ -80,19 +90,32 @@ object CurveEnvelopeWrapper {
         loop: Loop,
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
+        //todo: clean up this shitty code
         val trigFunc =
-            if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_UP || curveOrientation == CurveOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.X)
+            if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_ABOVE || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_UP || curveOrientation == CurveOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_ABOVE || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_UP || curveOrientation == CurveOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.X)
+            else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.RIGHT_BELOW) && vectorComponent == VectorComponent.X)
                 TrigonometricEnvelope.TrigFunc.COS
-            else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_UP || curveOrientation == CurveOrientation.RIGHT_DOWN) && vectorComponent == VectorComponent.Z)
+            else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.RIGHT_BELOW) && vectorComponent == VectorComponent.Z)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((curveOrientation == CurveOrientation.RIGHT_DOWN || curveOrientation == CurveOrientation.LEFT_DOWN) && vectorComponent == VectorComponent.Y)
+            else if ((curveOrientation == CurveOrientation.RIGHT_BELOW || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.SIN
-            else if ((curveOrientation == CurveOrientation.RIGHT_UP || curveOrientation == CurveOrientation.LEFT_UP) && vectorComponent == VectorComponent.Y)
+            else if ((curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.LEFT_ABOVE) && vectorComponent == VectorComponent.Y)
                 TrigonometricEnvelope.TrigFunc.COS
+            else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.SIN
+            else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.X)
+                TrigonometricEnvelope.TrigFunc.COS
+            else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.Z)
+                TrigonometricEnvelope.TrigFunc.COS
+            else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.Y)
+                TrigonometricEnvelope.TrigFunc.COS
+            else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.X)
+                TrigonometricEnvelope.TrigFunc.SIN
+            else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.Z)
+                TrigonometricEnvelope.TrigFunc.SIN
             else
                 throw IllegalArgumentException("Invalid combination of curve orientation & vector component")
 
