@@ -146,7 +146,7 @@ class PartigonParticle(
      */
 
     fun stop() {
-        LoggerUtil.info("Stopping PartigonParticleImpl", id)
+        LoggerUtil.info("Stopping PartigonParticle", id)
         task?.cancel()
     }
 
@@ -222,7 +222,7 @@ class PartigonParticle(
                 }
 
                 Envelope.PropertyType.NONE -> {
-                    throw IllegalArgumentException("Property type NONE may only be used for nested envelopes, not for the parent one.")
+                    throw IllegalArgumentException("Property type NONE may not be used for top-level envelopes.")
                 }
             }
         }
