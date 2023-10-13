@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
 import java.util.*
 
-//todo: add link to the documentation here, also, write the documentation you lazy shit
 /**
  * Represents a particle animation, that's spawned every tick.
  * The particle's properties are controlled via envelopes,
