@@ -48,17 +48,16 @@ object TestCommand : CommandExecutor {
                         CircleEnvelopeWrapper.CircleDirection.RIGHT,
                         RepeatLoop(100),
                     ).getEnvelopes().toTypedArray(),
-
-                    curveEnvelope(
-                        Envelope.PropertyType.POS_Y,
-                        0.0.envelope, 4.0.envelope,
-                        CurveEnvelopeWrapper.CurveOrientation.BELOW,
-                        BounceLoop(200),
-                    )
                 )
-                //todo: have everything be so like this extra = envelope. remove property type.
-                extra = 0.05
-                count = 0
+                positionX = curveEnvelope(
+                    Envelope.PropertyType.NONE,
+                    0.0.envelope, 4.0.envelope,
+                    CurveEnvelopeWrapper.CurveOrientation.BELOW,
+                    BounceLoop(200),
+                )
+                //todo: see if we cna get rid of PropertyType
+                extra = LineEnvelope(Envelope.PropertyType.NONE, 0.025.envelope, 0.075.envelope, BounceLoop(400))
+                count = 0.envelope
             }
 
         val particle1 = builder().build().start()

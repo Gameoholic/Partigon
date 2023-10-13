@@ -19,12 +19,16 @@ import java.util.*
  * which interpolate them over time.
  */
 class PartigonParticle(
-    val origin: Location,
+    val originLocation: Location,
     val particleType: Particle,
     val envelopes: List<Envelope>,
-    val location: EnvelopeTriple,
+    var positionX: Envelope = 0.0.envelope,
+    var positionY: Envelope = 0.0.envelope,
+    var positionZ: Envelope = 0.0.envelope,
+    var offsetX: Envelope = 0.0.envelope,
+    var offsetY: Envelope = 0.0.envelope,
+    var offsetZ: Envelope = 0.0.envelope,
     val count: Envelope,
-    val offset: EnvelopeTriple,
     val extra: Envelope,
     val rotationOptions: List<RotationOptions>,
     val animationFrameAmount: Int,
@@ -35,11 +39,16 @@ class PartigonParticle(
         builder: Builder
     ) :
         this(
-            builder.location,
+            builder.originLocation,
             builder.particleType,
             builder.envelopes,
+            builder.positionX,
+            builder.positionY,
+            builder.positionZ,
+            builder.offsetX,
+            builder.offsetY,
+            builder.offsetZ,
             builder.count,
-            builder.offset,
             builder.extra,
             builder.rotationOptions,
             builder.animationFrameAmount,
@@ -48,25 +57,30 @@ class PartigonParticle(
 
     companion object {
         inline fun partigonParticle(
-            location: Location,
+            originLocation: Location,
             particleType: Particle,
             block: Builder.() -> Unit
-        ) = Builder(location, particleType).apply(block).build()
+        ) = Builder(originLocation, particleType).apply(block).build()
 
         inline fun partigonParticleBuilder(
-            location: Location,
+            originLocation: Location,
             particleType: Particle,
             block: Builder.() -> Unit
-        ) = Builder(location, particleType).apply(block)
+        ) = Builder(originLocation, particleType).apply(block)
     }
 
     class Builder(
-        var location: Location,
+        var originLocation: Location,
         var particleType: Particle
     ) {
         var envelopes: List<Envelope> = listOf()
         var count: Envelope = 1.0.envelope
-        var offset: EnvelopeTriple = EnvelopeTriple(0.0.envelope, 0.0.envelope, 0.0.envelope)
+        var positionX: Envelope = 0.0.envelope
+        var positionY: Envelope = 0.0.envelope
+        var positionZ: Envelope = 0.0.envelope
+        var offsetX: Envelope = 0.0.envelope
+        var offsetY: Envelope = 0.0.envelope
+        var offsetZ: Envelope = 0.0.envelope
         var extra: Envelope = 0.0.envelope
         var rotationOptions: List<RotationOptions> = listOf()
         var animationFrameAmount: Int = 1
@@ -156,9 +170,19 @@ class PartigonParticle(
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
 
-        var newLocation = origin.clone()
+        var newLocation = originLocation.clone().apply {
+            this.x += positionX.getValueAt(frameIndex)
+            this.y += positionY.getValueAt(frameIndex)
+            this.z += positionZ.getValueAt(frameIndex)
+        }.clone()
+        var newOffset = Vector(
+            offsetX.getValueAt(frameIndex),
+            offsetY.getValueAt(frameIndex),
+            offsetZ.getValueAt(frameIndex)
+        )
+        var newCount = count.getValueAt(frameIndex)
+        var newExtra = extra.getValueAt(frameIndex)
 
-        location.x.getValueAt(frameIndex)
         envelopes.forEach {
             val envelopePropertyType = it.propertyType
             val envelopeValue = it.getValueAt(frameIndex)
@@ -166,31 +190,35 @@ class PartigonParticle(
 
             when (envelopePropertyType) {
                 Envelope.PropertyType.POS_X -> {
-                        newLocation.x += envelopeValue
+                    newLocation.x += envelopeValue
                 }
 
                 Envelope.PropertyType.POS_Y -> {
-                        newLocation.y += envelopeValue
+                    newLocation.y += envelopeValue
                 }
 
                 Envelope.PropertyType.POS_Z -> {
-                        newLocation.z += envelopeValue
-                }
-
-                Envelope.PropertyType.COUNT -> {
-                        newCount += envelopeValue.toInt()
+                    newLocation.z += envelopeValue
                 }
 
                 Envelope.PropertyType.OFFSET_X -> {
-                        newOffset.x += envelopeValue
+                    newOffset.x += envelopeValue
                 }
 
                 Envelope.PropertyType.OFFSET_Y -> {
-                        newOffset.y += envelopeValue
+                    newOffset.y += envelopeValue
                 }
 
                 Envelope.PropertyType.OFFSET_Z -> {
-                        newOffset.z += envelopeValue
+                    newOffset.z += envelopeValue
+                }
+
+                Envelope.PropertyType.COUNT -> {
+                    newCount += envelopeValue.toInt()
+                }
+
+                Envelope.PropertyType.EXTRA -> {
+                    newExtra += envelopeValue.toInt()
                 }
 
                 Envelope.PropertyType.NONE -> {
@@ -201,13 +229,13 @@ class PartigonParticle(
 
         LoggerUtil.debug("Current properties are: {location: $newLocation, count: $newCount, offset: $newOffset}", id)
 
-        spawnParticle(newLocation, newCount, newOffset)
+        spawnParticle(newLocation, newOffset, newCount.toInt(), newExtra)
     }
 
     /**
      * Spawns the particle with the new provided properties.
      */
-    private fun spawnParticle(newLocation: Location, newCount: Int, newOffset: Vector) {
+    private fun spawnParticle(newLocation: Location, newOffset: Vector, newCount: Int, newExtra: Double) {
         LoggerUtil.debug("Spawning particle", id)
         newLocation.world.spawnParticle(
             particleType,
@@ -216,7 +244,7 @@ class PartigonParticle(
             newOffset.x,
             newOffset.y,
             newOffset.z,
-            extra
+            newExtra
         )
     }
 

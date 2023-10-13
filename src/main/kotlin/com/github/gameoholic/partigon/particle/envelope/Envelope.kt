@@ -8,7 +8,7 @@ import com.github.gameoholic.partigon.util.EnvelopeTriple
  * Represents an envelope for animating properties over time.
  */
 interface Envelope {
-    enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, NONE }
+    enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, NONE, EXTRA }
 
     /**
      * The property type the envelope controls.
