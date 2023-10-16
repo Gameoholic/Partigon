@@ -1,7 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.10"
 
-    id("maven-publish")
+    `maven-publish`
+//    id("maven-publish")
 
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing
@@ -12,7 +13,7 @@ plugins {
 
 group = "com.github.gameoholic"
 version = "1.0.0"
-description = "Tests"
+description = "Partigon."
 val apiVersion = "1.20"
 
 java {
@@ -76,11 +77,26 @@ tasks {
     }
 }
 
+
 publishing {
     publications {
         create<MavenPublication>("partigon") {
+//            groupId = "test"
+//            artifactId = "test"
+//            version = "test"
+
             from(components["kotlin"])
             artifact(tasks["kotlinSourcesJar"])
         }
     }
 }
+
+//
+//publishing {
+//    publications {
+//        create<MavenPublication>("partigon") {
+//            from(components["kotlin"])
+//            artifact(tasks["kotlinSourcesJar"])
+//        }
+//    }
+//}
