@@ -90,13 +90,3 @@ publishing {
         }
     }
 }
-
-//
-//publishing {
-//    publications {
-//        create<MavenPublication>("partigon") {
-//            from(components["kotlin"])
-//            artifact(tasks["kotlinSourcesJar"])
-//        }
-//    }
-//}
