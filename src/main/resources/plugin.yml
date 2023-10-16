@@ -5,7 +5,3 @@ description: '$description'
 api-version: '$apiVersion'
 authors:
   - Gameoholic
-commands:
-  test:
-    description: Test
-    usage: /test

@@ -7,6 +7,7 @@ import com.github.gameoholic.partigon.util.Utils.envelope
 import com.github.gameoholic.partigon.util.rotation.RotationOptions
 import org.bukkit.Location
 import org.bukkit.Particle
+import org.bukkit.entity.Entity
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
@@ -18,20 +19,21 @@ import java.util.*
  * which interpolate them over time.
  */
 class PartigonParticle(
-    val originLocation: Location,
+    var originLocation: Location,
     val particleType: Particle,
     val envelopes: List<Envelope>,
-    var positionX: Envelope = 0.0.envelope,
-    var positionY: Envelope = 0.0.envelope,
-    var positionZ: Envelope = 0.0.envelope,
-    var offsetX: Envelope = 0.0.envelope,
-    var offsetY: Envelope = 0.0.envelope,
-    var offsetZ: Envelope = 0.0.envelope,
+    val positionX: Envelope = 0.0.envelope, //todo: make all of these val
+    val positionY: Envelope = 0.0.envelope,
+    val positionZ: Envelope = 0.0.envelope,
+    val offsetX: Envelope = 0.0.envelope,
+    val offsetY: Envelope = 0.0.envelope,
+    val offsetZ: Envelope = 0.0.envelope,
     val count: Envelope,
     val extra: Envelope,
     val rotationOptions: List<RotationOptions>,
     val animationFrameAmount: Int,
     val animationInterval: Int,
+    val entity: Entity?,
 ) {
 
     private constructor(
@@ -52,6 +54,7 @@ class PartigonParticle(
             builder.rotationOptions,
             builder.animationFrameAmount,
             builder.animationInterval,
+            builder.entity
         )
 
     companion object {
@@ -84,6 +87,7 @@ class PartigonParticle(
         var rotationOptions: List<RotationOptions> = listOf()
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
+        var entity: Entity? = null
 
         fun build() = PartigonParticle(this)
     }
@@ -95,6 +99,7 @@ class PartigonParticle(
     private var delay = animationInterval
 
     init {
+        //todo: why do this only for groups? also, only do it for offsets and positions.
         //Add rotation for every group, on top of whatever rotations they already have
         val groups = envelopes.mapNotNull { it.envelopeGroup }.distinct()
         groups.forEach {
@@ -168,6 +173,9 @@ class PartigonParticle(
      */
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
+
+        if (entity != null && !entity.isDead) // Follow entity
+            originLocation = entity.location
 
         var newLocation = originLocation.clone().apply {
             this.x += positionX.getValueAt(frameIndex)
