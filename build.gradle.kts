@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.github.gameoholic"
-version = "1.0.1"
+version = "1.0.2"
 description = "Partigon."
 val apiVersion = "1.20"
 
@@ -81,9 +81,9 @@ tasks {
 publishing {
     publications {
         create<MavenPublication>("partigon") {
-//            groupId = "test"
-//            artifactId = "test"
-//            version = "test"
+            groupId = group.toString()
+            artifactId = "partigon"
+            version = version
 
             from(components["kotlin"])
             artifact(tasks["kotlinSourcesJar"])
