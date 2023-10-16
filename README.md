@@ -10,3 +10,6 @@ TODO:
 + More property types
 + Copy and mirror particles
 + Change envelopes/unmodifiable properties mid-anim?
+
+[![](https://jitpack.io/v/gameoholic/partigon.svg)](https://jitpack.io/#gameoholic/partigon)
+
