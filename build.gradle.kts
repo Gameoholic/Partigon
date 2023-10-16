@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.github.gameoholic"
-version = "1.0.0"
+version = "1.0.1"
 description = "Partigon."
 val apiVersion = "1.20"
 
