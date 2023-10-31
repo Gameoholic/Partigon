@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm") version "1.9.10"
 
     `maven-publish`
-//    id("maven-publish")
 
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("xyz.jpenilla.run-paper") version "2.1.0" // Adds runServer and runMojangMappedServer tasks for testing
@@ -11,8 +10,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
-group = "com.github.gameoholic"
-version = "1.0.2"
+group = "xyz.gameoholic"
+version = "1.1.0"
 description = "Partigon."
 val apiVersion = "1.20"
 
@@ -28,7 +27,7 @@ repositories {
 
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    compileOnly(kotlin("stdlib-jdk8"))
 
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT") //the paper dev bundle is a compile-only dependency, paper itself provides it. No need to shade
 
@@ -72,19 +71,29 @@ tasks {
         // helper function to relocate a package into our package
         fun reloc(pkg: String) = relocate(pkg, "${project.group}.${project.name}.dependency.$pkg")
 
-        reloc("net.objecthunter.exp4j")
-        //reloc("stdlib-jdk8")
+        //relocate("kotlin", "xyz.gameoholic.partigon.dependency.kotlin")
+        reloc("net.objecthunter")
+        reloc("org.apache.commons")
     }
 }
 
 
 publishing {
+    repositories {
+        maven {
+            name = "gameoholicRepository"
+            url = uri("https://repo.gameoholic.xyz/releases")
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
     publications {
-        create<MavenPublication>("partigon") {
+        create<MavenPublication>("maven") { //this should be "partigon" maybe?
             groupId = group.toString()
             artifactId = "partigon"
             version = version
-
             from(components["kotlin"])
             artifact(tasks["kotlinSourcesJar"])
         }

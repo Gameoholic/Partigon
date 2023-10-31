@@ -1,7 +1,8 @@
 name: '$name'
 version: '$version'
-main: com.github.gameoholic.partigon.PartigonPlugin
+main: xyz.gameoholic.partigon.PartigonPlugin
 description: '$description'
 api-version: '$apiVersion'
 authors:
   - Gameoholic
+depend: [ Kotlin ]
