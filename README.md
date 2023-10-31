@@ -11,5 +11,16 @@ TODO:
 + Copy and mirror particles
 + Change envelopes/unmodifiable properties mid-anim?
 
-[![](https://jitpack.io/v/gameoholic/partigon.svg)](https://jitpack.io/#gameoholic/partigon)
 
+
+To use:
+
+```
+maven {
+  url = uri("https://repo.gameoholic.xyz/releases")
+}
+compileOnly("xyz.gameoholic:partigon:version")
+```
+
+
+Add "Partigon" as a `depend` to `plugin.yml`, and add Kotlin and Partigon to your plugins.
