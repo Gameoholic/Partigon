@@ -1,5 +1,7 @@
 package xyz.gameoholic.partigon.particle
 
+import net.minecraft.core.particles.ParticleType
+import org.bukkit.Bukkit
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.Utils.envelope
@@ -18,11 +20,11 @@ import java.util.*
  * which interpolate them over time.
  */
 class PartigonParticle(
-    var originLocation: Location,
-    val particleType: Particle,
+    var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation,
+    val particleType: Particle = Particle.END_ROD,
     val envelopes: List<Envelope>,
     val positionX: Envelope = 0.0.envelope, //todo: make all of these val
-    val positionY: Envelope = 0.0.envelope,
+    val positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
     val positionZ: Envelope = 0.0.envelope,
     val offsetX: Envelope = 0.0.envelope,
     val offsetY: Envelope = 0.0.envelope,
@@ -58,23 +60,18 @@ class PartigonParticle(
 
     companion object {
         inline fun partigonParticle(
-            originLocation: Location,
-            particleType: Particle,
             block: Builder.() -> Unit
-        ) = Builder(originLocation, particleType).apply(block).build()
+        ) = Builder().apply(block).build()
 
         inline fun partigonParticleBuilder(
-            originLocation: Location,
-            particleType: Particle,
             block: Builder.() -> Unit
-        ) = Builder(originLocation, particleType).apply(block)
+        ) = Builder().apply(block)
     }
 
-    class Builder(
-        var originLocation: Location,
-        var particleType: Particle
-    ) {
-        var envelopes: List<Envelope> = listOf()
+    class Builder {
+        var originLocation = Bukkit.getWorlds()[0].spawnLocation
+        var particleType = Particle.END_ROD
+        var envelopes = listOf<Envelope>()
         var count: Envelope = 1.0.envelope
         var positionX: Envelope = 0.0.envelope
         var positionY: Envelope = 0.0.envelope
@@ -89,6 +86,14 @@ class PartigonParticle(
         var entity: Entity? = null
 
         fun build() = PartigonParticle(this)
+
+        /**
+         * Adds this Envelope to the list of Envelopes of the particle.
+         */
+        fun Envelope.add()
+        {
+            envelopes += this
+        }
     }
 
     val id = UUID.randomUUID()!!
