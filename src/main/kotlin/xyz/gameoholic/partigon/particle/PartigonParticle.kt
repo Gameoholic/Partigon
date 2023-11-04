@@ -1,6 +1,5 @@
 package xyz.gameoholic.partigon.particle
 
-import xyz.gameoholic.partigon.Partigon
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.Utils.envelope
@@ -37,7 +36,7 @@ class PartigonParticle(
 ) {
 
     private constructor(
-        builder: xyz.gameoholic.partigon.particle.PartigonParticle.Builder
+        builder: Builder
     ) :
         this(
             builder.originLocation,
@@ -61,14 +60,14 @@ class PartigonParticle(
         inline fun partigonParticle(
             originLocation: Location,
             particleType: Particle,
-            block: xyz.gameoholic.partigon.particle.PartigonParticle.Builder.() -> Unit
-        ) = xyz.gameoholic.partigon.particle.PartigonParticle.Builder(originLocation, particleType).apply(block).build()
+            block: Builder.() -> Unit
+        ) = Builder(originLocation, particleType).apply(block).build()
 
         inline fun partigonParticleBuilder(
             originLocation: Location,
             particleType: Particle,
-            block: xyz.gameoholic.partigon.particle.PartigonParticle.Builder.() -> Unit
-        ) = xyz.gameoholic.partigon.particle.PartigonParticle.Builder(originLocation, particleType).apply(block)
+            block: Builder.() -> Unit
+        ) = Builder(originLocation, particleType).apply(block)
     }
 
     class Builder(
@@ -89,7 +88,7 @@ class PartigonParticle(
         var animationInterval: Int = 1
         var entity: Entity? = null
 
-        fun build() = xyz.gameoholic.partigon.particle.PartigonParticle(this)
+        fun build() = PartigonParticle(this)
     }
 
     val id = UUID.randomUUID()!!
