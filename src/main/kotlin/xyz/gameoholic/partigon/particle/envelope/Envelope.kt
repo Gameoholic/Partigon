@@ -11,6 +11,11 @@ interface Envelope {
     enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, EXTRA, NONE }
 
     /**
+     * The property type the envelope controls.
+     */
+    val propertyType: PropertyType
+
+    /**
      * The loop to use with the envelope.
      */
     val loop: Loop
@@ -33,13 +38,12 @@ interface Envelope {
 
     /**
      * Retrieves the envelope's value for a certain frame t. Applies loop.
-     * todo: doc about property type, that it is usedf for grupp.s
      *
      * @param frameIndex The frame index.
      * @param rawValue Whether to return the value before any external transformations have been applied.
      * @return The value of the envelope at a frame t. If rawValue set to true, returns the value before any external transformations have been applied.
      */
-    fun getValueAt(frameIndex: Int, rawValue: Boolean = false, propertyType: PropertyType = PropertyType.NONE): Double
+    fun getValueAt(frameIndex: Int, rawValue: Boolean = false): Double
 
     /**
      * Nested envelopes are property-less envelopes that produce a value used for the parent envelope(s).

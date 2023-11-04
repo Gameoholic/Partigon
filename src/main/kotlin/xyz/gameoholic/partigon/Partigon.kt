@@ -4,17 +4,15 @@ import xyz.gameoholic.partigon.parsers.ConfigFileParser
 import xyz.gameoholic.partigon.parsers.ConfigSettings
 
 object Partigon {
-    lateinit var plugin: PartigonPlugin
-    lateinit var configSettings: ConfigSettings
+    lateinit var plugin: xyz.gameoholic.partigon.PartigonPlugin
+    lateinit var configSettings: xyz.gameoholic.partigon.parsers.ConfigSettings
 
-    fun onEnable(partigonPlugin: PartigonPlugin) {
-        plugin = partigonPlugin
+    fun onEnable(partigonPlugin: xyz.gameoholic.partigon.PartigonPlugin) {
+        xyz.gameoholic.partigon.Partigon.plugin = partigonPlugin
 
-        plugin.saveResource("config.yml", false)
-        configSettings = ConfigFileParser.parseFile()
+        xyz.gameoholic.partigon.Partigon.plugin.saveResource("config.yml", false)
+        xyz.gameoholic.partigon.Partigon.configSettings = xyz.gameoholic.partigon.parsers.ConfigFileParser.parseFile()
 
-        plugin.logger.info("Plugin enabled - Log level set to ${configSettings.logLevel}")
-
-        Test.test()
+        xyz.gameoholic.partigon.Partigon.plugin.logger.info("Plugin enabled - Log level set to ${xyz.gameoholic.partigon.Partigon.configSettings.logLevel}")
     }
 }

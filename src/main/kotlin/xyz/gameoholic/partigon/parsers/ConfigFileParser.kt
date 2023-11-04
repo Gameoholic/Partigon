@@ -10,10 +10,10 @@ object ConfigFileParser {
     /**
      * Should be executed asynchronously or when the server starts.
      */
-    fun parseFile(): ConfigSettings {
+    fun parseFile(): xyz.gameoholic.partigon.parsers.ConfigSettings {
         val config: YamlConfiguration =
-            YamlConfiguration.loadConfiguration(File(Partigon.plugin.dataFolder, "config.yml"))
-        return ConfigSettings(
+            YamlConfiguration.loadConfiguration(File(xyz.gameoholic.partigon.Partigon.plugin.dataFolder, "config.yml"))
+        return xyz.gameoholic.partigon.parsers.ConfigSettings(
             LogLevel.valueOf(config.getString("LogLevel")!!),
         )
     }
