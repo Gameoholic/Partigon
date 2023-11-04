@@ -19,11 +19,13 @@ _It is recommended to use Kotlin with Partigon, as it was made specifically for 
 To use this library, add the `Partigon .jar` file (found in Releases) and `Kotlin` to your plugins folder. Partigon requires the Kotlin std-lib to work. 
 Then, add Partigon as a [dependency or soft dependency](https://docs.papermc.io/paper/dev/plugin-yml#dependencies) like any other plugin:
 
-```depend: [ Partigon ]```
+```yml
+depend: [ Partigon ]
+```
 
 To add Partigon as a Maven dependency:
 
-```
+```xml
 <repository>
   <id>gameoholic-repo</id>
   <url>https://repo.gameoholic.xyz/releases</url>
@@ -39,7 +41,7 @@ To add Partigon as a Maven dependency:
 
 To add Partigon as a Gradle (Kotlin) dependency:
 
-```
+```gradle
 repositories {
     maven {
         url = uri("https://repo.gameoholic.xyz/releases")
