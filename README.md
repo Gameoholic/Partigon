@@ -16,7 +16,7 @@ TODO:
 ## Using Partigon
 _It is recommended to use Kotlin with Partigon, as it was made specifically for usage with Kotlin._
 
-To use this library, add the `Partigon.jar` file (found in [Releases](https://github.com/Gameoholic/Partigon/releases)) and `Kotlin.jar` to your plugins folder (Found [here](https://github.com/Gameoholic/PaperKotlin/releases/tag/1.0.0)). Partigon requires the Kotlin stdlib to work. 
+To use this library, add the `Partigon.jar` file (found in [Releases](https://github.com/Gameoholic/Partigon/releases)) and `Kotlin.jar` (Found [here](https://github.com/Gameoholic/PaperKotlin/releases/tag/1.0.0)) to your plugins folder. Partigon requires the Kotlin stdlib to work. 
 
 Then, add Partigon as a [dependency or soft dependency](https://docs.papermc.io/paper/dev/plugin-yml#dependencies) like any other plugin:
 
