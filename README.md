@@ -16,7 +16,8 @@ TODO:
 ## Using Partigon
 _It is recommended to use Kotlin with Partigon, as it was made specifically for usage with Kotlin._
 
-To use this library, add the `Partigon .jar` file (found in Releases) and `Kotlin` to your plugins folder. Partigon requires the Kotlin std-lib to work. 
+To use this library, add the `Partigon .jar` file (found in Releases) and `Kotlin` to your plugins folder (todo: link here). Partigon requires the Kotlin stdlib to work. 
+
 Then, add Partigon as a [dependency or soft dependency](https://docs.papermc.io/paper/dev/plugin-yml#dependencies) like any other plugin:
 
 ```yml
