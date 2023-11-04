@@ -12,7 +12,7 @@ plugins {
 
 group = "xyz.gameoholic"
 version = "1.1.1"
-description = "Partigon."
+description = "A Minecraft particle animation library written in Kotlin."
 val apiVersion = "1.20"
 
 java {
