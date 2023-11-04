@@ -26,10 +26,11 @@ class EnvelopeGroup(
     init {
         if (envelopeX.envelopeGroup != null || envelopeY.envelopeGroup != null || envelopeZ.envelopeGroup != null)
             throw RuntimeException("Envelopes may only have one envelope group assigned to them.")
-        if (envelopeX.propertyType != Envelope.PropertyType.POS_X && envelopeX.propertyType != Envelope.PropertyType.OFFSET_X &&
-            envelopeY.propertyType != Envelope.PropertyType.POS_Y && envelopeY.propertyType != Envelope.PropertyType.OFFSET_Y &&
-            envelopeZ.propertyType != Envelope.PropertyType.POS_Z && envelopeZ.propertyType != Envelope.PropertyType.OFFSET_Z)
-            throw IllegalArgumentException("One of the envelopes' properties is invalid for group.")
+        //todo: reinstate this error somehow. check what happens if I actually create it with wrong parameters.
+//        if (envelopeX.propertyType != Envelope.PropertyType.POS_X && envelopeX.propertyType != Envelope.PropertyType.OFFSET_X &&
+//            envelopeY.propertyType != Envelope.PropertyType.POS_Y && envelopeY.propertyType != Envelope.PropertyType.OFFSET_Y &&
+//            envelopeZ.propertyType != Envelope.PropertyType.POS_Z && envelopeZ.propertyType != Envelope.PropertyType.OFFSET_Z)
+//            throw IllegalArgumentException("One of the envelopes' properties is invalid for group.")
         envelopeX.envelopeGroup = this
         envelopeY.envelopeGroup = this
         envelopeZ.envelopeGroup = this

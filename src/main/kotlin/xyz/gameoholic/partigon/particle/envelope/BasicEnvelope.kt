@@ -19,7 +19,6 @@ import java.lang.RuntimeException
  * @param nestedEnvelopes The nested envelopes.
  */
 open class BasicEnvelope(
-    override val propertyType: Envelope.PropertyType,
     override val envelopeExpression: String,
     override val loop: Loop,
     override val completion: Double,
@@ -33,13 +32,13 @@ open class BasicEnvelope(
             field = value
         }
 
-    override fun getValueAt(frameIndex: Int, rawValue: Boolean): Double {
-        /**
-         * We don't use the actual frame index with the envelope,
-         * as the loop might modify it for different purposes.
-         * Therefore, we use the LOOPED frame index, which may
-         * differ from the original frame index.
-         */
+    override fun getValueAt(frameIndex: Int, rawValue: Boolean, propertyType: Envelope.PropertyType): Double {
+
+//         We don't use the actual frame index with the envelope,
+//         as the loop might modify it for different purposes.
+//         Therefore, we use the LOOPED frame index, which may
+//         differ from the original frame index.
+
         val loopedFrameIndex = loop.applyLoop(frameIndex)
 
         var updatedEnvelopeExpression = envelopeExpression
@@ -58,9 +57,9 @@ open class BasicEnvelope(
 
                 var newPosition = RotationUtil.applyRotationsForPoint(
                     Triple(
-                    it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true),
+                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true),
+                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true)
                 ), it.rotationOptions, frameIndex)
 
                 return when (propertyType) {

@@ -1,5 +1,6 @@
 package xyz.gameoholic.partigon.particle
 
+import org.bukkit.Bukkit
 import xyz.gameoholic.partigon.Partigon
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
@@ -21,8 +22,7 @@ import java.util.*
 class PartigonParticle(
     var originLocation: Location,
     val particleType: Particle,
-    val envelopes: List<Envelope>,
-    val positionX: Envelope = 0.0.envelope, //todo: make all of these val
+    val positionX: Envelope = 0.0.envelope,
     val positionY: Envelope = 0.0.envelope,
     val positionZ: Envelope = 0.0.envelope,
     val offsetX: Envelope = 0.0.envelope,
@@ -37,12 +37,11 @@ class PartigonParticle(
 ) {
 
     private constructor(
-        builder: xyz.gameoholic.partigon.particle.PartigonParticle.Builder
+        builder: Builder
     ) :
         this(
             builder.originLocation,
             builder.particleType,
-            builder.envelopes,
             builder.positionX,
             builder.positionY,
             builder.positionZ,
@@ -59,22 +58,21 @@ class PartigonParticle(
 
     companion object {
         inline fun partigonParticle(
-            originLocation: Location,
-            particleType: Particle,
-            block: xyz.gameoholic.partigon.particle.PartigonParticle.Builder.() -> Unit
-        ) = xyz.gameoholic.partigon.particle.PartigonParticle.Builder(originLocation, particleType).apply(block).build()
+            block: Builder.() -> Unit
+        ) = Builder().apply(block).build()
 
         inline fun partigonParticleBuilder(
-            originLocation: Location,
-            particleType: Particle,
-            block: xyz.gameoholic.partigon.particle.PartigonParticle.Builder.() -> Unit
-        ) = xyz.gameoholic.partigon.particle.PartigonParticle.Builder(originLocation, particleType).apply(block)
+            block: Builder.() -> Unit
+        ) = Builder().apply(block)
     }
 
-    class Builder(
-        var originLocation: Location,
-        var particleType: Particle
-    ) {
+    fun Envelope.affect(propertyType: Envelope.PropertyType) {
+        envelopes += this.apply { this.propertyType = propertyType }
+    }
+
+    class Builder {
+        var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation
+        var particleType: Particle = Particle.END_ROD
         var envelopes: List<Envelope> = listOf()
         var count: Envelope = 1.0.envelope
         var positionX: Envelope = 0.0.envelope
@@ -89,7 +87,7 @@ class PartigonParticle(
         var animationInterval: Int = 1
         var entity: Entity? = null
 
-        fun build() = xyz.gameoholic.partigon.particle.PartigonParticle(this)
+        fun build() = PartigonParticle(this)
     }
 
     val id = UUID.randomUUID()!!
@@ -97,6 +95,7 @@ class PartigonParticle(
         private set
     private var task: BukkitTask? = null
     private var delay = animationInterval
+    private var envelopes = hashMapOf<>()
 
     init {
         //todo: why do this only for groups? also, only do it for offsets and positions.
