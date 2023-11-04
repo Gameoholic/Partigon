@@ -3,7 +3,7 @@ package xyz.gameoholic.partigon
 import xyz.gameoholic.partigon.parsers.ConfigFileParser
 import xyz.gameoholic.partigon.parsers.ConfigSettings
 
-object Partigon {
+internal object Partigon {
     lateinit var plugin: PartigonPlugin
     lateinit var configSettings: ConfigSettings
 
