@@ -22,7 +22,6 @@ internal object RotationUtil {
     ): DoubleTriple {
         val angleRadians = Math.toRadians(
             options.angle.getValueAt(frameIndex)
-                ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
         )
 
         val pointMatrix = MatrixUtils.createRealMatrix(
@@ -37,15 +36,12 @@ internal object RotationUtil {
             arrayOf(
                 doubleArrayOf(
                     options.rotationPoint.x.getValueAt(frameIndex)
-                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
                 ),
                 doubleArrayOf(
                     options.rotationPoint.y.getValueAt(frameIndex)
-                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
                 ),
                 doubleArrayOf(
                     options.rotationPoint.z.getValueAt(frameIndex)
-                        ?: throw RuntimeException("Envelopes for rotation parameters may not be disabled.")
                 )
             )
         )
