@@ -69,6 +69,8 @@ internal object RotationUtil {
         val newY = newPointMatrix.data[1][0]
         val newZ = newPointMatrix.data[2][0]
 
+        LoggerUtil.debug("Applied rotation for point (${point.x}, ${point.y}, ${point.z}) -> ($newX, $newY, $newZ).\nAngle was $angleRadians in radians.")
+
         return DoubleTriple(newX, newY, newZ)
     }
 
