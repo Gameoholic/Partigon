@@ -26,22 +26,16 @@ class LineEnvelope(
 
     init {
         val nestedEnvelopesList = mutableListOf<Envelope>()
-        var value1String = value1.toString()
-        if (value1 is Envelope) { //todo: it's all envelopes now so it needs to be re-worked
-            /**
-             * Since we don't know the actual nested envelope value initialization-time,
-             * we give it a placeholder (@ENV_X@) and replace it with the nested envelope's
-             * value every tick.
-             */
-            value1String = "@ENV_0@"
-            nestedEnvelopesList.add(value1)
-        }
 
-        var value2String = value2.toString()
-        if (value2 is Envelope) {
-            value2String = "@ENV_${nestedEnvelopesList.size}@"
-            nestedEnvelopesList.add(value2)
-        }
+        // Since we don't know the actual nested envelope value initialization-time,
+        // we give it a placeholder (@ENV_X@) and replace it with the nested envelope's
+        // value every tick.
+
+        val value1String = "@ENV_0@"
+        nestedEnvelopesList.add(value1)
+
+        val value2String = "@ENV_1@"
+        nestedEnvelopesList.add(value2)
 
         envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1})"
         nestedEnvelopes = nestedEnvelopesList.toList()

@@ -36,22 +36,15 @@ open class TrigonometricEnvelope(
         val animProgress = "frame_index / ${(loop.envelopeDuration - 1)}" //The animation progress, from 0.0 to 1.0
 
         val nestedEnvelopesList = mutableListOf<Envelope>()
-        var value1String = value1.toString()
-        if (value1 is Envelope) {
-            /**
-             * Since we don't know the actual nested envelope value initialization-time,
-             * we give it a placeholder (@ENV_X@) and replace it with the nested envelope's
-             * value every tick.
-             */
-            value1String = "@ENV_0@"
-            nestedEnvelopesList.add(value1)
-        }
+        // Since we don't know the actual nested envelope value initialization-time,
+        // we give it a placeholder (@ENV_X@) and replace it with the nested envelope's
+        // value every tick.
 
-        var value2String = value2.toString()
-        if (value2 is Envelope) {
-            value2String = "@ENV_${nestedEnvelopesList.size}@"
-            nestedEnvelopesList.add(value2)
-        }
+        val value1String = "@ENV_0@"
+        nestedEnvelopesList.add(value1)
+
+        val value2String = "@ENV_1@"
+        nestedEnvelopesList.add(value2)
 
         //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
         envelopeExpression = if (trigFunc == TrigFunc.COS)
