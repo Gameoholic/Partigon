@@ -105,8 +105,7 @@ class PartigonParticle(
     init {
         //todo: why do this only for groups? also, only do it for offsets and positions.
         //Add rotation for every group, on top of whatever rotations they already have
-        val groups = envelopes.mapNotNull { it.envelopeGroup }.distinct()
-        groups.forEach {
+        envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
             it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
         }
     }
