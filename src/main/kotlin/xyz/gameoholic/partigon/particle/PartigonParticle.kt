@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
+import xyz.gameoholic.partigon.particle.location.ConstantLocation
+import xyz.gameoholic.partigon.particle.location.PartigonLocation
 import java.util.*
 
 /**
@@ -20,7 +22,7 @@ import java.util.*
  * which interpolate them over time.
  */
 class PartigonParticle(
-    var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation,
+    var originLocation: PartigonLocation,
     val particleType: Particle = Particle.END_ROD,
     envelopes: List<Envelope> = listOf(),
     positionX: Envelope = 0.0.envelope,
@@ -69,7 +71,7 @@ class PartigonParticle(
     }
 
     class Builder {
-        var originLocation = Bukkit.getWorlds()[0].spawnLocation
+        var originLocation = ConstantLocation(Bukkit.getWorlds()[0].spawnLocation)
         var particleType = Particle.END_ROD
         var envelopes = listOf<Envelope>()
         var count: Envelope = 1.0.envelope
@@ -193,10 +195,7 @@ class PartigonParticle(
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
 
-        if (entity != null && !entity.isDead) // Follow entity
-            originLocation = entity.location
-
-        var newLocation = originLocation.clone()
+        var newLocation = originLocation.getLocation()
         var newOffset = Vector(0.0, 0.0, 0.0)
         var newCount = 0
         var newExtra = 0.0
