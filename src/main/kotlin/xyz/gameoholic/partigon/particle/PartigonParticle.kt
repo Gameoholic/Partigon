@@ -195,7 +195,7 @@ class PartigonParticle(
     private fun applyEnvelopes() {
         LoggerUtil.debug("Applying envelopes", id)
 
-        var newLocation = originLocation.getLocation()
+        var newLocation = originLocation.getLocation().clone()
         var newOffset = Vector(0.0, 0.0, 0.0)
         var newCount = 0
         var newExtra = 0.0
