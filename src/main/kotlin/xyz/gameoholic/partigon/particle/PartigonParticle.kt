@@ -1,6 +1,5 @@
 package xyz.gameoholic.partigon.particle
 
-import net.minecraft.core.particles.ParticleType
 import org.bukkit.Bukkit
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
@@ -12,7 +11,6 @@ import org.bukkit.entity.Entity
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
-import xyz.gameoholic.partigon.particle.loop.FillLoop
 import java.util.*
 
 /**
@@ -199,7 +197,7 @@ class PartigonParticle(
         var newCount = 0
         var newExtra = 0.0
 
-        envelopes.filter { it.loop !is FillLoop }.forEach {
+        envelopes.forEach {
             val envelopePropertyType = it.propertyType
             val envelopeValue = it.getValueAt(frameIndex)
             LoggerUtil.debug("Applying envelope $it. Envelope value is $envelopeValue", id)
@@ -245,64 +243,7 @@ class PartigonParticle(
 
         LoggerUtil.debug("Current properties are: {location: $newLocation, count: $newCount, offset: $newOffset}", id)
 
-        val fillLoopEnvelopes = envelopes.filter { it.loop is FillLoop }
-        if (fillLoopEnvelopes.isEmpty()) {
-            spawnParticle(newLocation, newOffset, newCount, newExtra)
-            return
-        }
-
-
-        fillLoopEnvelopes.forEach {
-            repeat(it.loop.duration) { i ->
-
-                val envelopeValue = it.getValueAt(i)
-
-                var newLocation2 = newLocation.clone()
-                var newOffset2 = newOffset.clone()
-                var newCount2 = newCount
-                var newExtra2 = newExtra
-
-                when (it.propertyType) {
-                    Envelope.PropertyType.POS_X -> {
-                        newLocation2.x += envelopeValue
-                    }
-
-                    Envelope.PropertyType.POS_Y -> {
-                        newLocation2.y += envelopeValue
-                    }
-
-                    Envelope.PropertyType.POS_Z -> {
-                        newLocation2.z += envelopeValue
-                    }
-
-                    Envelope.PropertyType.OFFSET_X -> {
-                        newOffset2.x += envelopeValue
-                    }
-
-                    Envelope.PropertyType.OFFSET_Y -> {
-                        newOffset2.y += envelopeValue
-                    }
-
-                    Envelope.PropertyType.OFFSET_Z -> {
-                        newOffset2.z += envelopeValue
-                    }
-
-                    Envelope.PropertyType.COUNT -> {
-                        newCount2 += envelopeValue.toInt()
-                    }
-
-                    Envelope.PropertyType.EXTRA -> {
-                        newExtra2 += envelopeValue.toInt()
-                    }
-
-                    Envelope.PropertyType.NONE -> {
-                        throw IllegalArgumentException("Property type NONE may not be used for top-level envelopes.")
-                    }
-                }
-
-                spawnParticle(newLocation2, newOffset2, newCount2, newExtra2)
-            }
-        }
+        spawnParticle(newLocation, newOffset, newCount, newExtra)
     }
 
     /**
