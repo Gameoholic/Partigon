@@ -132,6 +132,66 @@ object CircleEnvelopeWrapper {
         )
     }
 
+    fun circleEnvelope(
+        propertyType: Envelope.PropertyType,
+        center: EnvelopePair,
+        radius: Envelope,
+        circleDirection: CircleDirection,
+        loop: Loop,
+        completion: Double = 1.0,
+    ): TrigonometricEnvelope {
+        val vectorComponent =
+            when (propertyType) {
+                Envelope.PropertyType.POS_X -> VectorComponent.X
+                Envelope.PropertyType.POS_Z -> VectorComponent.Z
+                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
+                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
+            }
+
+
+
+        //5,5
+        //10
+
+
+        //15, 5
+        // 5, 15
+
+        var value1: Envelope
+        var value2: Envelope
+        if (vectorComponent == VectorComponent.X) {
+            // value1 = center.first + radius
+            // value2 = center.first
+            value1 = BasicEnvelope("@ENV_0@ + @ENV_1@", loop, completion, listOf(center.first, radius))
+            value2 = center.first
+        }
+        else {
+            // value1 = center.second
+            // valuje2 = center.second + radius
+
+            value1 = BasicEnvelope("@ENV_0@", loop, completion, listOf(center.second))
+            value2 = BasicEnvelope("@ENV_0@ + @ENV_1@", loop, completion, listOf(center.second, radius))
+
+
+//            val value1 = point1.second
+//            val value2 = point2.second
+//            val value1= BasicEnvelope("@ENV_0@ - @ENV_1@", loop, completion, listOf(center.second, radius))
+//            val value2= BasicEnvelope("@ENV_0@", loop, completion, listOf(center.first))
+        }
+
+
+        return circleEnvelope(
+            propertyType,
+            value1,
+            value2,
+            circleDirection,
+            vectorComponent,
+            loop,
+            completion,
+        )
+    }
+
 
     /**
      * Envelope wrapper that creates a circle between 2 points/offsets
@@ -149,8 +209,8 @@ object CircleEnvelopeWrapper {
      */
     fun circleEnvelopeGroup(
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
-        position1: EnvelopePair,
-        position2: EnvelopePair,
+        position1: EnvelopePair, //(0,0)
+        position2: EnvelopePair, //(4,4)
         circleDirection: CircleDirection,
         loop: Loop,
         rotationOptions: List<RotationOptions> = listOf(),
