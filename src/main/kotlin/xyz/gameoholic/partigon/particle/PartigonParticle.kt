@@ -106,18 +106,19 @@ class PartigonParticle(
     init {
         // Add rotation for every group, on top of whatever rotations they already have
         envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
-            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
+            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) } // todo: do like below, envelopes as MutableList +=. not toMutableList
         }
 
         // Add all parameter-mapped envelopes to the envelopes list
-        envelopes.toMutableList() += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
-        envelopes.toMutableList() += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
-        envelopes.toMutableList() += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
-        envelopes.toMutableList() += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
-        envelopes.toMutableList() += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
-        envelopes.toMutableList() += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
-        envelopes.toMutableList() += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
-        envelopes.toMutableList() += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
+        (envelopes as MutableList) += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
+        envelopes += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
+        envelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
+        envelopes += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
+        envelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
+        envelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
+        envelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
+        envelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
+
     }
 
     /**
