@@ -115,7 +115,7 @@ class PartigonParticle(
         envelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
         envelopes += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
         envelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
-        envelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
+        envelopes += offsetY.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
         envelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
         envelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
 
