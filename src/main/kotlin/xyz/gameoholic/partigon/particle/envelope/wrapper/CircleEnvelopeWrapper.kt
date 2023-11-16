@@ -31,20 +31,6 @@ object CircleEnvelopeWrapper {
     }
 
     /**
-     * Represents the direction of the circle, from an upside perspective.
-     */
-    enum class CircleClockwiseDirection {
-        /**
-         * When looking at the circle from above, the direction will be clockwise.
-         */
-        CLOCKWISE,
-        /**
-         * When looking at the circle from above, the direction will be counter clockwise.
-         */
-        COUNTER_CLOCKWISE,
-    }
-
-    /**
      * Represents the component (X, Z) of a vector.
      * This is used in circle envelopes with circle directions to automatically
      * determine the trigonometric function to use.
@@ -169,7 +155,6 @@ object CircleEnvelopeWrapper {
         propertyType: Envelope.PropertyType,
         center: EnvelopePair,
         radius: Envelope,
-        circleDirection: CircleClockwiseDirection,
         loop: Loop,
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
@@ -192,11 +177,6 @@ object CircleEnvelopeWrapper {
             value1 = BasicEnvelope("@ENV_0@", loop, completion, listOf(center.second))
             value2 = BasicEnvelope("@ENV_0@ + @ENV_1@", loop, completion, listOf(center.second, radius))
         }
-
-        val circleDirection = if (circleDirection == CircleClockwiseDirection.CLOCKWISE)
-            CircleDirection.RIGHT
-        else
-            CircleDirection.LEFT
 
         return circleEnvelope(
             propertyType,
@@ -282,7 +262,6 @@ object CircleEnvelopeWrapper {
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         center: EnvelopePair,
         radius: Envelope,
-        circleDirection: CircleClockwiseDirection,
         loop: Loop,
         rotationOptions: List<RotationOptions> = listOf(),
         completion: Double = 1.0,
@@ -294,7 +273,6 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.OFFSET_X,
             center,
             radius,
-            circleDirection,
             loop,
             completion,
         ),
@@ -311,7 +289,6 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.OFFSET_Z,
             center,
             radius,
-            circleDirection,
             loop,
             completion,
         ),
