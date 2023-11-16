@@ -165,23 +165,12 @@ object CircleEnvelopeWrapper {
         var value1: Envelope
         var value2: Envelope
         if (vectorComponent == VectorComponent.X) {
-            // value1 = center.first + radius
-            // value2 = center.first
             value1 = BasicEnvelope("@ENV_0@ + @ENV_1@", loop, completion, listOf(center.first, radius))
             value2 = center.first
         }
         else {
-            // value1 = center.second
-            // valuje2 = center.second + radius
-
             value1 = BasicEnvelope("@ENV_0@", loop, completion, listOf(center.second))
             value2 = BasicEnvelope("@ENV_0@ + @ENV_1@", loop, completion, listOf(center.second, radius))
-
-
-//            val value1 = point1.second
-//            val value2 = point2.second
-//            val value1= BasicEnvelope("@ENV_0@ - @ENV_1@", loop, completion, listOf(center.second, radius))
-//            val value2= BasicEnvelope("@ENV_0@", loop, completion, listOf(center.first))
         }
 
         val circleDirection = if (circleDirection == CircleClockwiseDirection.CLOCKWISE)
