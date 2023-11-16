@@ -23,7 +23,7 @@ import java.util.*
 class PartigonParticle(
     var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation,
     val particleType: Particle = Particle.END_ROD,
-    val envelopes: List<Envelope> = listOf(),
+    envelopes: List<Envelope> = listOf(),
     positionX: Envelope = 0.0.envelope,
     positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
     positionZ: Envelope = 0.0.envelope,
@@ -102,23 +102,26 @@ class PartigonParticle(
         private set
     private var task: BukkitTask? = null
     private var delay = animationInterval
+    private val envelopes: List<Envelope>
 
     init {
+        val newEnvelopes = envelopes.toMutableList()
+
         // Add rotation for every group, on top of whatever rotations they already have
-        envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
+        newEnvelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
             it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) } // todo: do like below, envelopes as MutableList +=. not toMutableList
         }
 
         // Add all constructor-parameter envelopes to the envelopes list
-        (envelopes as MutableList) += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
-        envelopes += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
-        envelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
-        envelopes += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
-        envelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
-        envelopes += offsetY.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
-        envelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
-        envelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
-
+        newEnvelopes += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
+        newEnvelopes += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
+        newEnvelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
+        newEnvelopes += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
+        newEnvelopes += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
+        newEnvelopes += offsetY.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
+        newEnvelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
+        newEnvelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
+        this.envelopes = newEnvelopes
     }
 
     /**
