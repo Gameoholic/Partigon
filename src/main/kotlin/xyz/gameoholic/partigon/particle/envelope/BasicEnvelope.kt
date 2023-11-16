@@ -87,4 +87,8 @@ open class BasicEnvelope(
             .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()
     }
 
+    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): BasicEnvelope {
+        return BasicEnvelope(propertyType, envelopeExpression, loop, completion, nestedEnvelopes)
+    }
+
 }

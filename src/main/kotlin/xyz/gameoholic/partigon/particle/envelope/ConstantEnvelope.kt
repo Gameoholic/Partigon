@@ -14,7 +14,7 @@ import xyz.gameoholic.partigon.util.LoggerUtil
  */
 class ConstantEnvelope(
     propertyType: Envelope.PropertyType,
-    value: Number
+    private val value: Number
 ) :
     BasicEnvelope(
         propertyType,
@@ -26,12 +26,13 @@ class ConstantEnvelope(
 
     constructor(value: Number) : this(Envelope.PropertyType.NONE, value)
 
-    override val envelopeExpression: String
+    override val envelopeExpression: String = value.toString()
     override val nestedEnvelopes: List<Envelope> = listOf()
     init {
-        envelopeExpression = value.toString()
-
         LoggerUtil.debug("Created constant envelope: $envelopeExpression")
+    }
+    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): ConstantEnvelope {
+        return ConstantEnvelope(propertyType, value)
     }
 
 }

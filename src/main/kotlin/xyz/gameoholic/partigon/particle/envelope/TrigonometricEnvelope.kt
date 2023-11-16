@@ -20,9 +20,9 @@ import xyz.gameoholic.partigon.util.LoggerUtil
 //todo: if completion below 0.0 throw exception, in all envelopes and wrappers.
 open class TrigonometricEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: Envelope,
-    value2: Envelope,
-    trigFunc: TrigFunc,
+    private val value1: Envelope,
+    private val value2: Envelope,
+    private val trigFunc: TrigFunc,
     override val loop: Loop,
     override val completion: Double = 1.0,
 ) : BasicEnvelope(propertyType, "", loop, completion, listOf()) {
@@ -62,7 +62,10 @@ open class TrigonometricEnvelope(
 
         nestedEnvelopes = nestedEnvelopesList.toList()
         LoggerUtil.info("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
+    }
 
+    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): TrigonometricEnvelope {
+        return TrigonometricEnvelope(propertyType, value1, value2, trigFunc, loop, completion)
     }
 
 

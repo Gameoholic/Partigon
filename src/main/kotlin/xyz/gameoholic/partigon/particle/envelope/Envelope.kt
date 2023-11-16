@@ -51,5 +51,10 @@ interface Envelope {
      */
     val nestedEnvelopes: List<Envelope>
 
+    /**
+     * Returns a new instance of this class, with a different envelope property.
+     */
+    fun copyWithPropertyType(propertyType: PropertyType): Envelope
+
 
 }

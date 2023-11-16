@@ -16,8 +16,8 @@ import xyz.gameoholic.partigon.util.LoggerUtil
  */
 class LineEnvelope(
     override val propertyType: Envelope.PropertyType,
-    value1: Envelope,
-    value2: Envelope,
+    private val value1: Envelope,
+    private val value2: Envelope,
     override val loop: Loop,
     override val completion: Double = 1.0): BasicEnvelope(propertyType, "", loop, completion, listOf())
 {
@@ -48,6 +48,10 @@ class LineEnvelope(
 
         LoggerUtil.debug("Created line envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
 
+    }
+
+    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): LineEnvelope {
+        return LineEnvelope(propertyType, value1, value2, loop, completion)
     }
 
 }

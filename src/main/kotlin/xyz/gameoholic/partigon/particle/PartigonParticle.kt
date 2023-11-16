@@ -24,14 +24,14 @@ class PartigonParticle(
     var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation,
     val particleType: Particle = Particle.END_ROD,
     val envelopes: List<Envelope>,
-    val positionX: Envelope = 0.0.envelope, //todo: make all of these val
-    val positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
-    val positionZ: Envelope = 0.0.envelope,
-    val offsetX: Envelope = 0.0.envelope,
-    val offsetY: Envelope = 0.0.envelope,
-    val offsetZ: Envelope = 0.0.envelope,
-    val count: Envelope,
-    val extra: Envelope,
+    positionX: Envelope = 0.0.envelope,
+    positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
+    positionZ: Envelope = 0.0.envelope,
+    offsetX: Envelope = 0.0.envelope,
+    offsetY: Envelope = 0.0.envelope,
+    offsetZ: Envelope = 0.0.envelope,
+    count: Envelope,
+    extra: Envelope,
     val rotationOptions: List<RotationOptions>,
     val animationFrameAmount: Int,
     val animationInterval: Int,
@@ -108,6 +108,16 @@ class PartigonParticle(
         envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
             it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) }
         }
+
+        // Add all parameter-mapped envelopes to the envelopes list
+        envelopes.toMutableList() += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
+        envelopes.toMutableList() += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
+        envelopes.toMutableList() += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
+        envelopes.toMutableList() += positionZ.copyWithPropertyType(Envelope.PropertyType.POS_Z)
+        envelopes.toMutableList() += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_X)
+        envelopes.toMutableList() += offsetX.copyWithPropertyType(Envelope.PropertyType.OFFSET_Y)
+        envelopes.toMutableList() += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
+        envelopes.toMutableList() += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
     }
 
     /**
@@ -180,18 +190,10 @@ class PartigonParticle(
         if (entity != null && !entity.isDead) // Follow entity
             originLocation = entity.location
 
-        var newLocation = originLocation.clone().apply {
-            this.x += positionX.getValueAt(frameIndex)
-            this.y += positionY.getValueAt(frameIndex)
-            this.z += positionZ.getValueAt(frameIndex)
-        }.clone()
-        var newOffset = Vector(
-            offsetX.getValueAt(frameIndex),
-            offsetY.getValueAt(frameIndex),
-            offsetZ.getValueAt(frameIndex)
-        )
-        var newCount = count.getValueAt(frameIndex)
-        var newExtra = extra.getValueAt(frameIndex)
+        var newLocation = originLocation.clone()
+        var newOffset = Vector(0.0, 0.0, 0.0)
+        var newCount = 0
+        var newExtra = 0.0
 
         envelopes.filter { it.loop !is FillLoop }.forEach {
             val envelopePropertyType = it.propertyType
@@ -250,7 +252,7 @@ class PartigonParticle(
 //
 //        }
 
-        spawnParticle(newLocation, newOffset, newCount.toInt(), newExtra)
+        spawnParticle(newLocation, newOffset, newCount, newExtra)
 
 
     }
