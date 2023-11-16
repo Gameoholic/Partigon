@@ -32,6 +32,13 @@ open class TrigonometricEnvelope(
 
     enum class TrigFunc(val value: String) { SIN("sin"), COS("cos"), TAN("tan"), COT("cot"), COSEC("cosec"), SEC("sec") }
 
+    constructor(
+        value1: Envelope,
+        value2: Envelope,
+        trigFunc: TrigFunc,
+        loop: Loop,
+        completion: Double = 1.0) : this(Envelope.PropertyType.NONE, value1, value2, trigFunc, loop, completion)
+
     init {
         val animProgress = "frame_index / ${(loop.envelopeDuration - 1)}" //The animation progress, from 0.0 to 1.0
 

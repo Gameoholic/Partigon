@@ -26,6 +26,12 @@ open class BasicEnvelope(
     override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
 
+    constructor(
+        envelopeExpression: String,
+        loop: Loop,
+        completion: Double,
+        nestedEnvelopes: List<Envelope>) : this(Envelope.PropertyType.NONE, envelopeExpression, loop, completion, nestedEnvelopes)
+
     override var envelopeGroup: EnvelopeGroup? = null
         set(value) {
             if (field != null)
@@ -58,10 +64,11 @@ open class BasicEnvelope(
 
                 var newPosition = RotationUtil.applyRotationsForPoint(
                     Triple(
-                    it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                    it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
-                ), it.rotationOptions, frameIndex)
+                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
+                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                    ), it.rotationOptions, frameIndex
+                )
 
                 return when (propertyType) {
                     Envelope.PropertyType.POS_X -> newPosition.x

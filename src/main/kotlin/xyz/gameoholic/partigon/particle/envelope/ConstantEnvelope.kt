@@ -1,6 +1,7 @@
 package xyz.gameoholic.partigon.particle.envelope
 
 import xyz.gameoholic.partigon.particle.loop.ContinueLoop
+import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.particle.loop.RepeatLoop
 import xyz.gameoholic.partigon.util.LoggerUtil
 
@@ -22,6 +23,8 @@ class ConstantEnvelope(
         1.0,
         listOf()
     ) {
+
+    constructor(value: Number) : this(Envelope.PropertyType.NONE, value)
 
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope> = listOf()

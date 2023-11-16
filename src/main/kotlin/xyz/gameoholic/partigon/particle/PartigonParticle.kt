@@ -12,6 +12,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
+import xyz.gameoholic.partigon.particle.loop.FillLoop
 import java.util.*
 
 /**
@@ -192,7 +193,7 @@ class PartigonParticle(
         var newCount = count.getValueAt(frameIndex)
         var newExtra = extra.getValueAt(frameIndex)
 
-        envelopes.forEach {
+        envelopes.filter { it.loop !is FillLoop }.forEach {
             val envelopePropertyType = it.propertyType
             val envelopeValue = it.getValueAt(frameIndex)
             LoggerUtil.debug("Applying envelope $it. Envelope value is $envelopeValue", id)
@@ -238,7 +239,20 @@ class PartigonParticle(
 
         LoggerUtil.debug("Current properties are: {location: $newLocation, count: $newCount, offset: $newOffset}", id)
 
+
+//        repeat(50) {
+//            var newLocationNewer = newLocation.clone().apply {
+//                this.x += envelopes.first { it.loop is FillLoop }.getValueAt(it)
+//                this.y += positionY.getValueAt(it)
+//                this.z += positionZ.getValueAt(it)
+//            }.clone()
+//            spawnParticle(newLocationNewer, newOffset, newCount.toInt(), newExtra)
+//
+//        }
+
         spawnParticle(newLocation, newOffset, newCount.toInt(), newExtra)
+
+
     }
 
     /**

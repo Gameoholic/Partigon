@@ -24,6 +24,12 @@ class LineEnvelope(
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
 
+    constructor(
+        value1: Envelope,
+        value2: Envelope,
+        loop: Loop,
+        completion: Double = 1.0) : this(Envelope.PropertyType.NONE, value1, value2, loop, completion)
+
     init {
         val nestedEnvelopesList = mutableListOf<Envelope>()
 
