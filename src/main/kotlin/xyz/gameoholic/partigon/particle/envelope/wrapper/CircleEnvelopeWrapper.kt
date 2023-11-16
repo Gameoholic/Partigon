@@ -145,6 +145,26 @@ object CircleEnvelopeWrapper {
         )
     }
 
+    /**
+     * Envelope wrapper that when applied on multiple properties,
+     * creates a circle centered around a point/offset in the XZ plane.
+     *
+     * This automatically determines the trigonometric function to use based
+     * on the circle orientation and the property type.
+     * This method may only be used with the following vector property
+     * types: POS_X, POS_Z, OFFSET_X, OFFSET_Z, and is preferred
+     * if you are dealing with position/offset envelopes.
+     *
+     * @param propertyType The property for the envelope to affect.
+     * @param center The center of the circle.
+     * @param radius The radius of the circle.
+     * @param circleDirection The direction of the circle.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+     *
+     * @throws IllegalArgumentException If the method doesn't support the property type provided.
+     * @return The trigonometric envelope to be used on this property to create the circle.
+     */
     fun circleEnvelope(
         propertyType: Envelope.PropertyType,
         center: EnvelopePair,
@@ -244,6 +264,20 @@ object CircleEnvelopeWrapper {
         rotationOptions
     )
 
+    /**
+     * Envelope wrapper that creates a circle around a center point
+     * in the XZ plane, with rotations.
+     *
+     * @param envelopeGroupType The type of property (offset/position)
+     * @param center The center of the circle.
+     * @param radius The radius of the circle.
+     * @param circleDirection The direction of the circle.
+     * @param rotationOptions The list of rotations to apply to the circle.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+     *
+     * @return The envelope group used to create the circle.
+     */
     fun circleEnvelopeGroup(
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         center: EnvelopePair,
