@@ -109,7 +109,7 @@ class PartigonParticle(
             it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) } // todo: do like below, envelopes as MutableList +=. not toMutableList
         }
 
-        // Add all parameter-mapped envelopes to the envelopes list
+        // Add all parameter envelopes to the envelopes list
         (envelopes as MutableList) += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
         envelopes += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
         envelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
