@@ -2,13 +2,12 @@ package xyz.gameoholic.partigon.particle.envelope.wrapper
 
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
-import xyz.gameoholic.partigon.particle.envelope.LineEnvelope
+import xyz.gameoholic.partigon.particle.envelope.LinearEnvelope
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
-import xyz.gameoholic.partigon.util.rotation.RotationUtil
 
-object LineEnvelopeWrapper {
+object LinearEnvelopeWrapper {
     /**
      * Envelope wrapper that creates a straight line between 2 points/offsets.
      *
@@ -21,7 +20,7 @@ object LineEnvelopeWrapper {
      *
      * @return The envelope group used to create the line.
      */
-    fun lineEnvelopeGroup(
+    fun linearEnvelopeGroup(
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
@@ -29,7 +28,7 @@ object LineEnvelopeWrapper {
         loop: Loop,
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
-        LineEnvelope(
+        LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
                 Envelope.PropertyType.POS_X
             else
@@ -39,7 +38,7 @@ object LineEnvelopeWrapper {
             loop,
             completion
         ),
-        LineEnvelope(
+        LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
                 Envelope.PropertyType.POS_Y
             else
@@ -49,7 +48,7 @@ object LineEnvelopeWrapper {
             loop,
             completion
         ),
-        LineEnvelope(
+        LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
                 Envelope.PropertyType.POS_Z
             else

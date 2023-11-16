@@ -1,7 +1,6 @@
 package xyz.gameoholic.partigon.particle.envelope
 
 import xyz.gameoholic.partigon.particle.loop.Loop
-import xyz.gameoholic.partigon.util.EnvelopeTriple
 import xyz.gameoholic.partigon.util.LoggerUtil
 
 
@@ -14,7 +13,7 @@ import xyz.gameoholic.partigon.util.LoggerUtil
  * @param loop The loop to be used with the envelope.
  * @param completion How much of the animation to animate. Must be positive. 1.0 for its entirety.
  */
-class LineEnvelope(
+class LinearEnvelope(
     override val propertyType: Envelope.PropertyType,
     private val value1: Envelope,
     private val value2: Envelope,
@@ -50,8 +49,8 @@ class LineEnvelope(
 
     }
 
-    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): LineEnvelope {
-        return LineEnvelope(propertyType, value1, value2, loop, completion)
+    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): LinearEnvelope {
+        return LinearEnvelope(propertyType, value1, value2, loop, completion)
     }
 
 }
