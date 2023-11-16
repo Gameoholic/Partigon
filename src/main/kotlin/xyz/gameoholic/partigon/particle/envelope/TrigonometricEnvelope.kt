@@ -32,6 +32,7 @@ open class TrigonometricEnvelope(
 
     enum class TrigFunc(val value: String) { SIN("sin"), COS("cos"), TAN("tan"), COT("cot"), COSEC("cosec"), SEC("sec") }
 
+    // todo: doc the secondary constructors in every class. should only be used in nested or constructo proeprties like posY = ...
     constructor(
         value1: Envelope,
         value2: Envelope,
