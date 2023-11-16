@@ -23,15 +23,15 @@ import java.util.*
 class PartigonParticle(
     var originLocation: Location = Bukkit.getWorlds()[0].spawnLocation,
     val particleType: Particle = Particle.END_ROD,
-    val envelopes: List<Envelope>,
+    val envelopes: List<Envelope> = listOf(),
     positionX: Envelope = 0.0.envelope,
     positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
     positionZ: Envelope = 0.0.envelope,
     offsetX: Envelope = 0.0.envelope,
     offsetY: Envelope = 0.0.envelope,
     offsetZ: Envelope = 0.0.envelope,
-    count: Envelope,
-    extra: Envelope,
+    count: Envelope = 1.0.envelope,
+    extra: Envelope = 0.0.envelope,
     val rotationOptions: List<RotationOptions>,
     val animationFrameAmount: Int,
     val animationInterval: Int,
@@ -109,7 +109,7 @@ class PartigonParticle(
             it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) } // todo: do like below, envelopes as MutableList +=. not toMutableList
         }
 
-        // Add all parameter envelopes to the envelopes list
+        // Add all constructor-parameter envelopes to the envelopes list
         (envelopes as MutableList) += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
         envelopes += positionX.copyWithPropertyType(Envelope.PropertyType.POS_X)
         envelopes += positionY.copyWithPropertyType(Envelope.PropertyType.POS_Y)
@@ -242,20 +242,58 @@ class PartigonParticle(
 
         LoggerUtil.debug("Current properties are: {location: $newLocation, count: $newCount, offset: $newOffset}", id)
 
+        val fillLoopEnvelopes = envelopes.filter { it.loop is FillLoop }
+        if (fillLoopEnvelopes.isEmpty()) {
+            spawnParticle(newLocation, newOffset, newCount, newExtra)
+            return
+        }
 
-//        repeat(50) {
-//            var newLocationNewer = newLocation.clone().apply {
-//                this.x += envelopes.first { it.loop is FillLoop }.getValueAt(it)
-//                this.y += positionY.getValueAt(it)
-//                this.z += positionZ.getValueAt(it)
-//            }.clone()
-//            spawnParticle(newLocationNewer, newOffset, newCount.toInt(), newExtra)
-//
-//        }
+        fillLoopEnvelopes.forEach {
+            repeat(it.loop.duration) { i ->
 
-        spawnParticle(newLocation, newOffset, newCount, newExtra)
+                val envelopeValue = it.getValueAt(i)
 
+                when (it.propertyType) {
+                    Envelope.PropertyType.POS_X -> {
+                        newLocation.x += envelopeValue
+                    }
 
+                    Envelope.PropertyType.POS_Y -> {
+                        newLocation.y += envelopeValue
+                    }
+
+                    Envelope.PropertyType.POS_Z -> {
+                        newLocation.z += envelopeValue
+                    }
+
+                    Envelope.PropertyType.OFFSET_X -> {
+                        newOffset.x += envelopeValue
+                    }
+
+                    Envelope.PropertyType.OFFSET_Y -> {
+                        newOffset.y += envelopeValue
+                    }
+
+                    Envelope.PropertyType.OFFSET_Z -> {
+                        newOffset.z += envelopeValue
+                    }
+
+                    Envelope.PropertyType.COUNT -> {
+                        newCount += envelopeValue.toInt()
+                    }
+
+                    Envelope.PropertyType.EXTRA -> {
+                        newExtra += envelopeValue.toInt()
+                    }
+
+                    Envelope.PropertyType.NONE -> {
+                        throw IllegalArgumentException("Property type NONE may not be used for top-level envelopes.")
+                    }
+                }
+
+                spawnParticle(newLocation, newOffset, newCount, newExtra)
+            }
+        }
     }
 
     /**
