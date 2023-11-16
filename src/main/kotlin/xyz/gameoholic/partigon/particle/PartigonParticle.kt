@@ -251,42 +251,48 @@ class PartigonParticle(
             return
         }
 
+
         fillLoopEnvelopes.forEach {
             repeat(it.loop.duration) { i ->
 
                 val envelopeValue = it.getValueAt(i)
 
+                var newLocation2 = newLocation.clone()
+                var newOffset2 = newOffset.clone()
+                var newCount2 = newCount
+                var newExtra2 = newExtra
+
                 when (it.propertyType) {
                     Envelope.PropertyType.POS_X -> {
-                        newLocation.x += envelopeValue
+                        newLocation2.x += envelopeValue
                     }
 
                     Envelope.PropertyType.POS_Y -> {
-                        newLocation.y += envelopeValue
+                        newLocation2.y += envelopeValue
                     }
 
                     Envelope.PropertyType.POS_Z -> {
-                        newLocation.z += envelopeValue
+                        newLocation2.z += envelopeValue
                     }
 
                     Envelope.PropertyType.OFFSET_X -> {
-                        newOffset.x += envelopeValue
+                        newOffset2.x += envelopeValue
                     }
 
                     Envelope.PropertyType.OFFSET_Y -> {
-                        newOffset.y += envelopeValue
+                        newOffset2.y += envelopeValue
                     }
 
                     Envelope.PropertyType.OFFSET_Z -> {
-                        newOffset.z += envelopeValue
+                        newOffset2.z += envelopeValue
                     }
 
                     Envelope.PropertyType.COUNT -> {
-                        newCount += envelopeValue.toInt()
+                        newCount2 += envelopeValue.toInt()
                     }
 
                     Envelope.PropertyType.EXTRA -> {
-                        newExtra += envelopeValue.toInt()
+                        newExtra2 += envelopeValue.toInt()
                     }
 
                     Envelope.PropertyType.NONE -> {
@@ -294,7 +300,7 @@ class PartigonParticle(
                     }
                 }
 
-                spawnParticle(newLocation, newOffset, newCount, newExtra)
+                spawnParticle(newLocation2, newOffset2, newCount2, newExtra2)
             }
         }
     }
