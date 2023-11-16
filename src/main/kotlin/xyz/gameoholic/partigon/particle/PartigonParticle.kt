@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
+import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import java.util.*
 
 /**
@@ -92,6 +93,9 @@ class PartigonParticle(
         fun Envelope.add()
         {
             envelopes += this
+        }
+        fun EnvelopeGroup.add() {
+            envelopes += this.getEnvelopes()
         }
     }
 
