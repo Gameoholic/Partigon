@@ -182,7 +182,7 @@ object CircleEnvelopeWrapper {
             propertyType,
             value1,
             value2,
-            circleDirection,
+            CircleDirection.RIGHT,
             vectorComponent,
             loop,
             completion,
