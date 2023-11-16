@@ -4,7 +4,6 @@ import xyz.gameoholic.partigon.particle.envelope.*
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
-import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.IllegalArgumentException
 
 object CircleEnvelopeWrapper {
@@ -29,6 +28,20 @@ object CircleEnvelopeWrapper {
          * 2D Circle to the left of the line.
          */
         LEFT,
+    }
+
+    /**
+     * Represents the direction of the circle, from an upside perspective.
+     */
+    enum class CircleClockwiseDirection {
+        /**
+         * When looking at the circle from above, the direction will be clockwise.
+         */
+        CLOCKWISE,
+        /**
+         * When looking at the circle from above, the direction will be counter clockwise.
+         */
+        COUNTER_CLOCKWISE,
     }
 
     /**
@@ -136,7 +149,7 @@ object CircleEnvelopeWrapper {
         propertyType: Envelope.PropertyType,
         center: EnvelopePair,
         radius: Envelope,
-        circleDirection: CircleDirection,
+        circleDirection: CircleClockwiseDirection,
         loop: Loop,
         completion: Double = 1.0,
     ): TrigonometricEnvelope {
@@ -148,15 +161,6 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
                 else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
-
-
-
-        //5,5
-        //10
-
-
-        //15, 5
-        // 5, 15
 
         var value1: Envelope
         var value2: Envelope
@@ -180,6 +184,10 @@ object CircleEnvelopeWrapper {
 //            val value2= BasicEnvelope("@ENV_0@", loop, completion, listOf(center.first))
         }
 
+        val circleDirection = if (circleDirection == CircleClockwiseDirection.CLOCKWISE)
+            CircleDirection.RIGHT
+        else
+            CircleDirection.LEFT
 
         return circleEnvelope(
             propertyType,
@@ -209,8 +217,8 @@ object CircleEnvelopeWrapper {
      */
     fun circleEnvelopeGroup(
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
-        position1: EnvelopePair, //(0,0)
-        position2: EnvelopePair, //(4,4)
+        position1: EnvelopePair,
+        position2: EnvelopePair,
         circleDirection: CircleDirection,
         loop: Loop,
         rotationOptions: List<RotationOptions> = listOf(),
@@ -240,6 +248,46 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.OFFSET_Z,
             position1.second,
             position2.second,
+            circleDirection,
+            loop,
+            completion,
+        ),
+        rotationOptions
+    )
+
+    fun circleEnvelopeGroup(
+        envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
+        center: EnvelopePair,
+        radius: Envelope,
+        circleDirection: CircleClockwiseDirection,
+        loop: Loop,
+        rotationOptions: List<RotationOptions> = listOf(),
+        completion: Double = 1.0,
+    ): EnvelopeGroup = EnvelopeGroup(
+        circleEnvelope(
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_X
+            else
+                Envelope.PropertyType.OFFSET_X,
+            center,
+            radius,
+            circleDirection,
+            loop,
+            completion,
+        ),
+        ConstantEnvelope(
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Y
+            else
+                Envelope.PropertyType.OFFSET_Y, 0.0
+        ),
+        circleEnvelope(
+            if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
+                Envelope.PropertyType.POS_Z
+            else
+                Envelope.PropertyType.OFFSET_Z,
+            center,
+            radius,
             circleDirection,
             loop,
             completion,
