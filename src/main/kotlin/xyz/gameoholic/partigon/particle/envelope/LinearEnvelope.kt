@@ -42,7 +42,7 @@ class LinearEnvelope(
         val value2String = "@ENV_1@"
         nestedEnvelopesList.add(value2)
 
-        envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1})"
+        envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1}) * $completion"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
         LoggerUtil.debug("Created line envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
