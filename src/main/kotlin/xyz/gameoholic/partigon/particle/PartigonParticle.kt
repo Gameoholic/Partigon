@@ -130,7 +130,7 @@ class PartigonParticle(
         newEnvelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
         this.envelopes = newEnvelopes
 
-        plugin.metrics.addCustomChart(SingleLineChart("particlesSpawned") { 1 }) // bstats
+        plugin.metrics.addCustomChart(SingleLineChart("particlesCreated") { 1 }) // bstats
     }
 
     /**
