@@ -37,7 +37,6 @@ class PartigonParticle(
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
-    val entity: Entity?,
 ) {
     private val plugin: PartigonPlugin by inject()
 
@@ -60,7 +59,6 @@ class PartigonParticle(
             builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
-            builder.entity
         )
 
     companion object {
@@ -88,7 +86,6 @@ class PartigonParticle(
         var maxFrameAmount: Int? = null
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
-        var entity: Entity? = null
 
         fun build() = PartigonParticle(this)
 
