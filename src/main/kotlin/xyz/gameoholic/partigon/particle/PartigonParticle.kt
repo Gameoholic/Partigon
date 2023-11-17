@@ -98,6 +98,9 @@ class PartigonParticle(
         {
             envelopes += this
         }
+        /**
+         * Adds this Envelope Group to the list of Envelopes of the particle.
+         */
         fun EnvelopeGroup.add() {
             envelopes += this.getEnvelopes()
         }
