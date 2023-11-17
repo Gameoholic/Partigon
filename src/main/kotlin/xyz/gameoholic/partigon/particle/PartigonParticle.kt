@@ -71,7 +71,7 @@ class PartigonParticle(
     }
 
     class Builder {
-        var originLocation = ConstantLocation(Bukkit.getWorlds()[0].spawnLocation)
+        var originLocation: PartigonLocation = ConstantLocation(Bukkit.getWorlds()[0].spawnLocation)
         var particleType = Particle.END_ROD
         var envelopes = listOf<Envelope>()
         var count: Envelope = 1.0.envelope
