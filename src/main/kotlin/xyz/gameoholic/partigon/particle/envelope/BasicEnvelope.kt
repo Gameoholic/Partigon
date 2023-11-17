@@ -36,6 +36,9 @@ open class BasicEnvelope(
         completion: Double,
         nestedEnvelopes: List<Envelope>) : this(Envelope.PropertyType.NONE, envelopeExpression, loop, completion, nestedEnvelopes)
 
+    init {
+        plugin.metrics.addCustomChart(SingleLineChart("basicEnvelopesCreated") { 1 }) // bstats
+    }
     override var envelopeGroup: EnvelopeGroup? = null
         set(value) {
             if (field != null)
@@ -84,8 +87,6 @@ open class BasicEnvelope(
                     else -> throw IllegalArgumentException("Non-position/offset envelope cannot be inside of an envelope group.")
                 }
             }
-
-        plugin.metrics.addCustomChart(SingleLineChart("basicEnvelopesCreated") { 1 }) // bstats
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")
