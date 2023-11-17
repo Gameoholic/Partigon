@@ -13,6 +13,7 @@ internal object RotationUtil {
      * Applies a rotation to a point, given a point and rotation options.
      * @param point The point to rotate.
      * @param options The rotation options.
+     * @param frameIndex The frame index.
      * @return The new point with the rotation applied.
      */
     private fun applyRotationForPoint(
@@ -76,6 +77,7 @@ internal object RotationUtil {
      * Applies multiple rotations to a point, given a point and a list of rotation options.
      * @param point The point to rotate.
      * @param options The rotation options list.
+     * @param frameIndex The frame index.
      * @return The new point with all the rotations applied.
      */
     fun applyRotationsForPoint(

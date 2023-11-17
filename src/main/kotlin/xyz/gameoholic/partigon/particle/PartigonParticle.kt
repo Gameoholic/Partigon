@@ -15,6 +15,8 @@ import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import xyz.gameoholic.partigon.particle.location.ConstantLocation
 import xyz.gameoholic.partigon.particle.location.PartigonLocation
+import xyz.gameoholic.partigon.util.rotation.RotationOptions
+import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.util.*
 
 /**
@@ -37,6 +39,7 @@ class PartigonParticle(
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
+    val rotationOptions: List<RotationOptions>
 ) {
     private val plugin: PartigonPlugin by inject()
 
@@ -59,6 +62,7 @@ class PartigonParticle(
             builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
+            builder.rotationOptions
         )
 
     companion object {
@@ -86,16 +90,17 @@ class PartigonParticle(
         var maxFrameAmount: Int? = null
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
+        var rotationOptions: List<RotationOptions> = listOf()
 
         fun build() = PartigonParticle(this)
 
         /**
          * Adds this Envelope to the list of Envelopes of the particle.
          */
-        fun Envelope.add()
-        {
+        fun Envelope.add() {
             envelopes += this
         }
+
         /**
          * Adds this Envelope Group to the list of Envelopes of the particle.
          */
@@ -251,6 +256,26 @@ class PartigonParticle(
      * Spawns the particle with the new provided properties.
      */
     private fun spawnParticle(newLocation: Location, newOffset: Vector, newCount: Int, newExtra: Double) {
+
+        // Apply final rotations
+        val newOffsetAfterRot = RotationUtil.applyRotationsForPoint(
+            DoubleTriple(newOffset.x, newOffset.y, newOffset.z),
+            rotationOptions,
+            frameIndex
+        )
+        val newPositionAfterRot = RotationUtil.applyRotationsForPoint(
+            DoubleTriple(newLocation.x, newLocation.y, newLocation.z),
+            rotationOptions, frameIndex
+        )
+        newLocation.x = newPositionAfterRot.x
+        newLocation.y = newPositionAfterRot.y
+        newLocation.z = newPositionAfterRot.z
+
+        newOffset.x = newOffsetAfterRot.x
+        newOffset.y = newOffsetAfterRot.y
+        newOffset.z = newOffsetAfterRot.z
+
+
         LoggerUtil.debug("Spawning particle", id)
         newLocation.world.spawnParticle(
             particleType,
