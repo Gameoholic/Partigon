@@ -16,7 +16,7 @@ object LinearEnvelopeWrapper {
      * @param position2 The second position to interpolate (x,y,z).
      * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
-     * @param completion How much of the line will be animated. If set to 1.0, the entire line would be drawn. Must be positive.
+     * @param completion How much of the line will be animated. If set to 1.0, the entire line would be drawn, if set to 0.5, only half, etc.
      *
      * @return The envelope group used to create the line.
      */

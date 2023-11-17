@@ -62,7 +62,7 @@ object CurveEnvelopeWrapper {
     }
 
     /**
-     * Represents the component (X_AXIS,Y_AXIS,Z_AXIS) of a vector.
+     * Represents the component (X, Y, Z) of a vector.
      * This is used in curve envelopes with curve orientations to automatically
      * determine the trigonometric function to use.
      */
@@ -78,7 +78,7 @@ object CurveEnvelopeWrapper {
      * @param curveOrientation The orientation of the curve.
      * @param vectorComponent The vector component to be used for this curve property.
      * @param loop The loop to be used with the envelope.
-     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse.
+     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an entire ellipse, etc.
      *
      * @throws IllegalArgumentException If an invalid combination of curve orientation & vector component was provided.
      * @return The trigonometric envelope to be used on this property to create the curve.
@@ -145,7 +145,7 @@ object CurveEnvelopeWrapper {
      * @param value2 The second value to interpolate.
      * @param curveOrientation The orientation of the curve.
      * @param loop The loop to be used with the envelope.
-     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse.
+     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an entire ellipse, etc.
      *
      * @throws IllegalArgumentException If the method doesn't support the property type provided.
      */
@@ -190,7 +190,7 @@ object CurveEnvelopeWrapper {
      * @param curveOrientation The orientation of the curve.
      * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
-     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an ellipse. Must be positive.
+     * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an entire ellipse, etc.
      *
      * @return The envelope group used to create the curve.
      */
