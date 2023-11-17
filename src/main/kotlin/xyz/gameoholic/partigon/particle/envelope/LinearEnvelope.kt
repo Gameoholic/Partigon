@@ -23,6 +23,16 @@ class LinearEnvelope(
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
 
+    /**
+     * An envelope used for creating linear lines between 2 points.
+     * This secondary constructor provides the property type as NONE, and should only be used for
+     * constructor-parameter envelopes (positionY = ...) or for nested Envelopes.
+     *
+     * @param value1 The first value to interpolate.
+     * @param value2 The second value to interpolate.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the animation to animate. 1.0 for its entirety, 0.5 for half, etc.
+     */
     constructor(
         value1: Envelope,
         value2: Envelope,

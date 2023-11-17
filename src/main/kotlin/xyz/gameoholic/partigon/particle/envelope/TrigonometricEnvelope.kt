@@ -29,7 +29,17 @@ open class TrigonometricEnvelope(
 
     enum class TrigFunc(val value: String) { SIN("sin"), COS("cos"), TAN("tan"), COT("cot"), COSEC("cosec"), SEC("sec") }
 
-    // todo: doc the secondary constructors in every class. should only be used in nested or constructo proeprties like posY = ...
+    /**
+     * An envelope used for creating curves between two points and circles using trigonometric functions.
+     * This secondary constructor provides the property type as NONE, and should only be used for
+     * constructor-parameter envelopes (positionY = ...) or for nested Envelopes.
+     *
+     * @param value1 The first value to interpolate.
+     * @param value2 The second value to interpolate.
+     * @param completion How much of the animation will be animated. If set to 1.0, half a wave length. If set to 2.0, one wavelength, etc.
+     * @param trigFunc The trigonometric function to use to animate the curve.
+     * @param loop The loop to be used with the envelope.
+     */
     constructor(
         value1: Envelope,
         value2: Envelope,
