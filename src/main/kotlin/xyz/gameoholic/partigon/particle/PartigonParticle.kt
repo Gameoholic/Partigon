@@ -26,7 +26,7 @@ class PartigonParticle(
     val particleType: Particle = Particle.END_ROD,
     envelopes: List<Envelope> = listOf(),
     positionX: Envelope = 0.0.envelope,
-    positionY: Envelope = 0.0.envelope, //todo: rework entity. add LocationType() class
+    positionY: Envelope = 0.0.envelope,
     positionZ: Envelope = 0.0.envelope,
     offsetX: Envelope = 0.0.envelope,
     offsetY: Envelope = 0.0.envelope,
