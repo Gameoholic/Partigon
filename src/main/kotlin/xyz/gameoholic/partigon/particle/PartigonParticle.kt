@@ -124,36 +124,13 @@ class PartigonParticle(
     }
 
     /**
-     * Resets and starts the particle animation.
+     * Starts the particle animation from frame 0.
      */
     fun start() {
         LoggerUtil.info("Starting PartigonParticleImpl", id)
 
         frameIndex = -1
         task?.cancel()
-        task = object : BukkitRunnable() {
-            override fun run() {
-                onTimerTickPassed()
-            }
-        }.runTaskTimer(xyz.gameoholic.partigon.Partigon.plugin, 0L, 1L)
-    }
-
-    //todo: check edge casdsees for htese mthods
-    /**
-     * Pauses the particle animation.
-     */
-    fun pause() {
-        LoggerUtil.info("Pausing PartigonParticleImpl", id)
-        task?.cancel()
-    }
-
-    /**
-     * Resumes the particle animation from the frame it stopped.
-     */
-
-    fun resume() {
-        LoggerUtil.info("Resuming PartigonParticleImpl", id)
-        if (task?.isCancelled == false) return
         task = object : BukkitRunnable() {
             override fun run() {
                 onTimerTickPassed()
@@ -168,6 +145,19 @@ class PartigonParticle(
     fun stop() {
         LoggerUtil.info("Stopping PartigonParticle", id)
         task?.cancel()
+    }
+
+    /**
+     * Resumes the particle animation from the frame it stopped.
+     */
+    fun resume() {
+        LoggerUtil.info("Resuming PartigonParticleImpl", id)
+        if (task?.isCancelled == false) return
+        task = object : BukkitRunnable() {
+            override fun run() {
+                onTimerTickPassed()
+            }
+        }.runTaskTimer(xyz.gameoholic.partigon.Partigon.plugin, 0L, 1L)
     }
 
     private fun onTimerTickPassed() {
