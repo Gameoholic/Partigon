@@ -102,6 +102,10 @@ class PartigonParticle(
         fun EnvelopeGroup.add() {
             envelopes += this.getEnvelopes()
         }
+        fun RotationOptions.add()
+        {
+            rotationOptions += this
+        }
     }
 
     val id = UUID.randomUUID()!!
