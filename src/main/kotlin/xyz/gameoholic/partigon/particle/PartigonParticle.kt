@@ -34,6 +34,7 @@ class PartigonParticle(
     count: Envelope = 1.0.envelope,
     extra: Envelope = 0.0.envelope,
     val rotationOptions: List<RotationOptions>,
+    val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
     val entity: Entity?,
@@ -55,6 +56,7 @@ class PartigonParticle(
             builder.count,
             builder.extra,
             builder.rotationOptions,
+            builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
             builder.entity
@@ -83,6 +85,7 @@ class PartigonParticle(
         var offsetZ: Envelope = 0.0.envelope
         var extra: Envelope = 0.0.envelope
         var rotationOptions: List<RotationOptions> = listOf()
+        var maxFrameAmount: Int? = null
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
         var entity: Entity? = null
@@ -183,6 +186,14 @@ class PartigonParticle(
         if (delay >= animationInterval) {
             for (i in 0 until animationFrameAmount) {
                 frameIndex++
+                maxFrameAmount?.let {
+                    if (frameIndex >= it) {
+                        LoggerUtil.debug("Particle has passed max frame amount, stopping.")
+                        stop()
+                        return
+                    }
+                }
+
                 applyEnvelopes()
             }
             delay = 0
