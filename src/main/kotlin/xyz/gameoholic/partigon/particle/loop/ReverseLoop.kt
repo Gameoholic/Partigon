@@ -14,10 +14,10 @@ class ReverseLoop(override val duration: Int): Loop {
             throw IllegalArgumentException("Reverse loop duration must be above 0.")
     }
     override fun applyLoop(frameIndex: Int): Int {
-        //For loop index 0,1,2,3,4,5 half loop index will be 0,1,2,0,1,2
+        // For loop index 0,1,2,3,4,5 half loop index will be 0,1,2,0,1,2
         val loopIndex = frameIndex % duration
         val halfLoopIndex = loopIndex % (duration / 2)
-        //If animation needs to be reversed:
+        // If animation needs to be reversed:
         if (loopIndex >= duration / 2)
             return duration / 2 - 1 - halfLoopIndex
         return halfLoopIndex

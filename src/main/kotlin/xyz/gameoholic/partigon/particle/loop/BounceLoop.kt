@@ -20,13 +20,13 @@ class BounceLoop(override val duration: Int) : Loop {
             throw IllegalArgumentException("Bounce loop duration must be above 0.")
     }
     override fun applyLoop(frameIndex: Int): Int {
-        //For loop index 0,1,2,3 half loop index will be 0,1,2,0
+        // For loop index 0,1,2,3 half loop index will be 0,1,2,0
         val loopIndex = frameIndex % duration
         val halfLoopIndex = loopIndex % (duration / 2 + 1) //We add +1 so it's not actually half
-        //If animation needs to be reversed, skip point 2 and reverse:
+        // If animation needs to be reversed, skip point 2 and reverse:
         if (loopIndex > duration / 2)
             return duration / 2 - 1 - halfLoopIndex
-        //Point 1 on reverse will not be animated
+        // Point 1 on reverse will not be animated
         return halfLoopIndex
     }
 

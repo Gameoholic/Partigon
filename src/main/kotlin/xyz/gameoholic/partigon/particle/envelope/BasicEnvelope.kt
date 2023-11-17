@@ -49,7 +49,7 @@ open class BasicEnvelope(
         val loopedFrameIndex = loop.applyLoop(frameIndex)
 
         var updatedEnvelopeExpression = envelopeExpression
-        //If there are nested envelopes, apply them recursively
+        // If there are nested envelopes, apply them recursively
         for (i in nestedEnvelopes.indices) {
             val nestedEnvelopeValue = nestedEnvelopes[i].getValueAt(frameIndex)
             updatedEnvelopeExpression = updatedEnvelopeExpression

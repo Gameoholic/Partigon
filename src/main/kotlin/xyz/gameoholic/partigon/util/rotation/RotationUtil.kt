@@ -46,20 +46,18 @@ internal object RotationUtil {
             )
         )
 
-        /**
-         * Imagine moving both the point and origin point the same distance so that the rotation point is at the origin.
-         * We apply the transformation to get only the point to that position.
-         */
+        // Imagine moving both the point and origin point the same distance so that the rotation point is at the origin.
+        // We apply the transformation to get only the point to that position.
+
         val transformedPointMatrix =
             pointMatrix.add(rotationPointMatrix.scalarMultiply(-1.0))
 
         val rotationMatrix = getRotationMatrix(options.rotationType, angleRadians)
 
-        /**
-         * We multiply the matrices to rotate the point.
-         * Keep in mind it's still transformed to be origin relative to
-         * the rotation point.
-         */
+
+        // We multiply the matrices to rotate the point.
+        // Keep in mind it's still transformed to be origin relative to the rotation point.
+
         val rotatedPointMatrix = rotationMatrix.multiply(transformedPointMatrix)
 
         // We transform the point back to where it's supposed to be, "cancelling" the first transformation
@@ -85,7 +83,7 @@ internal object RotationUtil {
         options: List<RotationOptions>,
         frameIndex: Int
     ): DoubleTriple {
-        //The point that was received is of envelopes, we get the value then convert to doubles
+        // The point that was received is of envelopes, we get the value then convert to doubles
         var newPoint = DoubleTriple(
             point.x,
             point.y,

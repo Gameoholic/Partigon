@@ -61,7 +61,7 @@ open class TrigonometricEnvelope(
         val value2String = "@ENV_1@"
         nestedEnvelopesList.add(value2)
 
-        //Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
+        // Cos starts at 1 and heads down until pi radians. Because we interpolate the value from down, to up, we must switch the values of the two values.
         envelopeExpression = if (trigFunc == TrigFunc.COS)
             "$value2String + ($value1String - $value2String) * ${trigFunc.value}(pi * $animProgress * $completion)"
         else
