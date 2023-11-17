@@ -33,6 +33,7 @@ dependencies {
 
     implementation("net.objecthunter", "exp4j","0.4.8")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 }
 
 
@@ -74,6 +75,7 @@ tasks {
         //relocate("kotlin", "xyz.gameoholic.partigon.dependency.kotlin")
         reloc("net.objecthunter")
         reloc("org.apache.commons")
+        reloc("org.bstats")
     }
 }
 
