@@ -1,5 +1,6 @@
 package xyz.gameoholic.partigon.particle
 
+import org.bstats.charts.SingleLineChart
 import org.bukkit.Bukkit
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
@@ -126,6 +127,8 @@ class PartigonParticle(
         newEnvelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
         newEnvelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
         this.envelopes = newEnvelopes
+
+        plugin.metrics.addCustomChart(SingleLineChart("particles_spawned") { 1 }) // bstats
     }
 
     /**
