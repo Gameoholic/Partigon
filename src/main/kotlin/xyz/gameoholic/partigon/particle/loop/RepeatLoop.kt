@@ -5,7 +5,7 @@ package xyz.gameoholic.partigon.particle.loop
  *
  * @param duration The duration of the loop.
  *
- * @throws IllegalArgumentException If loop duration was not above 0.
+ * @throws IllegalArgumentException If loop duration is not above 0.
  */
 class RepeatLoop(override val duration: Int): Loop {
     override val envelopeDuration = duration

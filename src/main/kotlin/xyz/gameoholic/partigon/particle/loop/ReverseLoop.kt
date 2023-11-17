@@ -5,7 +5,7 @@ package xyz.gameoholic.partigon.particle.loop
  * and vice versa.
  * @param duration The duration of the loop, both directions included.
  *
- * @throws IllegalArgumentException If loop duration was not above 0.
+ * @throws IllegalArgumentException If loop duration is not above 0.
  */
 class ReverseLoop(override val duration: Int): Loop {
     override val envelopeDuration = duration / 2

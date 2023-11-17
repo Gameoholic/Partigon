@@ -6,7 +6,7 @@ package xyz.gameoholic.partigon.particle.loop
  *
  * @param duration The duration of the loop (used for envelope calculations). Can be 0.
  *
- * @throws IllegalArgumentException If loop duration was not above or equal to 0.
+ * @throws IllegalArgumentException If loop duration is not above or equal to 0.
  */
 class ContinueLoop(override val duration: Int) : Loop {
     override val envelopeDuration = duration
