@@ -2,12 +2,12 @@ package xyz.gameoholic.partigon.particle.loop
 
 /**
  * When loop reaches end, reverses the animation similarly to RepeatLoop,
- * but will skip the first & last frames (point 1 and 2) upon reversing.
- * This results in a smooth back and forth animation that does not stay
- * on the points for an extra frame, as opposed to ReverseLoop.
+ * but will skip repeating frames upon reversing.
+ * This results in a smooth back and forth animation that does not repeat
+ * any frames, as opposed to ReverseLoop.
  *
  * NOTE: The last frame will not be animated. The loop will not end
- * on point1, but one frame before it.
+ * on the first frame, but one frame before it.
  *
  * @param duration The duration of the loop, both directions included. Must be even.
  *
