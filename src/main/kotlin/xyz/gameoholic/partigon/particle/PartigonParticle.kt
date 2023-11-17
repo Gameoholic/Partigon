@@ -33,7 +33,6 @@ class PartigonParticle(
     offsetZ: Envelope = 0.0.envelope,
     count: Envelope = 1.0.envelope,
     extra: Envelope = 0.0.envelope,
-    val rotationOptions: List<RotationOptions>,
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
@@ -55,7 +54,6 @@ class PartigonParticle(
             builder.offsetZ,
             builder.count,
             builder.extra,
-            builder.rotationOptions,
             builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
@@ -84,7 +82,6 @@ class PartigonParticle(
         var offsetY: Envelope = 0.0.envelope
         var offsetZ: Envelope = 0.0.envelope
         var extra: Envelope = 0.0.envelope
-        var rotationOptions: List<RotationOptions> = listOf()
         var maxFrameAmount: Int? = null
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
@@ -102,10 +99,6 @@ class PartigonParticle(
         fun EnvelopeGroup.add() {
             envelopes += this.getEnvelopes()
         }
-        fun RotationOptions.add()
-        {
-            rotationOptions += this
-        }
     }
 
     val id = UUID.randomUUID()!!
@@ -117,11 +110,6 @@ class PartigonParticle(
 
     init {
         val newEnvelopes = envelopes.toMutableList()
-
-        // Add rotation for every group, on top of whatever rotations they already have
-        newEnvelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
-            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(rotationOptions) } // todo: do like below, envelopes as MutableList +=. not toMutableList
-        }
 
         // Add all constructor-parameter envelopes to the envelopes list
         newEnvelopes += count.copyWithPropertyType(Envelope.PropertyType.COUNT)
