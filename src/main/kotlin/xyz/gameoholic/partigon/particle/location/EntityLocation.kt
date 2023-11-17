@@ -4,7 +4,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.util.Vector
 
 /**
- * A Partigon location that follows the entity, with an optional offset.
+ * A PartigonPlugin location that follows the entity, with an optional offset.
  * @param entity The entity to set the location to
  * @param offset The offset to add to the entity's location
  */

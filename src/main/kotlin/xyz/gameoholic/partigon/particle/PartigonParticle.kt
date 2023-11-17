@@ -4,13 +4,13 @@ import org.bukkit.Bukkit
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.Utils.envelope
-import xyz.gameoholic.partigon.util.rotation.RotationOptions
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.entity.Entity
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
+import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import xyz.gameoholic.partigon.particle.location.ConstantLocation
 import xyz.gameoholic.partigon.particle.location.PartigonLocation
@@ -38,6 +38,8 @@ class PartigonParticle(
     val animationInterval: Int,
     val entity: Entity?,
 ) {
+    private val plugin: PartigonPlugin by inject()
+
 
     private constructor(
         builder: Builder
@@ -135,7 +137,7 @@ class PartigonParticle(
             override fun run() {
                 onTimerTickPassed()
             }
-        }.runTaskTimer(xyz.gameoholic.partigon.Partigon.plugin, 0L, 1L)
+        }.runTaskTimer(plugin, 0L, 1L)
     }
 
     /**
@@ -157,7 +159,7 @@ class PartigonParticle(
             override fun run() {
                 onTimerTickPassed()
             }
-        }.runTaskTimer(xyz.gameoholic.partigon.Partigon.plugin, 0L, 1L)
+        }.runTaskTimer(plugin, 0L, 1L)
     }
 
     private fun onTimerTickPassed() {
