@@ -1,8 +1,12 @@
 package xyz.gameoholic.partigon.particle.envelope
 
+import org.bstats.charts.AdvancedPie
+import org.bstats.charts.SingleLineChart
+import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.EnvelopeTriple
 import xyz.gameoholic.partigon.util.LoggerUtil
+import xyz.gameoholic.partigon.util.inject
 
 //TODO: fix extra frames bug
 /**
@@ -23,6 +27,8 @@ open class TrigonometricEnvelope(
     override val loop: Loop,
     override val completion: Double = 1.0,
 ) : BasicEnvelope(propertyType, "", loop, completion, listOf()) {
+
+    private val plugin: PartigonPlugin by inject()
 
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
@@ -68,6 +74,8 @@ open class TrigonometricEnvelope(
             "$value1String + ($value2String - $value1String) * ${trigFunc.value}(pi * $animProgress * $completion)"
 
         nestedEnvelopes = nestedEnvelopesList.toList()
+
+        plugin.metrics.addCustomChart(AdvancedPie("envelopesCreated") { mapOf("Trigonometric" to 1) }) // bstats
         LoggerUtil.info("Created curve envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
     }
 

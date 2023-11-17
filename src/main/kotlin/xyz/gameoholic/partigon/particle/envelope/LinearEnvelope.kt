@@ -1,7 +1,10 @@
 package xyz.gameoholic.partigon.particle.envelope
 
+import org.bstats.charts.AdvancedPie
+import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.LoggerUtil
+import xyz.gameoholic.partigon.util.inject
 
 
 /**
@@ -20,6 +23,8 @@ class LinearEnvelope(
     override val loop: Loop,
     override val completion: Double = 1.0): BasicEnvelope(propertyType, "", loop, completion, listOf())
 {
+    private val plugin: PartigonPlugin by inject()
+
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
 
@@ -55,8 +60,8 @@ class LinearEnvelope(
         envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1}) * $completion"
         nestedEnvelopes = nestedEnvelopesList.toList()
 
+        plugin.metrics.addCustomChart(AdvancedPie("envelopesCreated") { mapOf("Linear" to 1) }) // bstats
         LoggerUtil.debug("Created line envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
-
     }
 
     override fun copyWithPropertyType(propertyType: Envelope.PropertyType): LinearEnvelope {

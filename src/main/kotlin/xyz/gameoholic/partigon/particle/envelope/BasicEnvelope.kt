@@ -4,6 +4,8 @@ import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import net.objecthunter.exp4j.ExpressionBuilder
+import org.bstats.charts.SingleLineChart
+import xyz.gameoholic.partigon.PartigonPlugin
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 
@@ -25,6 +27,8 @@ open class BasicEnvelope(
     override val completion: Double,
     override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
+
+    private val plugin: PartigonPlugin by inject()
 
     constructor(
         envelopeExpression: String,
@@ -80,6 +84,8 @@ open class BasicEnvelope(
                     else -> throw IllegalArgumentException("Non-position/offset envelope cannot be inside of an envelope group.")
                 }
             }
+
+        plugin.metrics.addCustomChart(SingleLineChart("basicEnvelopesCreated") { 1 }) // bstats
 
         return ExpressionBuilder(updatedEnvelopeExpression)
             .variables("frame_index")

@@ -1,5 +1,9 @@
 package xyz.gameoholic.partigon.particle.envelope
 
+import org.bstats.charts.AdvancedPie
+import org.bstats.charts.SingleLineChart
+import xyz.gameoholic.partigon.PartigonPlugin
+import xyz.gameoholic.partigon.util.inject
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
 import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.RuntimeException
@@ -21,6 +25,8 @@ class EnvelopeGroup(
     val envelopeZ: Envelope,
     var rotationOptions: List<RotationOptions> = listOf() // Needs to be var, so PartigonParticle can add additional rotations on top
 ) {
+    private val plugin: PartigonPlugin by inject()
+
     enum class EnvelopeGroupType { POSITION, OFFSET }
 
     init {
@@ -33,6 +39,8 @@ class EnvelopeGroup(
         envelopeX.envelopeGroup = this
         envelopeY.envelopeGroup = this
         envelopeZ.envelopeGroup = this
+
+        plugin.metrics.addCustomChart(SingleLineChart("envelopeGroupsCreated") { 1 }) // bstats
     }
     /**
      * Returns a list of all envelopes.

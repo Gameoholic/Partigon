@@ -1,9 +1,12 @@
 package xyz.gameoholic.partigon.particle.envelope
 
+import org.bstats.charts.AdvancedPie
+import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.loop.ContinueLoop
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.particle.loop.RepeatLoop
 import xyz.gameoholic.partigon.util.LoggerUtil
+import xyz.gameoholic.partigon.util.inject
 
 
 /**
@@ -23,6 +26,7 @@ class ConstantEnvelope(
         1.0,
         listOf()
     ) {
+    private val plugin: PartigonPlugin by inject()
 
     constructor(value: Number) : this(Envelope.PropertyType.NONE, value)
 
@@ -30,6 +34,8 @@ class ConstantEnvelope(
     override val nestedEnvelopes: List<Envelope> = listOf()
     init {
         LoggerUtil.debug("Created constant envelope: $envelopeExpression")
+
+        plugin.metrics.addCustomChart(AdvancedPie("envelopesCreated") { mapOf("Constant" to 1) }) // bstats
     }
     override fun copyWithPropertyType(propertyType: Envelope.PropertyType): ConstantEnvelope {
         return ConstantEnvelope(propertyType, value)
