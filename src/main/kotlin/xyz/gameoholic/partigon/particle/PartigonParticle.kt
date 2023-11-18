@@ -39,8 +39,8 @@ class PartigonParticle(
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
-    val rotationOptions: List<RotationOptions>, //todo: doc this. final rtoation. maybe move to inline?
-    val envelopeGroupsRotationOptions: List<RotationOptions> // todo: doc this. rotation to be added to groups. maybe move to inline?
+    val rotationOptions: List<RotationOptions>,
+    val envelopeGroupsRotationOptions: List<RotationOptions>
 ) {
     private val plugin: PartigonPlugin by inject()
 
@@ -109,6 +109,20 @@ class PartigonParticle(
          */
         fun EnvelopeGroup.add() {
             envelopes += this.getEnvelopes()
+        }
+
+        /**
+         * Adds this RotationOptions to the list of final Rotation Options of the particle to be applied last.
+         */
+        fun RotationOptions.add() {
+            rotationOptions += this
+        }
+
+        /**
+         * Adds this RotationOptions to all envelope groups.
+         */
+        fun RotationOptions.addToGroups() {
+            rotationOptions += this
         }
     }
 
