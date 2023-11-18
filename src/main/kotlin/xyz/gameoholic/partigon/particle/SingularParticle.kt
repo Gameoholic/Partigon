@@ -94,8 +94,6 @@ class SingularParticle(
         var rotationOptions: List<RotationOptions> = listOf()
         var envelopeGroupsRotationOptions: List<RotationOptions> = listOf()
 
-        fun build() = SingularParticle(this)
-
         /**
          * Adds this Envelope to the list of Envelopes of the particle.
          */
@@ -123,6 +121,8 @@ class SingularParticle(
         fun RotationOptions.addToGroups() {
             envelopeGroupsRotationOptions += this
         }
+
+        fun build() = SingularParticle(this)
     }
 
     val id = UUID.randomUUID()!!
