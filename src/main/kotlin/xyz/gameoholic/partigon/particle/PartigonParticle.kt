@@ -39,7 +39,8 @@ class PartigonParticle(
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
-    val rotationOptions: List<RotationOptions>
+    val rotationOptions: List<RotationOptions>,
+    val envelopeGroupsRotationOptions: List<RotationOptions>
 ) {
     private val plugin: PartigonPlugin by inject()
 
@@ -62,7 +63,8 @@ class PartigonParticle(
             builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
-            builder.rotationOptions
+            builder.rotationOptions,
+            builder.envelopeGroupsRotationOptions
         )
 
     companion object {
@@ -91,6 +93,7 @@ class PartigonParticle(
         var animationFrameAmount: Int = 1
         var animationInterval: Int = 1
         var rotationOptions: List<RotationOptions> = listOf()
+        var envelopeGroupsRotationOptions: List<RotationOptions> = listOf()
 
         fun build() = PartigonParticle(this)
 
@@ -117,6 +120,11 @@ class PartigonParticle(
     private val envelopes: List<Envelope>
 
     init {
+        // Add rotation for every group, on top of whatever rotations they already have
+        envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
+            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(envelopeGroupsRotationOptions) }
+        }
+
         val newEnvelopes = envelopes.toMutableList()
 
         // Add all constructor-parameter envelopes to the envelopes list
@@ -238,7 +246,7 @@ class PartigonParticle(
                 }
 
                 Envelope.PropertyType.EXTRA -> {
-                    newExtra += envelopeValue.toInt()
+                    newExtra += envelopeValue
                 }
 
                 Envelope.PropertyType.NONE -> {
@@ -257,6 +265,7 @@ class PartigonParticle(
      */
     private fun spawnParticle(newLocation: Location, newOffset: Vector, newCount: Int, newExtra: Double) {
 
+        LoggerUtil.debug("Applying final rotations.", id)
         // Apply final rotations
         val newOffsetAfterRot = RotationUtil.applyRotationsForPoint(
             DoubleTriple(newOffset.x, newOffset.y, newOffset.z),
@@ -265,8 +274,10 @@ class PartigonParticle(
         )
         val newPositionAfterRot = RotationUtil.applyRotationsForPoint(
             DoubleTriple(newLocation.x, newLocation.y, newLocation.z),
-            rotationOptions, frameIndex
+            rotationOptions,
+            frameIndex
         )
+
         newLocation.x = newPositionAfterRot.x
         newLocation.y = newPositionAfterRot.y
         newLocation.z = newPositionAfterRot.z
@@ -276,7 +287,7 @@ class PartigonParticle(
         newOffset.z = newOffsetAfterRot.z
 
 
-        LoggerUtil.debug("Spawning particle", id)
+        LoggerUtil.debug("Spawning particle $particleType at ${newLocation.world.name}, x: ${newLocation.x}, y: ${newLocation.y}, z: ${newLocation.z}, count: $newCount, extra: $newExtra, offsetx: ${newOffset.x}, offsety: ${newOffset.y}, offsetz: ${newOffset.z}", id)
         newLocation.world.spawnParticle(
             particleType,
             newLocation,
