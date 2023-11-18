@@ -1,7 +1,6 @@
 package xyz.gameoholic.partigon.util.rotation
 
 import xyz.gameoholic.partigon.particle.envelope.Envelope
-import xyz.gameoholic.partigon.util.DoubleTriple
 import xyz.gameoholic.partigon.util.EnvelopeTriple
 
 /**
