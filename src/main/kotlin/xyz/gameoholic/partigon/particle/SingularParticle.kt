@@ -67,11 +67,11 @@ class SingularParticle(
         )
 
     companion object {
-        inline fun partigonParticle(
+        inline fun singularParticle(
             block: Builder.() -> Unit
         ) = Builder().apply(block).build()
 
-        inline fun partigonParticleBuilder(
+        inline fun singularParticleBuilder(
             block: Builder.() -> Unit
         ) = Builder().apply(block)
     }
