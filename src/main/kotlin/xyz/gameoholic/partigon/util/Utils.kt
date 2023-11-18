@@ -4,7 +4,6 @@ import xyz.gameoholic.partigon.particle.envelope.ConstantEnvelope
 import xyz.gameoholic.partigon.particle.envelope.Envelope
 
 typealias EnvelopeTriple = Triple<Envelope, Envelope, Envelope>
-typealias DoubleTriple = Triple<Double, Double, Double>
 typealias EnvelopePair = Pair<Envelope, Envelope>
 val <T> Triple<T,*,*>.x
     get(): T = first
