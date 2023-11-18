@@ -122,7 +122,7 @@ class PartigonParticle(
          * Adds this RotationOptions to all envelope groups.
          */
         fun RotationOptions.addToGroups() {
-            rotationOptions += this
+            envelopeGroupsRotationOptions += this
         }
     }
 
