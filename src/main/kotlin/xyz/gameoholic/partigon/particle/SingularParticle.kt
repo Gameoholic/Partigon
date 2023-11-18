@@ -10,6 +10,7 @@ import org.bukkit.Particle
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
 import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import xyz.gameoholic.partigon.particle.location.ConstantLocation
@@ -19,9 +20,7 @@ import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.util.*
 
 /**
- * Represents a particle animation, that's spawned every tick.
- * The particle's properties are controlled via envelopes,
- * which interpolate them over time.
+ * Represents a single Partigon particle.
  */
 class SingularParticle(
     private var originLocation: PartigonLocation,
@@ -77,21 +76,87 @@ class SingularParticle(
     }
 
     class Builder {
+        /**
+         * The location to spawn the particle at.
+         */
         var originLocation: PartigonLocation = ConstantLocation(Bukkit.getWorlds()[0].spawnLocation)
+        /**
+         * The Minecraft particle type.
+         */
         var particleType = Particle.END_ROD
+
+        /**
+         * The envelopes that will affect this particle.
+         */
         var envelopes = listOf<Envelope>()
+
+        /**
+         * How many Minecraft particles to spawn on every frame. This will be rounded to an Int value.
+         * If set to 0, the offset will control the particle's velocity.
+         */
         var count: Envelope = 0.0.envelope
+
+        /**
+         * The X position of the particle.
+         */
         var positionX: Envelope = 0.0.envelope
+
+        /**
+         * The Y position of the particle.
+         */
         var positionY: Envelope = 0.0.envelope
+
+        /**
+         * The Z position of the particle.
+         */
         var positionZ: Envelope = 0.0.envelope
+
+        /**
+         * The X offset of the particle. When count is set to 0, will control particle's X velocity.
+         */
         var offsetX: Envelope = 0.0.envelope
+
+        /**
+         * The Y offset of the particle. When count is set to 0, will control particle's Y velocity.
+         */
         var offsetY: Envelope = 0.0.envelope
+
+        /**
+         * The Z offset of the particle. When count is set to 0, will control particle's Z velocity.
+         */
         var offsetZ: Envelope = 0.0.envelope
+
+        /**
+         * The extra value of the Minecraft particle. Controls its speed.
+         */
         var extra: Envelope = 0.0.envelope
+
+        /**
+         * The maximum amount of frames to animate. When passed, will stop the particle.
+         * If set to null, will be ignored.
+         */
         var maxFrameAmount: Int? = null
+
+        /**
+         * How many frames to animate, per frame.
+         */
+        @Deprecated("You may use this field to generate shapes, however, this will be removed in the future and replaced with a better system.")
         var animationFrameAmount: Int = 1
+
+        /**
+         * How often to draw a frame of the animation, in ticks.
+         */
         var animationInterval: Int = 1
+
+        /**
+         * The rotation options to apply on the final particle's position and offset.
+         * Remember that this is applied AFTER the envelopes, and on top of originLocation.
+         */
         var rotationOptions: List<RotationOptions> = listOf()
+
+        /**
+         * Rotations to add to all Envelope groups.
+         */
         var envelopeGroupsRotationOptions: List<RotationOptions> = listOf()
 
         /**
@@ -154,9 +219,6 @@ class SingularParticle(
         plugin.metrics.addCustomChart(SingleLineChart("particlesCreated") { 1 }) // bstats
     }
 
-    /**
-     * Starts the particle animation from frame 0.
-     */
     override fun start() {
         LoggerUtil.info("Starting PartigonParticleImpl", id)
 
@@ -169,18 +231,11 @@ class SingularParticle(
         }.runTaskTimer(plugin, 0L, 1L)
     }
 
-    /**
-     * Stops the particle animation.
-     */
-
     override fun stop() {
         LoggerUtil.info("Stopping SingularParticle", id)
         task?.cancel()
     }
 
-    /**
-     * Resumes the particle animation from the frame it stopped.
-     */
     override fun resume() {
         LoggerUtil.info("Resuming PartigonParticleImpl", id)
         if (task?.isCancelled == false) return

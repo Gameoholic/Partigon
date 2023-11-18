@@ -6,6 +6,7 @@ import org.bstats.charts.SingleLineChart
 import org.bukkit.plugin.java.JavaPlugin
 import xyz.gameoholic.partigon.parsers.ConfigFileParser
 import xyz.gameoholic.partigon.parsers.ConfigSettings
+import xyz.gameoholic.partigon.util.Utils.envelope
 import xyz.gameoholic.partigon.util.bind
 
 internal class PartigonPlugin: JavaPlugin() {

@@ -1,8 +1,10 @@
 package xyz.gameoholic.partigon.particle
 
+/**
+ * Represents a particle animation with multiple Partigon particles.
+ * Starting, stopping or resuming it will do it to all the singular particles that it contains.
+ */
 class MultiParticle(private val particles: List<SingularParticle>) : PartigonParticle {
-
-    //todo: doc different partigon classes
 
     private constructor(
         builder: Builder
@@ -22,8 +24,14 @@ class MultiParticle(private val particles: List<SingularParticle>) : PartigonPar
     }
 
     class Builder {
+        /**
+         * The list of singular particles that are part of this MultiParticle.
+         */
         var particles: List<SingularParticle> = listOf()
 
+        /**
+         * Adds this particle to the MultiParticle instance.
+         */
         fun SingularParticle.add() {
             particles += this
         }

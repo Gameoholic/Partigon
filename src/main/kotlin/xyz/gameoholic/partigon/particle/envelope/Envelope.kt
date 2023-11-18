@@ -5,7 +5,7 @@ import xyz.gameoholic.partigon.util.EnvelopeTriple
 
 
 /**
- * Represents an envelope for animating properties over time.
+ * Represents an envelope for interpolating property values over time.
  */
 interface Envelope {
     enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, EXTRA, NONE }
