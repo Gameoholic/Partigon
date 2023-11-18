@@ -34,13 +34,13 @@ class PartigonParticle(
     offsetX: Envelope = 0.0.envelope,
     offsetY: Envelope = 0.0.envelope,
     offsetZ: Envelope = 0.0.envelope,
-    count: Envelope = 1.0.envelope,
+    count: Envelope = 0.0.envelope,
     extra: Envelope = 0.0.envelope,
     val maxFrameAmount: Int?,
     val animationFrameAmount: Int,
     val animationInterval: Int,
-    val rotationOptions: List<RotationOptions>,
-    val envelopeGroupsRotationOptions: List<RotationOptions>
+    val rotationOptions: List<RotationOptions>, //todo: doc this. final rtoation. maybe move to inline?
+    val envelopeGroupsRotationOptions: List<RotationOptions> // todo: doc this. rotation to be added to groups. maybe move to inline?
 ) {
     private val plugin: PartigonPlugin by inject()
 
@@ -81,7 +81,7 @@ class PartigonParticle(
         var originLocation: PartigonLocation = ConstantLocation(Bukkit.getWorlds()[0].spawnLocation)
         var particleType = Particle.END_ROD
         var envelopes = listOf<Envelope>()
-        var count: Envelope = 1.0.envelope
+        var count: Envelope = 0.0.envelope
         var positionX: Envelope = 0.0.envelope
         var positionY: Envelope = 0.0.envelope
         var positionZ: Envelope = 0.0.envelope
