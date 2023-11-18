@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "xyz.gameoholic"
-version = "1.3.0"
+version = "1.3.1"
 description = "A Minecraft particle animation library written in Kotlin."
 val apiVersion = "1.20"
 
