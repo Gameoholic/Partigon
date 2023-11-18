@@ -14,8 +14,8 @@ object LinearEnvelopeWrapper {
      * @param envelopeGroupType The type of property (offset/position)
      * @param position1 The first position to interpolate (x,y,z).
      * @param position2 The second position to interpolate (x,y,z).
-     * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
+     * @param rotationOptions The list of the rotations to apply to the curve.
      * @param completion How much of the line will be animated. If set to 1.0, the entire line would be drawn, if set to 0.5, only half, etc.
      *
      * @return The envelope group used to create the line.
@@ -24,8 +24,8 @@ object LinearEnvelopeWrapper {
         envelopeGroupType: EnvelopeGroup.EnvelopeGroupType,
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
-        rotationOptions: List<RotationOptions>,
         loop: Loop,
+        rotationOptions: List<RotationOptions> = listOf(),
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         LinearEnvelope(

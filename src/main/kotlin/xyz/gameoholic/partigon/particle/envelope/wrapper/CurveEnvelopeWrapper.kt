@@ -188,8 +188,8 @@ object CurveEnvelopeWrapper {
      * @param position1 The first position to interpolate (x,y,z).
      * @param position2 The second position to interpolate (x,y,z).
      * @param curveOrientation The orientation of the curve.
-     * @param rotationOptions The list of the rotations to apply to the curve.
      * @param loop The loop to be used with the envelope.
+     * @param rotationOptions The list of the rotations to apply to the curve.
      * @param completion How much of the curve will be animated. If set to 1.0, the entire curve would be drawn. If set to 2.0, it'll draw a half-ellipse. If set to 4.0, it'll draw an entire ellipse, etc.
      *
      * @return The envelope group used to create the curve.
@@ -199,8 +199,8 @@ object CurveEnvelopeWrapper {
         position1: EnvelopeTriple,
         position2: EnvelopeTriple,
         curveOrientation: CurveOrientation,
-        rotationOptions: List<RotationOptions>,
         loop: Loop,
+        rotationOptions: List<RotationOptions> = listOf(),
         completion: Double = 1.0,
     ): EnvelopeGroup = EnvelopeGroup(
         curveEnvelope(

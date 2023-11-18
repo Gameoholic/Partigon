@@ -198,8 +198,8 @@ object CircleEnvelopeWrapper {
      * @param position1 The first position to interpolate (X, Z).
      * @param position2 The second position to interpolate (X, Z).
      * @param circleDirection The direction of the circle.
-     * @param rotationOptions The list of rotations to apply to the circle.
      * @param loop The loop to be used with the envelope.
+     * @param rotationOptions The list of rotations to apply to the circle.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
      * @return The envelope group used to create the circle.
@@ -251,8 +251,8 @@ object CircleEnvelopeWrapper {
      * @param envelopeGroupType The type of property (offset/position)
      * @param center The center of the circle.
      * @param radius The radius of the circle.
-     * @param rotationOptions The list of rotations to apply to the circle.
      * @param loop The loop to be used with the envelope.
+     * @param rotationOptions The list of rotations to apply to the circle.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
      * @return The envelope group used to create the circle.
