@@ -23,7 +23,7 @@ class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    var rotationOptions: List<RotationOptions> = listOf() // Needs to be var, so PartigonParticle can add additional rotations on top
+    var rotationOptions: List<RotationOptions> = listOf() // Needs to be var, so SingularParticle can add additional rotations on top
 ) {
     private val plugin: PartigonPlugin by inject()
 
