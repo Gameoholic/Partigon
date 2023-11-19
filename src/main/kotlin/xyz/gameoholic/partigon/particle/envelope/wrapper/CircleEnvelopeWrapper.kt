@@ -136,7 +136,7 @@ object CircleEnvelopeWrapper {
      * creates a circle centered around a point/offset in the XZ plane.
      *
      * This automatically determines the trigonometric function to use based
-     * on the circle orientation and the property type.
+     * on the property type.
      * This method may only be used with the following vector property
      * types: POS_X, POS_Z, OFFSET_X, OFFSET_Z, and is preferred
      * if you are dealing with position/offset envelopes.
@@ -144,7 +144,6 @@ object CircleEnvelopeWrapper {
      * @param propertyType The property for the envelope to affect.
      * @param center The center of the circle.
      * @param radius The radius of the circle.
-     * @param circleDirection The direction of the circle.
      * @param loop The loop to be used with the envelope.
      * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
      *
@@ -156,7 +155,7 @@ object CircleEnvelopeWrapper {
         center: EnvelopePair,
         radius: Envelope,
         loop: Loop,
-        completion: Double = 1.0,
+        completion: Double = 1.0
     ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
@@ -166,6 +165,33 @@ object CircleEnvelopeWrapper {
                 Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
                 else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
+        return circleEnvelope(propertyType, vectorComponent, center, radius, loop, completion)
+    }
+    /**
+     * Envelope wrapper that when applied on multiple properties,
+     * creates a circle centered around a point/offset in the XZ plane.
+     *
+     * This automatically determines the trigonometric function to use based
+     * on the circle orientation and the vector component.
+     * This method supports any property type.
+     *
+     * @param propertyType The property for the envelope to affect.
+     * @param center The center of the circle.
+     * @param radius The radius of the circle.
+     * @param loop The loop to be used with the envelope.
+     * @param completion How much of the circle will be animated. If set to 1.0, an entire circle would be drawn. If set to 0.5, only half of it, etc.
+     *
+     * @throws IllegalArgumentException If the method doesn't support the property type provided.
+     * @return The trigonometric envelope to be used on this property to create the circle.
+     */
+    fun circleEnvelope(
+        propertyType: Envelope.PropertyType,
+        vectorComponent: VectorComponent,
+        center: EnvelopePair,
+        radius: Envelope,
+        loop: Loop,
+        completion: Double = 1.0,
+    ): TrigonometricEnvelope {
 
         var value1: Envelope
         var value2: Envelope
