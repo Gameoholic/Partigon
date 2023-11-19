@@ -30,6 +30,7 @@ open class BasicEnvelope(
 
     private val plugin: PartigonPlugin by inject()
 
+    //todo: add doc here
     constructor(
         envelopeExpression: String,
         loop: Loop,

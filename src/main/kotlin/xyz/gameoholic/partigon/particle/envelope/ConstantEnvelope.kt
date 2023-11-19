@@ -28,6 +28,7 @@ class ConstantEnvelope(
     ) {
     private val plugin: PartigonPlugin by inject()
 
+    // todo: add doc here
     constructor(value: Number) : this(Envelope.PropertyType.NONE, value)
 
     override val envelopeExpression: String = value.toString()

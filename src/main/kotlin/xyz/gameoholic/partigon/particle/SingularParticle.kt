@@ -198,11 +198,6 @@ class SingularParticle(
     private val envelopes: List<Envelope>
 
     init {
-        // Add rotation for every group, on top of whatever rotations they already have
-        envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
-            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(envelopeGroupsRotationOptions) }
-        }
-
         val newEnvelopes = envelopes.toMutableList()
 
         // Add all constructor-parameter envelopes to the envelopes list
@@ -215,6 +210,11 @@ class SingularParticle(
         newEnvelopes += offsetZ.copyWithPropertyType(Envelope.PropertyType.OFFSET_Z)
         newEnvelopes += extra.copyWithPropertyType(Envelope.PropertyType.EXTRA)
         this.envelopes = newEnvelopes
+
+        // Add rotation for every group, on top of whatever rotations they already have
+        this.envelopes.mapNotNull { it.envelopeGroup }.distinct().forEach {
+            it.rotationOptions = it.rotationOptions.toMutableList().apply { this.addAll(envelopeGroupsRotationOptions) }
+        }
 
         plugin.metrics.addCustomChart(SingleLineChart("particlesCreated") { 1 }) // bstats
     }
