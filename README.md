@@ -4,7 +4,7 @@ A Minecraft particle animation library designed to make your life easier.
 
 Create complex particle animations with just a few lines of code!
 
-To get started, read below, then jump into the [documentation](https://partigon.gameoholic.xyz/) (WORK IN PROGRESS)
+To get started, go to the [documentation](https://partigon.gameoholic.xyz/).
 
 
 ## Using Partigon
