@@ -2,22 +2,24 @@ package xyz.gameoholic.partigon.particle
 
 import org.bstats.charts.SingleLineChart
 import org.bukkit.Bukkit
-import xyz.gameoholic.partigon.particle.envelope.Envelope
-import xyz.gameoholic.partigon.util.*
-import xyz.gameoholic.partigon.util.Utils.envelope
+import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.Particle
+import org.bukkit.Particle.DustOptions
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
-import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval
 import xyz.gameoholic.partigon.PartigonPlugin
+import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import xyz.gameoholic.partigon.particle.location.ConstantLocation
 import xyz.gameoholic.partigon.particle.location.PartigonLocation
+import xyz.gameoholic.partigon.util.*
+import xyz.gameoholic.partigon.util.Utils.envelope
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
 import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.util.*
+
 
 /**
  * Represents a single Partigon particle.
@@ -34,6 +36,7 @@ class SingularParticle(
     offsetZ: Envelope,
     count: Envelope,
     extra: Envelope,
+    private val dustOptions: DustOptions?,
     private val maxFrameAmount: Int?,
     private val animationFrameAmount: Int,
     private val animationInterval: Int,
@@ -58,6 +61,7 @@ class SingularParticle(
             builder.offsetZ,
             builder.count,
             builder.extra,
+            builder.dustOptions,
             builder.maxFrameAmount,
             builder.animationFrameAmount,
             builder.animationInterval,
@@ -130,6 +134,11 @@ class SingularParticle(
          * The extra value of the Minecraft particle. Controls its speed.
          */
         var extra: Envelope = 0.0.envelope
+
+        /**
+         * Options which can be applied to dust or dust transitions particles - a particle color and size.
+         */
+        var dustOptions: DustOptions? = null
 
         /**
          * The maximum amount of frames to animate. When passed, will stop the particle.
@@ -354,7 +363,6 @@ class SingularParticle(
         newOffset.y = newOffsetAfterRot.y
         newOffset.z = newOffsetAfterRot.z
 
-
         LoggerUtil.debug("Spawning particle $particleType at ${newLocation.world.name}, x: ${newLocation.x}, y: ${newLocation.y}, z: ${newLocation.z}, count: $newCount, extra: $newExtra, offsetx: ${newOffset.x}, offsety: ${newOffset.y}, offsetz: ${newOffset.z}", id)
         newLocation.world.spawnParticle(
             particleType,
@@ -363,7 +371,8 @@ class SingularParticle(
             newOffset.x,
             newOffset.y,
             newOffset.z,
-            newExtra
+            newExtra,
+            dustOptions
         )
     }
 

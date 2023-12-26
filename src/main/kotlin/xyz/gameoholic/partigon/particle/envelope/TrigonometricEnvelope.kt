@@ -42,9 +42,9 @@ open class TrigonometricEnvelope(
      *
      * @param value1 The first value to interpolate.
      * @param value2 The second value to interpolate.
-     * @param completion How much of the animation will be animated. If set to 1.0, half a wave length. If set to 2.0, one wavelength, etc.
      * @param trigFunc The trigonometric function to use to animate the curve.
      * @param loop The loop to be used with the envelope.
+     * @param completion How much of the animation will be animated. If set to 1.0, half a wave length. If set to 2.0, one wavelength, etc.
      */
     constructor(
         value1: Envelope,
